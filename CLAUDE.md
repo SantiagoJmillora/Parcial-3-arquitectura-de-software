@@ -27,7 +27,7 @@ servicio al cliente (PQR y devoluciones) · financiero (registro contable de rec
 
 ## 2. Reglas del curso que no se pueden romper
 
-1. **La IA es solo el experto del negocio.** En la entrevista **no se le puede pedir** que proponga el mapa de capacidades, los dominios, los agregados, el mapa de contextos ni las vistas ArchiMate. Esos productos los evalúan como trabajo del equipo. Si la IA los propone por su cuenta, se descarta y se deja constancia en el análisis de hallazgos.
+1. **La IA es solo el experto del negocio durante la entrevista, después, una herramienta para el equipo.** En la entrevista **no se le puede pedir** que proponga el mapa de capacidades, los dominios, los agregados, el mapa de contextos ni las vistas ArchiMate. Después del apartado de la entrevista, si será posible pedirle a la IA recomendaciones sobre el mapa de capacidades, los dominios, los agregados, el mapa de contextos y las vistas ArchiMate. Esto se hace para que la entrevista sea lo más natural posible y que luego si se pueda trabajar de acuerdo a lo que la IA nos dijo en la entrevista.
 2. Hay que guardar como evidencia **la instrucción de rol, la conversación completa exportada y el análisis de hallazgos** (aceptados, descartados o contrastados, y cómo influyeron en el diseño).
 3. **Un único modelo ArchiMate** con varias vistas, que use las capas de Estrategia, Motivación, Negocio y Aplicación, con relaciones horizontales y verticales que permitan **trazar cada componente de aplicación hasta la meta y la capacidad** que lo justifican.
 4. **Commits repartidos:** cada integrante hace commit con su propia cuenta. La tabla de aportes se verifica contra el historial.
@@ -131,6 +131,6 @@ El archivo `.archimate` es un XML grande y **los merges simultáneos lo corrompe
 3. Mientras tanto, los demás avanzan en tareas que no tocan el modelo: redacción del README, tablas, análisis, glosario en texto y bocetos en papel o Excalidraw para pasarlos luego al modelo.
 
 ## 8. Instrucciones para asistentes de IA en este repositorio
-- No generar ni proponer el diseño (capacidades, dominios, agregados, mapa de contextos, vistas) como si fuera trabajo final. Se puede **revisar, señalar inconsistencias, explicar conceptos y dar formato**, pero las decisiones de diseño son del equipo.
+- Se puede proponer y generar el diseño, eso si, siempre con confirmación del equipo de trabajo. Es importante **revisar, señalar inconsistencias, explicar conceptos y dar formato**
 - Responder en español.
 - No agregar coautoría ni firmas de IA en commits, PRs ni archivos.
