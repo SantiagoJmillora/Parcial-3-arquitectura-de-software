@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<archimate:model xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:archimate="http://www.archimatetool.com/archimate" name="Recaudo SIT" id="id-7c1e2a9f4b3d4e6a8f0b1c2d3e4f5a60" version="5.0.0">
+  <folder name="Strategy" id="id-a1b2c3d4e5f60718293a4b5c6d7e8f01" type="strategy"/>
+  <folder name="Business" id="id-a1b2c3d4e5f60718293a4b5c6d7e8f02" type="business"/>
+  <folder name="Application" id="id-a1b2c3d4e5f60718293a4b5c6d7e8f03" type="application"/>
+  <folder name="Technology &amp; Physical" id="id-a1b2c3d4e5f60718293a4b5c6d7e8f04" type="technology"/>
+  <folder name="Motivation" id="id-a1b2c3d4e5f60718293a4b5c6d7e8f05" type="motivation"/>
+  <folder name="Implementation &amp; Migration" id="id-a1b2c3d4e5f60718293a4b5c6d7e8f06" type="implementation_migration"/>
+  <folder name="Other" id="id-a1b2c3d4e5f60718293a4b5c6d7e8f07" type="other"/>
+  <folder name="Relations" id="id-a1b2c3d4e5f60718293a4b5c6d7e8f08" type="relations"/>
+  <folder name="Views" id="id-a1b2c3d4e5f60718293a4b5c6d7e8f09" type="diagrams">
+    <element xsi:type="archimate:ArchimateDiagramModel" name="V1 Motivación" id="id-b0000000000000000000000000000001" viewpoint="motivation"/>
+    <element xsi:type="archimate:ArchimateDiagramModel" name="V2 Mapa de capacidades" id="id-b0000000000000000000000000000002" viewpoint="strategy"/>
+    <element xsi:type="archimate:ArchimateDiagramModel" name="V3 Cadena de valor y proceso E2E" id="id-b0000000000000000000000000000003"/>
+    <element xsi:type="archimate:ArchimateDiagramModel" name="V4 Descomposición de servicios" id="id-b0000000000000000000000000000004"/>
+    <element xsi:type="archimate:ArchimateDiagramModel" name="V5 Dominios" id="id-b0000000000000000000000000000005"/>
+    <element xsi:type="archimate:ArchimateDiagramModel" name="V6a Agregados - (dominio)" id="id-b0000000000000000000000000000006"/>
+    <element xsi:type="archimate:ArchimateDiagramModel" name="V7 Lenguaje ubicuo" id="id-b0000000000000000000000000000007"/>
+    <element xsi:type="archimate:ArchimateDiagramModel" name="V8 Mapa de contextos" id="id-b0000000000000000000000000000008" viewpoint="application_cooperation"/>
+    <element xsi:type="archimate:ArchimateDiagramModel" name="V9 Interoperabilidad y anticorrupción" id="id-b0000000000000000000000000000009" viewpoint="application_cooperation"/>
+    <element xsi:type="archimate:ArchimateDiagramModel" name="V10 Trazabilidad vertical" id="id-b0000000000000000000000000000010"/>
+    <element xsi:type="archimate:ArchimateDiagramModel" name="V11 Bounded Context Canvas" id="id-b0000000000000000000000000000011"/>
+  </folder>
+</archimate:model>
