@@ -29,12 +29,12 @@
 | T01 | [x] | Crear el repositorio en GitHub, hacer push de esta estructura e invitar a los 4 integrantes como colaboradores | — | Repositorio remoto | Los 4 pueden clonar y hacer push | 0,5 |
 | T02 | [x] | Los 4 instalan **Archi** (misma versión) y clonan el repositorio | T01 | — | Todos abren Archi | 0,5 c/u |
 | T03 | [x] 🧩 | Crear el modelo vacío `modelo/recaudo.archimate` con las 11 vistas vacías y sus nombres (`V1 Motivación` … `V11 Bounded Context Canvas`) | T02 | Modelo base | Commit con las 11 vistas vacías | 0,5 |
-| T04 | [ ] 📝 | Escribir la **instrucción de rol** del experto (quién es, empresa, años de experiencia, qué sabe y qué **no** debe hacer: no diseñar) | T01 | `entrevista/01_instruccion_rol.md` | Revisada por al menos 2 integrantes | 1 |
-| T05 | [ ] 📝 | Guion, parte A: **contexto de la organización, proceso E2E, actores, reglas de negocio y excepciones** | T01 | `entrevista/02_guion.md` | Cada bloque tiene preguntas abiertas, de profundización y de validación | 1,5 |
-| T06 | [ ] 📝 | Guion, parte B: **indicadores, normatividad, sistemas actuales y el bloque de INTEROPERABILIDAD** (procesos, áreas, sistemas y entidades externas: qué información, en qué dirección y con qué frecuencia) | T01 | `entrevista/02_guion.md` | El bloque cubre las 6 interoperabilidades del enunciado y pregunta por otras | 1,5 |
-| T07 | [ ] 📝 | Guion, parte C: **motivación** (interesados, impulsores, evaluaciones, metas, resultados, principios, requerimientos, restricciones) y **capacidades del negocio** (preguntar qué hace la organización, sin pedir el mapa) | T01 | `entrevista/02_guion.md` | Hay preguntas para los 8 elementos de motivación | 1 |
-| T08 | [ ] 📝 | **Hacer la entrevista** con la IA usando T04 y el guion completo (T05–T07), con preguntas de repregunta cuando algo quede vago | T04–T07 | Conversación | Se cubrieron todos los bloques | 1,5 |
-| T09 | [ ] 📝 | **Exportar la conversación completa** (enlace compartido + texto o PDF) | T08 | `entrevista/03_conversacion.md` | Conversación íntegra en el repositorio | 0,5 |
+| T04 | [x] 📝 | Escribir la **instrucción de rol** del experto (quién es, empresa, años de experiencia, qué sabe y qué **no** debe hacer: no diseñar) | T01 | `entrevista/01_instruccion_rol.md` | Revisada por al menos 2 integrantes | 1 |
+| T05 | [x] 📝 | Guion, parte A: **contexto de la organización, proceso E2E, actores, reglas de negocio y excepciones** | T01 | `entrevista/02_guion.md` | Cada bloque tiene preguntas abiertas, de profundización y de validación | 1,5 |
+| T06 | [x] 📝 | Guion, parte B: **indicadores, normatividad, sistemas actuales y el bloque de INTEROPERABILIDAD** (procesos, áreas, sistemas y entidades externas: qué información, en qué dirección y con qué frecuencia) | T01 | `entrevista/02_guion.md` | El bloque cubre las 6 interoperabilidades del enunciado y pregunta por otras | 1,5 |
+| T07 | [x] 📝 | Guion, parte C: **motivación** (interesados, impulsores, evaluaciones, metas, resultados, principios, requerimientos, restricciones) y **capacidades del negocio** (preguntar qué hace la organización, sin pedir el mapa) | T01 | `entrevista/02_guion.md` | Hay preguntas para los 8 elementos de motivación | 1 |
+| T08 | [x] 📝 | **Hacer la entrevista** con la IA usando T04 y el guion completo (T05–T07), con preguntas de repregunta cuando algo quede vago | T04–T07 | Conversación | Se cubrieron todos los bloques | 1,5 |
+| T09 | [x] 📝 | **Exportar la conversación completa** (enlace compartido + texto o PDF) | T08 | `entrevista/03_conversacion.md` | Conversación íntegra en el repositorio | 0,5 |
 
 ## Día 2 (dom 11): análisis de hallazgos y Fase 1, motivación, capacidades y E2E
 
