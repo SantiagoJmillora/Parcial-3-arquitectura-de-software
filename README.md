@@ -32,7 +32,7 @@ _Solicitud del usuario, alcance y lo que queda fuera. Resumen de la entrevista y
 
 # Inventario de elementos de motivación
 
-> Tarea del backlog. Inventario de los elementos de motivación identificados en la entrevista al experto del negocio del SIT, organizados en los ocho tipos: interesados, impulsores, evaluaciones, metas, resultados, principios, requerimientos y restricciones.
+> Tarea 11 del backlog. Inventario de los elementos de motivación identificados en la entrevista al experto del negocio del SIT, organizados en los ocho tipos: interesados, impulsores, evaluaciones, metas, resultados, principios, requerimientos y restricciones.
 
 ## 1. Interesados (Stakeholders)
 
