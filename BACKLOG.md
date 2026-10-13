@@ -1,6 +1,6 @@
 # BACKLOG: Parcial 3, recaudo del sistema integrado de transporte
 
-> **Turno de modelo (archivo .archimate):** Santiago Jaramillo  ← escribe tu nombre aquí antes de abrir Archi y vuelve a dejarlo en _libre_ al terminar (ver [CLAUDE.md §7](CLAUDE.md#7-cómo-trabajamos-sin-responsables-fijos)).
+> **Turno de modelo (archivo .archimate):** _libre_  ← escribe tu nombre aquí antes de abrir Archi y vuelve a dejarlo en _libre_ al terminar (ver [CLAUDE.md §7](CLAUDE.md#7-cómo-trabajamos-sin-responsables-fijos)).
 
 ## Cómo usar este backlog
 - Las tareas están **en orden**. Toma la **primera tarea libre** (`[ ]`) cuyas dependencias estén en `[x]`.
