@@ -108,6 +108,7 @@ Estos términos pueden tener más de un significado según el contexto. El glosa
 /BACKLOG.md              plan de tareas
 /CLAUDE.md               esta guía
 /modelo/recaudo.archimate  modelo ArchiMate único (herramienta: Archi)
+/modelo/DECISIONES_MODELO.md  decisiones y convenciones de modelado (leer antes de tocar el modelo)
 /vistas/V#_nombre.png     imágenes exportadas de cada vista
 /entrevista/             rol, guion, conversación y análisis
 ```
