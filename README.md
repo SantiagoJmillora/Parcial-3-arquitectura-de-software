@@ -223,7 +223,13 @@ La meta prioritaria expresada por la experta es que el ente gestor pueda demostr
 ### V4 Descomposición de servicios
 ![V4 Descomposición de servicios](vistas/V4_descomposicion_servicios.png)
 
-**Análisis:** _…_
+**Análisis.** La vista baja el proceso E2E de recaudo en tres niveles. Arriba está el servicio de extremo a extremo. Debajo hay 10 servicios de plataforma que se implementan, cada uno ligado a los requerimientos de V1 que realiza (por ejemplo, la liquidación a operadores realiza REQ03 y REQ04), y debajo de ellos 19 servicios de dominio funcional. En amarillo está lo que se construye y en gris lo que queda fuera del alcance: seis servicios de plataforma, entre ellos la operación de validadores (IoT), la atención de PQR y la contabilidad y el giro de la fiducia. La cuarta capa, con los 52 servicios básicos que tienen el tamaño para construirse y los 8 que se descartan, está en V4c. La V4d muestra quién hace cada cosa: los roles del ente gestor, las funciones que realizan los servicios de plataforma y los objetos de negocio que manejan.
+
+![V4c Servicios básicos](vistas/V4c_servicios_basicos.png)
+
+![V4d Roles, funciones y objetos](vistas/V4d_roles_funciones_objetos.png)
+
+**Decisiones.** Se usó la relación de agregación entre capas porque un servicio de una capa se compone de los de la inferior sin ser su dueño exclusivo. El servicio de consulta, reportes e indicadores (P10) se dejó como un servicio de plataforma y no como un dominio, porque se alimenta de los demás. La liquidación a operadores (P8) sí se incluye, pero solo aplica las fórmulas de cada contrato y no las decide, porque el software no puede modificar unilateralmente las reglas de remuneración (RESC06).
 
 #### Descomposición del proceso E2E en capas
 
@@ -286,13 +292,69 @@ Los 52 servicios de capa 4 de la tabla de arriba se implementan todos, porque ca
 | L4 | Gestión de credenciales de servicio | No (por decidir) | La experta la mencionó como débil, pero el enunciado no la pide. Es una pregunta abierta del boceto del mapa de capacidades. |
 
 #### Contratos de servicio (contract-first)
+
+Cada servicio básico de la capa 4 tiene su contrato como objeto *Contract* en el modelo (vista V4b), con los mismos datos de esta tabla en su documentación. Los requisitos no funcionales salen de lo que dijo la experta (por ejemplo las 48 horas de llegada de transacciones, la espera de 48 horas para trasladar saldo o la meta de diferencia de conciliación) y de las reglas de protección de datos.
+
+![V4b Contratos de servicio](vistas/V4b_contratos.png)
+
 | Servicio | Entradas | Salidas | Errores | Requisitos no funcionales |
 |---|---|---|---|---|
-| | | | | |
+| Definir tarifas, reglas de transbordo y límites de uso | Perfil tarifario, valor o descuento, ventana de transbordo, máximo de transbordos, valor del 1.er y 2.º transbordo, límite mensual de viajes subsidiados y vigencia. | Borrador de tarifario con su número de versión. | Descuento fuera de 0 a 100 %; falta la tarifa plena; vigencia incompleta. | Conserva todas las versiones; registra quién cambió qué y cuándo. |
+| Publicar el tarifario | Versión del tarifario, acto administrativo y fecha de vigencia. | Tarifario publicado, inmutable, y entrega al proveedor por la capa anticorrupción. | Sin acto administrativo; vigencia que se traslapa con otra; versión incompleta. | Inmutable una vez publicado; se entrega con días de anticipación a su vigencia. |
+| Consultar el tarifario vigente por fecha | Fecha y hora, perfil tarifario. | Tarifa, reglas de transbordo y límites que regían en esa fecha. | Fecha sin tarifario vigente. | Responde con la regla de la fecha de la validación y no con la de llegada de la transacción. |
+| Emitir y personalizar la tarjeta | Tipo (al portador o personalizada), documento del titular y su autorización de datos si es personalizada, canal. | Tarjeta emitida con su número y su estado. | Titular sin autorización de datos; tarjeta ya emitida. | Protege los datos personales (Ley 1581 de 2012). |
+| Reponer la tarjeta con traslado de saldo | Número de la tarjeta bloqueada e identidad verificada del titular. | Tarjeta nueva y orden de traslado del saldo calculado. | Tarjeta al portador (no se repone); no han pasado las 48 horas de espera. | Espera unas 48 horas para que lleguen las transacciones pendientes. |
+| Retirar las tarjetas de primera generación | Número de tarjeta y tarjeta nueva de reemplazo. | Tarjeta retirada y bloqueada, con el saldo respetado. | Tarjeta ya retirada. | Una tarjeta retirada no se puede reactivar. |
+| Registrar recargas | Tarjeta, valor, canal y referencia de la venta. | Recarga registrada; si viene de la app o la web queda pendiente de aplicar. | Valor menor a $2.000; saldo que superaría $200.000; tarjeta bloqueada. | Idempotente por la referencia de la venta. |
+| Aplicar movimientos al saldo calculado | Transacción con el consecutivo de la tarjeta y su valor. | Saldo calculado actualizado. | Salto de consecutivo (se reporta como diferencia); saldo por debajo de menos una tarifa. | Se aplican en orden de consecutivo; las diferencias se investigan como posible fraude. |
+| Consultar saldo e historial | Tarjeta. | Saldo calculado, recargas pendientes, estado y últimos movimientos. | Tarjeta inexistente. | Respuesta en línea para Servicio al Cliente; aclara que el saldo real está en la tarjeta. |
+| Registrar el titular y su autorización de datos | Documento, datos de contacto y autorización (del acudiente si es menor). | Titular registrado con autorización vigente. | Menor sin acudiente; autorización incompleta. | Solo los datos necesarios; los de salud con acceso restringido. |
+| Atender solicitudes de consulta, rectificación y supresión | Titular y tipo de solicitud. | Respuesta y registro de lo que se hizo. | Titular no verificado; dato que la ley obliga a conservar. | Deja evidencia y respeta los plazos de ley. |
+| Solicitar el perfil | Titular, tarjeta personalizada, tipo de perfil y soportes. | Solicitud en verificación. | Tarjeta al portador; el titular ya tiene un perfil activo. | Trazable por titular. |
+| Recibir y validar las certificaciones | Listados de las instituciones y certificados. | Certificaciones aceptadas o rechazadas, con su motivo. | Formato no reconocido; titular no encontrado. | Soporta formatos distintos por institución y los picos de enero y julio. |
+| Verificar la elegibilidad | Solicitud con su certificación. | Elegible o no, con la vigencia. | Certificación vencida; institución que no responde. | Aplica la regla de cada perfil (edad, matrícula, discapacidad). |
+| Gestionar la vigencia del perfil | Perfil, evento (activar, vencer o retirar) y motivo. | Perfil actualizado y novedad para los validadores. | Retiro sin motivo. | Al vencer, la tarjeta sigue a tarifa plena; avisa el vencimiento. |
+| Controlar el consumo subsidiado | Validación con tarifa especial. | Contador mensual de viajes subsidiados. | Validación ya contada. | No cuenta los transbordos gratuitos; el límite ronda los 50 viajes al mes. |
+| Registrar una decisión de lista | Tarjeta o identificación técnica, lista (bloqueo o denegación), motivo y responsable. | Decisión registrada y orden de publicar. | Sin motivo o sin responsable; bloqueo por pérdida de una tarjeta al portador. | Auditable: nada se borra. |
+| Levantar una decisión de lista | Decisión, motivo y quien autoriza. | Decisión levantada y orden de publicar. | Bloqueo por pérdida (no se reversa); quien levanta no tiene permiso. | Solo Recaudo y Tarifas levanta bloqueos por fraude. |
+| Publicar la versión de lista | Decisiones nuevas. | Versión numerada entregada al proveedor. | Versión con salto de número. | Inmutable una vez publicada. |
+| Vigilar la sincronización de los validadores | Reportes de sincronización por validador. | Validadores desactualizados (más de unas 48 horas) señalados. | Validador que no reporta. | Alerta oportuna a Operaciones. |
+| Registrar la transacción | Transacción del validador: medio de pago, perfil, fecha y hora, validador, ruta, operador, tipo, valor, saldo antes y después y consecutivo. | Transacción registrada, o marcada como duplicada o extemporánea. | Transacción incompleta; ruta inexistente. | Idempotente por validador y consecutivo; acepta llegadas de hasta 48 horas. |
+| Controlar la completitud | Contadores de cierre del validador y transacciones recibidas. | Informe de completitud por validador y por día. | Contador sin transacciones. | Mide el 99 % recibido en 24 horas y el 100 % en 48 horas. |
+| Asociar la validación a un viaje y reconocer el transbordo | Transacción y viaje abierto del medio de pago. | Viaje actualizado; transbordo reconocido o no. | Transbordo en la misma ruta o estación; más de 2 transbordos; fuera de los 90 minutos. | Tolera llegadas desordenadas y reconstruye el viaje. |
+| Determinar la tarifa esperada y detectar diferencias | Viaje, perfil y tarifario de la fecha. | Tarifa esperada y diferencia con lo cobrado. | Perfil o tarifario no encontrado. | Usa la regla vigente en la fecha de la validación. |
+| Cerrar el viaje | Viaje con la ventana vencida. | Viaje cerrado, listo para el cobro bancario y la consolidación. | Viaje ya cerrado. | Una vez cerrado solo cambia con un ajuste. |
+| Generar el cobro diario | Viajes cerrados por identificación técnica de la tarjeta y fecha. | Cobro diario (siempre tarifa plena, con los transbordos aplicados). | Cobro ya generado para esa tarjeta y fecha. | No almacena el número completo de la tarjeta. |
+| Enviar al adquirente y registrar el resultado | Cobro diario. | Cobro aprobado o rechazado. | Adquirente no disponible (se acumula y se reintenta); tarjeta inválida. | Envío en la madrugada; PCI DSS a través del adquirente. |
+| Reintentar el cobro | Cobro rechazado. | Cobro aprobado o rechazo definitivo. | Se superaron los 3 intentos. | Alrededor de 3 intentos durante algunos días. |
+| Gestionar la deuda de la tarjeta | Rechazo definitivo o pago del usuario. | Deuda registrada o saldada, con la orden de denegar o de levantar la denegación. | Pago parcial; deuda ya saldada. | La cartera se castiga tras el plazo; la meta es una cartera no cobrada menor al 1 %. |
+| Gestionar los contracargos | Contracargo notificado por el adquirente. | Respuesta con la evidencia de los toques. | Plazo vencido. | Conserva la evidencia de los toques. |
+| Consolidar los usos | Transacciones y periodo. | Líneas por modo, ruta, operador y tipo de tarifa. | Transacción de un periodo ya cerrado (entra como ajuste). | Cuadre: la suma de las líneas es igual al total del periodo. |
+| Consolidar las ventas | Ventas y consignaciones por canal y punto. | Líneas por canal, punto y medio de pago, con sus diferencias. | Consignación mayor a lo vendido. | Diaria. |
+| Incorporar ajustes extemporáneos | Transacción tardía de un periodo cerrado. | Ajuste en el periodo abierto con su periodo de origen. | Sin periodo de origen. | Trazable hasta la transacción original. |
+| Conciliar por capa | Capa (ventas contra consignaciones, transacciones contra el proveedor, usos contra kilómetros, con el operador) y periodo. | Diferencias detectadas. | Falta un insumo, por ejemplo los kilómetros. | Meta de diferencia sin explicar del 0,1 % o menos. |
+| Gestionar las diferencias | Diferencia, explicación y responsable. | Diferencia explicada o pendiente. | Diferencia sin responsable. | No se cierra un periodo con diferencias sin clasificar. |
+| Generar la base de liquidación | Periodo cerrado y conciliado. | Base por modo, ruta y operador con huella de integridad. | Periodo abierto o con diferencias sin clasificar. | Inmutable. |
+| Aprobar la base de liquidación | Base y aprobador. | Base aprobada. | El aprobador es quien la generó. | Separación de funciones. |
+| Definir y publicar el esquema de un contrato | Contrato, reglas (kilómetros, pasajeros, indicadores), prelación de pagos y vigencia. | Esquema vigente y versionado. | Vigencia que se traslapa; regla sin fuente de dato. | Un esquema vigente no se modifica: cada cambio es una versión con soporte contractual. |
+| Calcular la liquidación | Base aprobada, kilómetros certificados, esquema vigente y tipo (preliminar semanal o definitiva mensual). | Liquidación por beneficiario con el origen de cada valor. | Faltan los kilómetros certificados. | Cada valor se reconstruye desde sus insumos, sin depender de Excel. |
+| Aprobar la liquidación | Liquidación y aprobador. | Liquidación aprobada. | El aprobador es quien liquidó. | Separación de funciones. |
+| Gestionar las objeciones | Objeción del operador y línea objetada. | Objeción registrada y resuelta. | Fuera del plazo. | Suspende solo la línea objetada. |
+| Preparar la instrucción de giro y registrar el giro | Liquidación aprobada. | Instrucción soportada para la Gerencia y giro confirmado por la fiducia. | El giro no respeta la prelación de pagos. | Trazable desde el peso pagado hasta su origen. |
+| Calcular el subsidio mensual | Periodo de usos cerrado. | Valor a cobrar por viajes con tarifa especial. | Periodo abierto. | Calculado sobre datos cerrados. |
+| Presentar el subsidio | Subsidio calculado. | Subsidio presentado a Hacienda. | Subsidio ya presentado (las diferencias van como ajuste). | Inmutable una vez presentado. |
+| Registrar la solicitud | Referencia a la PQR, tipo (ajuste a favor, devolución en dinero, reverso bancario o traslado de saldo), monto, causa y evidencias. | Solicitud registrada. | Sin PQR de referencia. | Conserva las evidencias. |
+| Aprobar según el monto | Solicitud y aprobador. | Solicitud aprobada o rechazada. | El aprobador no tiene nivel para ese monto; quien registra la solicitud intenta aprobarla. | Hasta $50.000 con causa clara aprueba Servicio al Cliente; el resto, Recaudo y Tarifas. |
+| Aplicar el ajuste a favor | Solicitud aprobada. | Ajuste cargado como recarga pendiente de la tarjeta. | Ajuste ya aplicado. | Se aplica una sola vez y entra a la conciliación del mes. |
+| Solicitar el giro de devolución o el reverso bancario | Solicitud aprobada y certificación bancaria. | Orden a Finanzas o al adquirente. | Sin certificación bancaria. | Una devolución en dinero tarda de dos a cuatro semanas. |
+| Consultar el historial de la tarjeta | Tarjeta y rango de fechas. | Validaciones, recargas, ajustes, rechazos, estado, perfil y viajes subsidiados del mes. | Sin permiso. | Respuesta en línea; no muestra datos personales a quien no los necesita. |
+| Generar los indicadores | Periodo y filtros por operador, ruta o modo. | Indicadores de recaudo: evasión estimada, completitud, diferencia de conciliación, cierre y PQR. | Faltan insumos. | Sin armarlos a mano. |
+| Detectar anomalías | Validaciones, conteos de pasajeros y saldos. | Alertas: baja validación, diferencias de saldo y perfiles prestados. | Sin datos de comparación. | Ayudan a dirigir el control, no a eliminar la evasión. |
+| Generar los reportes obligatorios | Periodo y entidad. | Reporte para DANE, Superintendencias, Ministerio y Contraloría. | Datos incompletos. | Sin trabajo manual; conserva el origen de cada dato. |
 
 #### Servicios externos (capa anticorrupción)
 
-Salieron de las respuestas del bloque 9 de la entrevista. "Entra" y "sale" se miran desde el software. Con esta tabla se arma V9, que debe coincidir con ella.
+Salieron de las respuestas del bloque 9 de la entrevista. "Entra" y "sale" se miran desde el software. Con esta tabla se armó V9, que coincide con ella fila por fila.
 
 | Externo | Tipo | Información intercambiada | Dirección | Sincronía / frecuencia |
 |---|---|---|---|---|
@@ -350,7 +412,9 @@ _Un diagrama por dominio._
 ### V9 Interoperabilidad y anticorrupción
 ![V9 Interoperabilidad y anticorrupción](vistas/V9_interoperabilidad_acl.png)
 
-**Análisis:** _…_
+**Análisis.** La vista tiene los 14 externos de la tabla de servicios externos, uno por fila, con la dirección de cada intercambio escrita en el flujo ("Entra" y "Sale" se miran desde la aplicación). Ocho tienen una capa anticorrupción (los componentes cuyo nombre empieza por ACL): la plataforma del proveedor, el sistema de PQR, el sistema financiero, la fiduciaria, el adquirente y las redes de pago, los canales de recarga, las instituciones que certifican perfiles y el sistema de flota de Operaciones. En todos esos casos el modelo del otro lado es ajeno o no lo controlamos (formatos de Excel distintos, plataforma del proveedor, códigos del adquirente), y no queremos que contamine el lenguaje de la aplicación; la ACL traduce en los dos sentidos. Con los otros seis la relación es directa: Planeación y la autoridad de transporte son conformistas (adoptamos su catálogo de rutas y sus actos de tarifa tal como vienen), y a Hacienda, los operadores, los entes de control y la propia autoridad el software les entrega lo suyo por una sola interfaz de reportes y liquidación, que es el lenguaje publicado del lado nuestro. Comunicaciones solo recibe avisos.
+
+**Decisiones.** La integración más crítica, según la experta, es la de los validadores con la plataforma central, por eso es la que tiene el flujo en ambos sentidos con más detalle (transacciones hacia arriba, tarifario y listas hacia abajo). La vista tiene que coincidir con el mapa de contextos (V8) cuando se haga: un externo con ACL aquí debe aparecer con ese patrón allá.
 
 ## 8. Bounded Context Canvas
 ### V11 Bounded Context Canvas

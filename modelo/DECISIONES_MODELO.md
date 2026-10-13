@@ -61,3 +61,42 @@ Registro de las decisiones tomadas al construir `modelo/recaudo.archimate`. Hay 
 ## 4. Pendientes para las siguientes vistas
 - **V2:** reutilizar MET01–MET07 y relacionarlas con capacidades y cursos de acción (T14).
 - **V10:** escoger al menos 2 cadenas meta → capacidad → servicio → componente. Candidatas: MET02 (liquidación y conciliación confiables) y MET04 (reducción de pérdidas).
+
+## 5. V4, V4b, V4c, V4d y V9 (T20, T21 y T22)
+
+**Contenido nuevo:** 209 elementos y 240 relaciones. Cada elemento lleva su descripción en *Documentation* y un código en la propiedad `ID` (los servicios `SN-P1`, `SN-P1.1`, `SN-P1.1.1`; los contratos `CT-P1.1.1`; los externos `E1` a `E14`; las ACL `ACL-E1`…). Los nombres van sin código, como en V1.
+
+**Vistas:**
+
+| Vista | Qué muestra |
+|---|---|
+| V4 Descomposición de servicios | Capas 1 a 3: el servicio E2E, 10 servicios de plataforma y 19 de dominio funcional. En gris, los 6 servicios de plataforma que quedan fuera del alcance |
+| V4b Contratos de servicio | Un objeto *Contract* por cada servicio de capa 4 (52). Entradas, salidas, errores y requisitos no funcionales están en la documentación de cada contrato |
+| V4c Servicios básicos de subdominio | Capa 4, agrupada por servicio de dominio funcional, y los 8 servicios de capa 4 que no se implementan |
+| V4d Roles, funciones y objetos de negocio | Rol y actor que ejecutan cada servicio de plataforma, la función que lo realiza y los objetos de negocio que maneja |
+| V9 Interoperabilidad y anticorrupción | Los 14 externos de la tabla del README §4, con la dirección de cada flujo. 8 con ACL y 6 directos |
+
+**Relaciones usadas:**
+
+| Desde | Relación | Hacia | Significado |
+|---|---|---|---|
+| Servicio de una capa | agregación | Servicio de la capa de abajo | La capa de abajo compone a la de arriba. No se usó composición porque un servicio puede reutilizarse |
+| Servicio de plataforma | realización | Requerimiento (REQ01 a REQ11 de V1) | El servicio realiza el requerimiento. Está en el modelo pero no se dibuja en V4 para no cargarla |
+| Servicio básico | acceso (lectura) | Contrato | El contrato define cómo se llama el servicio |
+| Función | realización | Servicio de plataforma | La función de negocio realiza el servicio |
+| Rol | asignación | Función | Quién la ejecuta |
+| Ente gestor | asignación | Rol | El ente gestor cumple los roles con sus áreas |
+| Servicio de plataforma | acceso (lectura/escritura) | Objeto de negocio | Qué maneja el servicio |
+| Externo / ACL / aplicación | flujo | Externo / ACL / aplicación | La información que se intercambia y su dirección, escrita en el nombre del flujo. Los que van en sentido contrario se dibujan con un quiebre para no taparse |
+| Aplicación de recaudo SIT | composición | Interfaz de reportes y liquidación | La interfaz es parte de la aplicación |
+
+**Decisiones particulares:**
+- **Elementos reutilizados:** V9 usa el componente «Aplicación de recaudo SIT» que ya creó V1. Los servicios apuntan a los requerimientos REQ de V1 (no se crearon nuevos).
+- **ACL o no:** tienen ACL los 8 externos cuyo modelo es ajeno o no controlamos (proveedor, PQR, finanzas, fiduciaria, adquirente, canales, instituciones y operaciones). Planeación y la autoridad de transporte son *conformistas*. Hacienda, operadores, entes de control y la autoridad reciben lo que el software les entrega por la *interfaz de reportes y liquidación* (lenguaje publicado). **V8 debe repetir estos patrones.**
+- **V9 con viewpoint** `application_cooperation`: solo tiene elementos de la capa de aplicación, por eso no hay conflicto.
+- **Liquidación a operadores (P8):** se incluye como servicio de plataforma, pero solo aplica las fórmulas de cada contrato; no las decide (RESC06).
+- **Servicio de consulta (P10):** es servicio de plataforma y no un dominio, porque se alimenta de los demás.
+
+**Pendientes:** al hacer V5 a V8 y V10, reutilizar estos servicios (para V10, las cadenas meta → capacidad → servicio de negocio → componente pueden salir de estos servicios y de los REQ).
+
+**Colores de V4, V4b, V4c, V4d y V9:** siguen la paleta de la presentación de TOGAF (`10_Arquitectura_Empresarial_TOGAF`) y no la de Archi por defecto. Negocio `#FEFF99` (amarillo), aplicación `#F0FFFF` (celeste muy claro), estrategia `#FBE0A7`, motivación `#ADB0FF` y tecnología `#CDFFCC`. Se guardan como color de relleno de cada objeto en la vista. En gris (`#D9D9D9`) van los servicios y los externos que quedan fuera del alcance. V1 y V2 conservan sus colores, y V2 usa colores propios por categoría (estratégica, misional y de apoyo). Esto se aparta de lo que dice CLAUDE.md §6 ("los de ArchiMate por defecto"), así que el equipo debe decidir si todas las vistas usan esta paleta.
