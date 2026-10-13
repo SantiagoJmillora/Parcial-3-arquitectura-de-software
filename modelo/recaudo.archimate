@@ -49,7 +49,7 @@
     <element xsi:type="archimate:Capability" name="CAP16 · Gestión de continuidad del servicio" id="id-a5e8865699514b589618426774f57ff7">
       <documentation>Impacto propuesto: out. El software de recaudo no sustituye la operación física ni garantiza por sí solo la continuidad.</documentation>
     </element>
-    <element xsi:type="archimate:Capability" name="CAP17 · Monitoreo de disponibilidad de validadores" id="id-664d9a9a4c1a44dc8dd7f961dae6dffd">
+    <element xsi:type="archimate:Capability" name="CAP17 · Supervisión del servicio de validación" id="id-664d9a9a4c1a44dc8dd7f961dae6dffd">
       <documentation>Impacto propuesto: out. La capacidad pertenece a la operación del transporte y se representa para completar el mapa empresarial; el software de recaudo no administra validadores, lectores ni IoT. Solo podría consumir indicadores agregados si una fuente externa autorizada los entrega.</documentation>
     </element>
     <element xsi:type="archimate:Capability" name="CAP18 · Análisis de demanda y evasión" id="id-dbe4c5749c494daeb426b3a4d1d6f8fb">
@@ -133,13 +133,13 @@
     <element xsi:type="archimate:Capability" name="CAP44 · Comunicación institucional" id="id-5f55ff46f737491a9a67bc4755b9f1ad">
       <documentation>Impacto propuesto: out. No forma parte de la solución solicitada.</documentation>
     </element>
-    <element xsi:type="archimate:Resource" name="R01 · Histórico de transacciones y liquidaciones" id="id-5f22d80793de4f8c867f4eb2676b38ba">
+    <element xsi:type="archimate:Resource" name="R01 · Registro histórico de transacciones y liquidaciones" id="id-5f22d80793de4f8c867f4eb2676b38ba">
       <documentation>Fuente de evidencia esencial; existencia, granularidad, retención y calidad se deben validar.</documentation>
     </element>
     <element xsi:type="archimate:Resource" name="R02 · Equipo de Recaudo y Tarifas" id="id-0bd76b65621340f4ab6fd2fe34dad01e">
       <documentation>Capacidad limitada y conocimiento clave concentrado; la solución debe reducir dependencia de personas.</documentation>
     </element>
-    <element xsi:type="archimate:Resource" name="R03 · Plataforma y validadores del proveedor" id="id-9d6c6c87b2fe4de49253ce1c19098d8c">
+    <element xsi:type="archimate:Resource" name="R03 · Plataforma central del proveedor de recaudo (externa)" id="id-9d6c6c87b2fe4de49253ce1c19098d8c">
       <documentation>Recurso externo bajo contrato vigente; no asumir propiedad ni reemplazo antes de tiempo.</documentation>
     </element>
     <element xsi:type="archimate:Resource" name="R04 · Contratos de operación, recaudo y fiducia" id="id-3a2d9ee779504fb5a18c5d4d67d4070e">
@@ -489,6 +489,12 @@
       <documentation>Los datos históricos presentan calidad irregular, lo que puede dificultar la migración, conciliación y reconstrucción de operaciones.</documentation>
       <property key="ID" value="RESC10"/>
     </element>
+    <element xsi:type="archimate:Outcome" name="CA01 · Obtener control y acceso oportuno a los datos de recaudo." id="id-e90f047198a84e8f8f6572338bd369e2"/>
+    <element xsi:type="archimate:Outcome" name="CA02 · Automatizar conciliación, liquidación y trazabilidad" id="id-c487d04eb4ef482aa6ae54b735fe3bfc"/>
+    <element xsi:type="archimate:Outcome" name="CA03 · Integrar perfiles, PQR y reglas tarifarias" id="id-7b23a8b879d7428cbce90ab5473fa10e"/>
+    <element xsi:type="archimate:Outcome" name="CA04 · Automatizar reportes, indicadores y alertas" id="id-18269b3afb174a76a35e7ceefe956c61"/>
+    <element xsi:type="archimate:Outcome" name="CA05 · Preparar la transición contractual y la interoperabilidad futura" id="id-e74845d320f64daba6a0fd71aae5fd08"/>
+    <element xsi:type="archimate:Outcome" name="CA06 · Incorporar la protección de datos y los reportes regulatorios desde el diseño" id="id-f25ec83048534e78bd888c9a371256e6"/>
   </folder>
   <folder name="Implementation &amp; Migration" id="id-a1b2c3d4e5f60718293a4b5c6d7e8f06" type="implementation_migration"/>
   <folder name="Other" id="id-a1b2c3d4e5f60718293a4b5c6d7e8f07" type="other"/>
@@ -1017,8 +1023,8 @@
       </child>
     </element>
     <element xsi:type="archimate:ArchimateDiagramModel" name="V2 Mapa de capacidades" id="id-b0000000000000000000000000000002" viewpoint="strategy">
-      <child xsi:type="archimate:Note" id="id-2463d9c164e5413d99ac3dec6a2c5b54" fontColor="#000000" lineColor="#B8C5D3" fillColor="#c0c0c0" textPosition="1" borderType="2">
-        <bounds x="12" y="12" width="1604" height="84"/>
+      <child xsi:type="archimate:Note" id="id-2463d9c164e5413d99ac3dec6a2c5b54" font="1|Segoe UI|11.0|1|WINDOWS|1|-15|0|0|0|700|0|0|0|0|3|2|1|34|Segoe UI" lineColor="#B8C5D3" fillColor="#c0c0c0" textPosition="1" borderType="2">
+        <bounds x="5" y="-24" width="1604" height="121"/>
         <content>V2 · MAPA DE CAPACIDADES EMPRESARIALES DEL SIT&#xD;
 &#xD;
 Estratégica - Magenta&#xD;
@@ -1111,10 +1117,10 @@ Apoyo - Verde</content>
       <child xsi:type="archimate:DiagramObject" id="id-c9865c48f245478fa1f45fb6ad117aac" fontColor="#000000" lineColor="#D97706" fillColor="#8080c0" alpha="100" textPosition="1" archimateElement="id-fbe2a78e63ec4f7fb45518b52b486d6d">
         <bounds x="837" y="434" width="262" height="55"/>
       </child>
-      <child xsi:type="archimate:DiagramObject" id="id-28efbfd43ced43bea70223c992c93cb5" fontColor="#000000" lineColor="#188577" fillColor="#008080" alpha="100" textPosition="1" archimateElement="id-008999a096e74cf38a73264caf792088">
+      <child xsi:type="archimate:DiagramObject" id="id-28efbfd43ced43bea70223c992c93cb5" fontColor="#000000" lineColor="#188577" fillColor="#8080c0" alpha="100" textPosition="1" archimateElement="id-008999a096e74cf38a73264caf792088">
         <bounds x="565" y="496" width="262" height="55"/>
       </child>
-      <child xsi:type="archimate:DiagramObject" id="id-17fe481e41a44e5c92708d669913c84f" fontColor="#000000" lineColor="#188577" fillColor="#008080" alpha="100" textPosition="1" archimateElement="id-db450d8da19740fd8181c3a5b05a4399">
+      <child xsi:type="archimate:DiagramObject" id="id-17fe481e41a44e5c92708d669913c84f" fontColor="#000000" lineColor="#188577" fillColor="#8080c0" alpha="100" textPosition="1" archimateElement="id-db450d8da19740fd8181c3a5b05a4399">
         <bounds x="837" y="496" width="262" height="55"/>
       </child>
       <child xsi:type="archimate:Note" id="id-7f93e6ce1b624b70b03eb1664fadcfa4" fontColor="#FFFFFF" lineColor="#244B68" fillColor="#244B68" textPosition="1" borderType="2">
@@ -1130,19 +1136,19 @@ Apoyo - Verde</content>
       <child xsi:type="archimate:DiagramObject" id="id-826c171b38c54181b1320a8d77998b58" fontColor="#000000" lineColor="#D97706" fillColor="#8080c0" alpha="100" textPosition="1" archimateElement="id-9a3aea943d04403abb2e4e09ec7daf9e">
         <bounds x="1131" y="434" width="244" height="55"/>
       </child>
-      <child xsi:type="archimate:DiagramObject" id="id-2830e26a2b9a49b8928398259dd81349" fontColor="#000000" lineColor="#D97706" fillColor="#008080" alpha="100" textPosition="1" archimateElement="id-639635c161c9486ebb3540a6d3f91f17">
+      <child xsi:type="archimate:DiagramObject" id="id-2830e26a2b9a49b8928398259dd81349" fontColor="#000000" lineColor="#D97706" fillColor="#8080c0" alpha="100" textPosition="1" archimateElement="id-639635c161c9486ebb3540a6d3f91f17">
         <bounds x="1385" y="434" width="244" height="55"/>
       </child>
-      <child xsi:type="archimate:DiagramObject" id="id-b233f2172e5342fa8befba5b6882091a" fontColor="#000000" lineColor="#D97706" fillColor="#008080" alpha="100" textPosition="1" archimateElement="id-3dfcd280bcd9452d8a7e498d26c8c884">
+      <child xsi:type="archimate:DiagramObject" id="id-b233f2172e5342fa8befba5b6882091a" fontColor="#000000" lineColor="#D97706" fillColor="#8080c0" alpha="100" textPosition="1" archimateElement="id-3dfcd280bcd9452d8a7e498d26c8c884">
         <bounds x="1131" y="496" width="244" height="55"/>
       </child>
-      <child xsi:type="archimate:DiagramObject" id="id-e6d207f4dca546e581ca2cc132963592" fontColor="#000000" lineColor="#D97706" fillColor="#008080" alpha="100" textPosition="1" archimateElement="id-2100b53c68714ae8be9aa867c07ac1bf">
+      <child xsi:type="archimate:DiagramObject" id="id-e6d207f4dca546e581ca2cc132963592" fontColor="#000000" lineColor="#D97706" fillColor="#8080c0" alpha="100" textPosition="1" archimateElement="id-2100b53c68714ae8be9aa867c07ac1bf">
         <bounds x="1385" y="496" width="244" height="55"/>
       </child>
-      <child xsi:type="archimate:DiagramObject" id="id-0973729ea3da4784a1d56bf771c9c4ce" fontColor="#000000" lineColor="#D97706" fillColor="#008080" alpha="100" textPosition="1" archimateElement="id-5605621783dc44a08e8cc92e88cf5519">
+      <child xsi:type="archimate:DiagramObject" id="id-0973729ea3da4784a1d56bf771c9c4ce" fontColor="#000000" lineColor="#D97706" fillColor="#8080c0" alpha="100" textPosition="1" archimateElement="id-5605621783dc44a08e8cc92e88cf5519">
         <bounds x="1131" y="558" width="244" height="55"/>
       </child>
-      <child xsi:type="archimate:DiagramObject" id="id-f854e74367184f27a15c27aa7fdf8e6d" fontColor="#000000" lineColor="#D97706" fillColor="#008080" alpha="100" textPosition="1" archimateElement="id-afd55a2fd22c474abd07322e5ba6484b">
+      <child xsi:type="archimate:DiagramObject" id="id-f854e74367184f27a15c27aa7fdf8e6d" fontColor="#000000" lineColor="#D97706" fillColor="#8080c0" alpha="100" textPosition="1" archimateElement="id-afd55a2fd22c474abd07322e5ba6484b">
         <bounds x="1385" y="558" width="244" height="55"/>
       </child>
       <child xsi:type="archimate:Note" id="id-c6b297837d1945aebd768e5d4844d2ea" fontColor="#FFFFFF" lineColor="#244B68" fillColor="#244B68" textPosition="1" borderType="2">
@@ -1193,7 +1199,7 @@ Apoyo - Verde</content>
       <child xsi:type="archimate:DiagramObject" id="id-06b25f6cd9c44450977dffcfc37ab1fc" fontColor="#000000" lineColor="#B9C3CD" fillColor="#008080" alpha="100" textPosition="1" archimateElement="id-5f55ff46f737491a9a67bc4755b9f1ad">
         <bounds x="1396" y="750" width="244" height="55"/>
       </child>
-      <child xsi:type="archimate:Note" id="id-d664f26e21e9430a90f8136f11dc3fdd" fontColor="#2A5B31" lineColor="#8EBB8B" fillColor="#E8F4E8" textPosition="1" borderType="2">
+      <child xsi:type="archimate:Note" id="id-d664f26e21e9430a90f8136f11dc3fdd" font="1|Segoe UI|10.0|1|WINDOWS|1|-13|0|0|0|700|0|0|0|0|3|2|1|34|Segoe UI" fontColor="#2a5b31" lineColor="#8EBB8B" fillColor="#E8F4E8" textPosition="1" borderType="2">
         <bounds x="24" y="840" width="686" height="28"/>
         <content>Recursos</content>
       </child>
@@ -1211,6 +1217,29 @@ Apoyo - Verde</content>
       </child>
       <child xsi:type="archimate:DiagramObject" id="id-2e0cecbd14c84c17a92af0d519046c95" fontColor="#234927" lineColor="#77A977" fillColor="#E8F4E8" archimateElement="id-2df824c6c7194e44b71c3ae695634685">
         <bounds x="337" y="971" width="227" height="70"/>
+      </child>
+      <child xsi:type="archimate:DiagramObject" id="id-77cf6595ade84f4da5d99a1645515054" fillColor="#8000ff" alpha="100" textPosition="1" archimateElement="id-e90f047198a84e8f8f6572338bd369e2">
+        <bounds x="806" y="900" width="258" height="55"/>
+      </child>
+      <child xsi:type="archimate:DiagramObject" id="id-242ccb6c93db4ad5977eef200b60f343" fillColor="#8000ff" alpha="100" textPosition="1" archimateElement="id-c487d04eb4ef482aa6ae54b735fe3bfc">
+        <bounds x="1080" y="900" width="258" height="55"/>
+      </child>
+      <child xsi:type="archimate:DiagramObject" id="id-8859b8510165482a932aa8f776d54be9" fillColor="#8000ff" alpha="100" textPosition="1" archimateElement="id-7b23a8b879d7428cbce90ab5473fa10e">
+        <bounds x="1356" y="900" width="258" height="55"/>
+      </child>
+      <child xsi:type="archimate:DiagramObject" id="id-e3e9826c8fa14bfebd8095f84b7a34e7" fillColor="#8000ff" alpha="100" textPosition="1" archimateElement="id-18269b3afb174a76a35e7ceefe956c61">
+        <bounds x="806" y="978" width="258" height="55"/>
+      </child>
+      <child xsi:type="archimate:DiagramObject" id="id-12a58526024f4e6b91a0fe55a24dadbd" fillColor="#8000ff" alpha="100" textPosition="1" archimateElement="id-e74845d320f64daba6a0fd71aae5fd08">
+        <bounds x="1080" y="978" width="258" height="55"/>
+      </child>
+      <child xsi:type="archimate:DiagramObject" id="id-fbaf11a59cb746ba885e22f974430608" fillColor="#8000ff" alpha="100" textPosition="1" archimateElement="id-f25ec83048534e78bd888c9a371256e6">
+        <bounds x="1356" y="978" width="258" height="55"/>
+      </child>
+      <child xsi:type="archimate:Note" id="id-95ab16e9161a4ef1931971b0e990b043" font="1|Segoe UI|10.0|1|WINDOWS|1|-13|0|0|0|700|0|0|0|0|3|2|1|34|Segoe UI" lineColor="#8EBB8B" fillColor="#8000ff" alpha="100" textPosition="1" borderType="2">
+        <bounds x="806" y="840" width="807" height="28"/>
+        <content>Cursos de acción&#xD;
+</content>
       </child>
     </element>
     <element xsi:type="archimate:ArchimateDiagramModel" name="V3 Cadena de valor y proceso E2E" id="id-b0000000000000000000000000000003"/>
