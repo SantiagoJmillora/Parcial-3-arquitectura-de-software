@@ -30,11 +30,11 @@ _Solicitud del usuario, alcance y lo que queda fuera. Resumen de la entrevista y
 ### V1 Motivación
 ![V1 Motivación](vistas/V1_motivacion.png)
 
-# Inventario de elementos de motivación
+### Inventario de elementos de motivación
 
-> Tarea 11 del backlog. Inventario de los elementos de motivación identificados en la entrevista al experto del negocio del SIT, organizados en los ocho tipos: interesados, impulsores, evaluaciones, metas, resultados, principios, requerimientos y restricciones.
+> Inventario de los elementos de motivación identificados en la entrevista al experto del negocio del SIT, organizados en los ocho tipos: interesados, impulsores, evaluaciones, metas, resultados, principios, requerimientos y restricciones.
 
-## 1. Interesados (Stakeholders)
+#### Interesados (Stakeholders)
 
 Personas, áreas y entidades que tienen interés en el software de recaudo y en sus resultados.
 
@@ -56,7 +56,7 @@ Personas, áreas y entidades que tienen interés en el software de recaudo y en 
 | INT14 | Instituciones certificadoras | Reducir el papeleo y disponer de un formato uniforme para reportar beneficiarios. |
 | INT15 | Fiduciaria | Recibir instrucciones de pago claras, completas y debidamente soportadas. |
 
-## 2. Impulsores (Drivers)
+#### Impulsores (Drivers)
 
 Factores que motivan a la organización a iniciar el proyecto en este momento.
 
@@ -71,7 +71,7 @@ Factores que motivan a la organización a iniciar el proyecto en este momento.
 | IMP07 | Calendario político | La administración actual termina a finales del próximo año y la Gerencia busca mostrar resultados concretos. |
 | IMP08 | Dependencia de personas clave | La liquidación depende de dos personas del equipo, lo que representa un riesgo para la continuidad del proceso. |
 
-## 3. Evaluaciones (Assessments)
+#### Evaluaciones (Assessments)
 
 Problemas, debilidades y valoraciones que describen la situación actual del negocio.
 
@@ -90,7 +90,7 @@ Problemas, debilidades y valoraciones que describen la situación actual del neg
 | EVA11 | Riesgos de protección de datos | La organización reconoce debilidades en el control de la información personal que debe proteger. |
 | EVA12 | Disponibilidad insuficiente de validadores en flota | La disponibilidad actual ronda el 96 %, frente a una meta de al menos el 98 %. |
 
-## 4. Metas (Goals)
+#### Metas (Goals)
 
 Estados futuros que la organización quiere alcanzar mediante el proyecto.
 
@@ -104,7 +104,7 @@ Estados futuros que la organización quiere alcanzar mediante el proyecto.
 | MET06 | Preparación para la transición contractual | Contar con información y procesos bajo control antes de decidir el futuro del contrato del proveedor. |
 | MET07 | Preparación para la integración metropolitana | Mejorar la capacidad de intercambio de información y gestión ante una eventual integración con municipios vecinos. |
 
-## 5. Resultados (Outcomes)
+#### Resultados (Outcomes)
 
 Resultados observables y medibles que permitirían evaluar el éxito del proyecto. Según la entrevista, estas metas son indicativas y todavía no han sido formalizadas por la Gerencia.
 
@@ -120,7 +120,7 @@ Resultados observables y medibles que permitirían evaluar el éxito del proyect
 | RES08 | Automatizar los reportes | Generar los reportes para entidades de control sin trabajo manual. | No se especifica un plazo. |
 | RES09 | Obtener resultados visibles del proyecto | Mostrar resultados concretos y verificables. | Entre 12 y 18 meses y, en todo caso, antes del vencimiento del contrato del proveedor. |
 
-## 6. Principios (Principles)
+#### Principios (Principles)
 
 Criterios que deben orientar las decisiones y el funcionamiento del software.
 
@@ -137,7 +137,7 @@ Criterios que deben orientar las decisiones y el funcionamiento del software.
 | PRI09 | Protección de datos personales | Solo deben tratarse los datos necesarios, con las autorizaciones y medidas de protección correspondientes. |
 | PRI10 | Inclusión | Debe existir una alternativa de pago para quienes no tienen cuenta bancaria ni teléfono inteligente. |
 
-## 7. Requerimientos (Requirements)
+#### Requerimientos (Requirements)
 
 Funciones y capacidades que el software debe proporcionar para satisfacer las necesidades del negocio.
 
@@ -156,7 +156,7 @@ Funciones y capacidades que el software debe proporcionar para satisfacer las ne
 | REQ11 | Detección de anomalías | Generar alertas sobre comportamientos anómalos y posibles fraudes. |
 | REQ12 | Conservación de información histórica | Conservar información durante los periodos exigidos por las normas y los contratos para respaldar auditorías y disputas. |
 
-## 8. Restricciones (Constraints)
+#### Restricciones (Constraints)
 
 Condiciones legales, contractuales, tecnológicas, financieras y operativas que limitan las alternativas de solución.
 
@@ -173,7 +173,7 @@ Condiciones legales, contractuales, tecnológicas, financieras y operativas que 
 | RESC09 | Continuidad operativa | La transición al nuevo sistema no puede detener el servicio de transporte. |
 | RESC10 | Calidad de datos históricos | Los datos históricos presentan calidad irregular, lo que puede dificultar la migración, conciliación y reconstrucción de operaciones. |
 
-## Síntesis
+#### Síntesis
 
 El inventario muestra que el proyecto surge principalmente de la necesidad de recuperar el control de la información del recaudo, mejorar la trazabilidad financiera y reducir la dependencia del proveedor y de procesos manuales.
 
