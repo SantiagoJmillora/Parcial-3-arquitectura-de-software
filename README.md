@@ -24,11 +24,34 @@
 ---
 
 ## 1. Contexto y entrevista
-_Solicitud del usuario, alcance y lo que queda fuera. Resumen de la entrevista y enlaces a [entrevista/](entrevista/): instrucción de rol, guion, conversación y análisis de hallazgos._
+
+El ente gestor de un sistema integrado de transporte (SIT) de una ciudad mediana necesita un software que apoye su proceso de recaudo. El sistema tiene tres modos: buses alimentadores, buses articulados en carriles exclusivos y metro. La gente puede pagar con la tarjeta VAMOS, que es la de la ciudad, o con una tarjeta débito o crédito, pensada sobre todo para los visitantes que no quieren comprar una tarjeta. La idea es que el viaje se pague rápido y con la tarifa que le corresponde a cada persona.
+
+Lo que entra en el alcance:
+- Recaudo en los tres modos con los tres medios de pago.
+- Gestión de la tarjeta VAMOS: emisión, recargas, consulta de saldo y bloqueo por pérdida.
+- Tarifas y perfiles (plena, estudiante de colegio, universitario, adulto mayor y movilidad reducida), incluida la validación de que la persona sí cumple las condiciones de su perfil.
+- Aplicación de la tarifa correcta en cada validación, teniendo en cuenta los transbordos.
+- Consolidación del recaudo por modo, ruta y operador, como base para repartir los ingresos y conciliar.
+
+Lo que queda por fuera son los validadores, los lectores y todo lo relacionado con IoT. El software recibe las transacciones que generan esos equipos, pero no los gestiona; por eso en el diseño aparecen detrás de una capa anticorrupción.
+
+**La entrevista.** La hicimos con una IA que asumió el papel de Andrea Montoya, directora de Recaudo y Tarifas del ente gestor, con unos 15 años en transporte masivo. La sesión fue aislada: la IA no conocía el enunciado ni la rúbrica, solo la instrucción de rol, y no se le pidió que propusiera capacidades, dominios ni vistas (al final ella misma dijo que eso le tocaba al equipo de arquitectura). Todo el material está en [entrevista/](entrevista/): la [instrucción de rol](entrevista/01_instruccion_rol.md), el [guion](entrevista/02_guion.md) de 11 bloques (el 9 es el de interoperabilidad), la [conversación completa](entrevista/03_conversacion.md) y el [análisis de hallazgos](entrevista/04_analisis_hallazgos.md).
+
+De los 24 hallazgos que analizamos, 16 se aceptaron, 3 se contrastaron con fuentes externas (el Metro de Medellín y la Ley 1581 de 2012) y 5 se descartaron. Estos fueron los que más cambiaron el diseño:
+- H07 (descartado): creíamos que toda validación descuenta una tarifa, y la experta nos corrigió. Hay rechazos, credenciales de servicio, tarifas especiales, segundos transbordos y pagos diferidos. Por eso separamos la validación, su resultado, el importe calculado y el movimiento de saldo.
+- H04 y H05 (aceptados): las transacciones de los buses pueden llegar hasta 48 horas tarde y el saldo que tiene el sistema central es calculado, no el que está en la tarjeta. De ahí salen las transacciones extemporáneas y las diferencias de saldo.
+- H18 (descartado): no se asume que el software reemplace la plataforma del proveedor. Hay que diseñarlo para convivir con ella.
+- H14 (descartado): el software no elimina la evasión, solo ayuda a medirla y a dirigir el control. Se limita a indicadores y alertas.
+- H21 (descartado): PCI DSS no es una ley colombiana, es un requisito contractual con el adquirente. Se trata como restricción de seguridad.
 
 ## 2. Motivación
 ### V1 Motivación
 ![V1 Motivación](vistas/V1_motivacion.png)
+
+**Análisis.** La vista junta los 83 elementos del inventario de abajo (15 interesados, 8 impulsores, 12 evaluaciones, 7 metas, 9 resultados, 10 principios, 12 requerimientos y 10 restricciones) y la aplicación de recaudo, con 120 relaciones. Se lee de arriba hacia abajo. A la Gerencia General le importan los hallazgos de la Contraloría, el déficit y el calendario político; al área de Recaudo y Tarifas, el vencimiento del contrato del proveedor, las disputas con operadores y que la liquidación dependa de solo dos personas. Esos impulsores se ven en problemas concretos: el ente depende del proveedor para consultar su propia información (EVA01), la liquidación vive en Excel (EVA02) y los sistemas de recaudo, PQR, flota y finanzas no se hablan entre sí (EVA03). De ahí salen las metas, y la que la experta marcó como la más importante es poder demostrar cuánto dinero entró, por qué concepto y a quién se le pagó. Esa idea une MET01 (control de la información) y MET02 (liquidación y conciliación confiables), y es la que más requerimientos tiene detrás: REQ03 (consolidar, conciliar y liquidar) produce los resultados RES01 a RES03, que son el cierre en máximo 5 días, la diferencia sin explicar en máximo 0,1 % y el 100 % de liquidaciones trazables.
+
+**Decisiones.** Las descripciones y el código de cada elemento (INT01, IMP01, etc.) se copiaron del inventario para que el modelo se pueda leer sin el README. Las cifras de los resultados son indicativas, porque la experta aclaró que la Gerencia todavía no las formaliza. MET07 (integración metropolitana) no tiene un resultado medible en la entrevista, así que la realiza directamente REQ01, el de intercambio de información. Las restricciones de proyecto, como el presupuesto, la contratación pública, los plazos y el tamaño del equipo, afectan a la meta o al resultado de transición (MET06 y RES09) y no a la aplicación, porque el software no las "cumple". Por el contrario, RESC01 y RESC02 (el contrato vigente del proveedor y las tarjetas que ya circulan) sí las realiza la aplicación al interoperar con la plataforma existente. La vista se dejó sin viewpoint porque mezcla motivación con un componente de aplicación. El detalle de cada relación está en [modelo/DECISIONES_MODELO.md](modelo/DECISIONES_MODELO.md).
 
 ### Inventario de elementos de motivación
 
@@ -185,7 +208,11 @@ La meta prioritaria expresada por la experta es que el ente gestor pueda demostr
 ### V2 Mapa de capacidades
 ![V2 Mapa de capacidades](vistas/V2_mapa_capacidades.png)
 
-**Análisis:** _…_  **Capacidades impactadas:** _…_
+**Análisis.** El mapa cubre a todo el ente gestor y no solo al recaudo, como pide la diapositiva 35 de 7_SOA. Tiene 44 capacidades repartidas en 9 grupos, y los colores separan las tres categorías que usó la experta al hablar de las funciones del ente: estratégicas (magenta), misionales (morado) y de apoyo (verde). Las estratégicas son Dirección y estrategia, Gobierno, riesgo y cumplimiento, y Relaciones institucionales. Las misionales son Planeación y operación del transporte, Acceso, tarifas y experiencia del usuario, y Recaudo, conciliación y liquidación. Las de apoyo son Finanzas y administración, Datos y tecnología, y Servicios corporativos. Al lado van 5 recursos (el registro histórico de transacciones y liquidaciones, el equipo de Recaudo y Tarifas, la plataforma central del proveedor, los contratos de operación, recaudo y fiducia, y los sistemas existentes) y 6 cursos de acción que se conectan con las metas de V1.
+
+**Capacidades impactadas.** Cada capacidad trae en su documentación el impacto que le asignamos. De las 44, 20 tienen impacto directo, 17 indirecto y 7 ninguno. Las directas son las que la aplicación ejecuta o automatiza: gestión de usuarios y medios de pago (CAP19), emisión, recarga y ciclo de vida de VAMOS (CAP20), tarifas y transbordos (CAP21), perfiles y elegibilidad (CAP22), toda la cadena desde la recepción de transacciones (CAP25) hasta la liquidación (CAP29), los subsidios (CAP30) y los indicadores (CAP32), además de varias de gobierno y de datos como auditoría y trazabilidad (CAP06), riesgos y fraude (CAP07) y ciberseguridad (CAP39). Las indirectas son las que mejoran porque reciben datos de la aplicación pero no la usan para ejecutarse, por ejemplo la atención de PQR (CAP23), la contabilidad (CAP33) y la tesorería (CAP34). Las que quedan sin impacto, como la supervisión del servicio de validación (CAP17), la gestión de compras y pagos (CAP36) o la comunicación institucional (CAP44), están cerca del recaudo pero fuera de lo que cubre el software.
+
+**Decisiones.** Una capacidad dice qué sabe hacer el ente, no qué área lo hace; por eso la personalización de tarjetas, aunque la ejecuta Servicio al Cliente, cuenta como parte del recaudo. La planeación de rutas queda con impacto indirecto: el software solo consume su catálogo de rutas para aplicar transbordos y liquidar, no diseña rutas. La operación de validadores y dispositivos es IoT y está fuera del alcance, así que ninguna capacidad la hace directa. El recurso de la plataforma del proveedor se marca como externo para no asumir que el ente la poseerá ni que se reemplazará antes de que venza el contrato.
 
 ### V3 Cadena de valor y proceso E2E
 ![V3 Cadena de valor y proceso E2E](vistas/V3_cadena_valor_e2e.png)
