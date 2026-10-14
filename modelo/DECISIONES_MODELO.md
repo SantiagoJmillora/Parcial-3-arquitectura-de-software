@@ -115,3 +115,20 @@ Registro de las decisiones tomadas al construir `modelo/recaudo.archimate`. Hay 
 - El color de cada dominio sale de su clasificación (central rojo, de soporte azul, genérico gris), no de su capa. Los objetos de negocio usan el amarillo de la paleta de TOGAF.
 - La «Base de liquidación» se muestra en DOM08 (Liquidación a operadores), como en el README §5.4, aunque en V4 vive en el servicio de consolidación.
 - V6 puede reutilizar estos objetos de negocio como raíces de agregado (objetos de datos que los realicen).
+
+## 7. V7 Lenguaje ubicuo (T27)
+
+**Contenido nuevo:** 61 elementos (37 significados `SIG01`–`SIG37`, 21 representaciones `REP01`–`REP21`, los roles «Pasajero» y «Cliente» y el objeto de negocio «Perfil de acceso» `O21`) y 60 relaciones. Reutiliza los 20 objetos de negocio de V4d/V5 y los actores «BA08 · Usuario del sistema», «Operadores de flota y operador del metro» y «BA01 · Proveedor de recaudo».
+
+| Relación | Desde | Hacia | Para qué |
+|---|---|---|---|
+| Realización | Representación | Objeto de negocio | La forma concreta en que aparece el objeto (documento, archivo, pantalla) |
+| Asociación | Significado | Objeto de negocio, actor o rol | La definición del glosario (README §5.8) que le da sentido |
+| Asignación | Usuario del sistema | Pasajero, Cliente | La misma persona cumple papeles distintos |
+
+**Decisiones:**
+- El nombre de cada significado es «Término: definición corta»; la definición completa y la referencia al glosario están en su documentación.
+- Los términos con doble significado (Tarifa, Saldo, Transacción, Perfil, Operador) se pintan en naranja `#FFC48C` y aparecen una vez por contexto. Los demás significados usan el lila de motivación `#ADB0FF` y los objetos de negocio y representaciones el amarillo `#FEFF99` (paleta de TOGAF, como V4 y V5).
+- Las franjas por dominio son *Group* visuales; los términos de DDD del glosario no se modelan.
+- **Duplicado resuelto:** había dos actores para los operadores («Operadores de flota y operador del metro» de V4d y «BA05 · Operadores del SIT» de V3) y dos para la fiduciaria («Fiduciaria» de V4d y «BA06 · Fiduciaria / patrimonio autónomo» de V3). Los de V3 no tenían relaciones, así que se borraron y V3 apunta ahora a los de V4d, que conservan su `ID` (A2 y A3) y recogen la documentación de los borrados.
+- **Deuda de tarjeta y Cartera:** no se renombró el objeto de negocio. Son dos niveles del mismo concepto (una tarjeta frente al total que ve Finanzas), así que V7 asocia los dos significados al objeto «Deuda de tarjeta» y el glosario los diferencia.

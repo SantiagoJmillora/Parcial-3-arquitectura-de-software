@@ -545,14 +545,25 @@ Cuando un término tiene más de un significado, se identifica explícitamente e
 | Transacción duplicada | Registro recibido más de una vez que corresponde a una misma operación de origen y debe identificarse para evitar contabilizaciones o cobros repetidos. | Procesamiento de transacciones | Un lote se transmite nuevamente y el sistema identifica registros que ya habían sido procesados. |
 | Conciliación | Proceso de comparar registros de diferentes fuentes para identificar coincidencias, diferencias y valores pendientes de explicación. | Consolidación y conciliación | Se comparan las ventas registradas con las consignaciones recibidas y se investiga una diferencia. |
 | Diferencia de conciliación | Desviación identificada entre los valores o registros que deberían coincidir según las reglas de conciliación. Debe investigarse y documentarse antes de considerarse resuelta. | Consolidación y conciliación | El valor reportado por el proveedor no coincide con el valor consignado a la fiducia. |
+| Consolidado de usos | Validaciones e importes agrupados por modo, ruta, operador y periodo. Es el insumo de la conciliación y de la base de liquidación. | Consolidación y conciliación | El consolidado de la semana muestra cuánto se recaudó en la ruta alimentadora A12 por operador. |
+| Consolidado de ventas | Ventas y recargas agrupadas por canal y periodo. Se compara con las consignaciones en la conciliación. | Consolidación y conciliación | Las recargas de las taquillas del metro suman un valor que se contrasta con lo consignado en la fiducia. |
 | Liquidación | Proceso de determinar los valores que corresponden a cada operador, aplicando las reglas contractuales y la información operativa y financiera pertinente. | Liquidación a operadores | Se calcula el valor que corresponde pagar a un operador por un periodo. |
 | Base de liquidación | Conjunto de datos y parámetros utilizados para calcular la remuneración de los operadores y los valores relacionados. | Liquidación a operadores | La base reúne el recaudo consolidado y los datos operativos necesarios para aplicar la fórmula contractual. |
 | Esquema de remuneración | Reglas contractuales que determinan cómo se calcula el pago correspondiente a un operador. | Liquidación a operadores | La liquidación aplica la fórmula establecida en el contrato del operador. |
 | Subsidio | Recurso destinado a cubrir el beneficio tarifario o la diferencia económica que corresponda según las reglas aplicables y la entidad responsable de financiarlo. | Liquidación a operadores | El sistema calcula el valor de los subsidios que debe solicitarse a la Alcaldía. |
-| Cartera | Valores pendientes de cobro o recuperación, por ejemplo, cuando un cobro bancario no se procesa correctamente. El término debe asociarse explícitamente al responsable y al tipo de obligación. | Cobro con tarjeta bancaria | Un pago rechazado genera un importe pendiente de recuperación. |
+| Deuda de tarjeta | Valor que debe una tarjeta débito o crédito cuando el cobro de sus viajes es rechazado. Mientras no se pague, la tarjeta queda en lista de denegación. | Cobro con tarjeta bancaria | El cobro diario de un visitante es rechazado tres veces y queda una deuda de tarjeta por el valor de sus viajes. |
+| Cartera | Total de las deudas de tarjeta pendientes de cobro o recuperación, como lo ve Finanzas. Para una sola tarjeta se dice «deuda de tarjeta». | Cobro con tarjeta bancaria | Finanzas revisa la cartera bancaria del mes para medir las pérdidas por cobros rechazados. |
 | Contracargo | Reversión o disputa de una operación de pago iniciada a través del mecanismo financiero correspondiente. Requiere seguimiento y conciliación con los actores financieros. | Cobro con tarjeta bancaria | Una operación bancaria es disputada y se registra para su revisión. |
 | Ajuste | Modificación autorizada de un registro o valor económico para corregir una diferencia o un error documentado. Debe conservarse su motivo y trazabilidad. | Ajustes y devoluciones | Se registra un ajuste después de confirmar que un usuario recibió un cobro incorrecto. |
 | Devolución | Operación mediante la cual se retorna un valor al usuario después de la revisión y aprobación correspondientes. | Ajustes y devoluciones | Se aprueba devolver un cobro duplicado identificado durante una reclamación. |
+| Solicitud de consulta | Pedido de información del recaudo que hace un usuario autorizado, con sus filtros y periodo. | Consulta, reportes e indicadores | Un analista de Finanzas pide el recaudo de un operador en el mes anterior. |
+
+#### Vocabulario del equipo (DDD y SOA)
+
+Estos términos los usa el equipo de arquitectura para describir el diseño; no son lenguaje del negocio y por eso no aparecen en V7.
+
+| Término | Definición | Ámbito | Ejemplo |
+|---|---|---|---|
 | Evento de negocio | Hecho relevante que ocurre en el negocio y que puede desencadenar actividades posteriores. Se expresa como algo que sucedió, no como una orden para ejecutar una acción. | Transversal a los dominios | Se detectó una diferencia de conciliación. |
 | Comando | Solicitud que expresa la intención de ejecutar una acción de negocio. Generalmente se formula como una acción en imperativo. | Transversal a los dominios | `RecargarTarjeta` solicita registrar una recarga. |
 | Entidad | Objeto del dominio que posee identidad propia y cuyo estado puede cambiar a lo largo del tiempo. | Transversal a los dominios | Una tarjeta conserva su identidad aunque cambien su saldo o su estado de bloqueo. |
@@ -576,6 +587,7 @@ Los términos siguientes requieren especial cuidado al hablar, documentar requis
 | Perfil | Perfil tarifario que habilita beneficios frente a perfil de acceso al software que determina permisos. | Utilizar «perfil tarifario» o «perfil de acceso» de forma explícita. |
 | Operador | Empresa operadora del transporte frente al proveedor operador del recaudo. | Especificar «operador de transporte» u «operador de recaudo». |
 | Transacción | Registro de validación recibido del proveedor frente a operación financiera de pago. | Especificar «transacción de validación» o «transacción financiera» y no asumir que ambas se producen o aprueban simultáneamente. |
+| Deuda de tarjeta / Cartera | La deuda de una tarjeta bancaria puntual frente al total de deudas pendientes que maneja Finanzas. | Usar «deuda de tarjeta» para una tarjeta y «cartera» para el total. |
 
 #### Regla general de uso del lenguaje ubicuo
 
@@ -583,6 +595,10 @@ En los requisitos, contratos de servicios, eventos, comandos y documentación de
 
 ### V7 Lenguaje ubicuo
 ![V7 Lenguaje ubicuo](vistas/V7_lenguaje_ubicuo.png)
+
+**Análisis.** La vista pasa el glosario al modelo. Cada fila se lee de izquierda a derecha: la *representación* (la forma concreta en que el término aparece en el negocio, como el acto de tarifas, el lote del proveedor o el acta de conciliación) realiza el *objeto de negocio*, y el *significado* asociado tiene la definición del glosario. Los objetos de negocio son los mismos 20 de V4d y V5, ordenados por dominio (DOM01 a DOM10), así que el término que se usa aquí es el mismo de las demás vistas. En total hay 37 significados y 21 representaciones. Los cinco términos que cambian de significado van en naranja y aparecen dos veces, una en cada contexto: «Tarifa» es la configurada en el tarifario (DOM01) o la aplicada a un viaje (DOM05); «Saldo» es el de la tarjeta (DOM02) o el pendiente de una liquidación (DOM08); «Transacción» es la de validación (DOM05) o la financiera (DOM06); «Perfil» es el tarifario (DOM03) o el de acceso al software, y «Operador» es el de transporte o el de recaudo. Así se ve en un solo diagrama que la misma palabra cae en objetos distintos según el contexto.
+
+**Decisiones.** Las personas (usuario, pasajero y cliente) no son objetos de negocio sino papeles, así que van como actor y roles en una franja transversal: el actor «Usuario del sistema» se asigna a los roles «Pasajero» y «Cliente», y el titular sí es objeto de negocio porque el ente guarda su registro (DOM03). Los dos sentidos de «Operador» se asocian a los actores que ya existían (los operadores de flota y el proveedor de recaudo). Para el perfil de acceso se creó el objeto «Perfil de acceso», porque sin él no se podía mostrar la ambigüedad con el perfil tarifario. Los términos de DDD y SOA (entidad, agregado, comando, evento, etc.) no se dibujan: son vocabulario del equipo, no del negocio, y por eso el glosario los separa en su propia tabla. «Deuda de tarjeta» y «Cartera» se asocian al mismo objeto de negocio porque son dos niveles del mismo concepto: la deuda de una tarjeta y el total que ve Finanzas. Se agregaron al glosario «Consolidado de usos», «Consolidado de ventas» y «Solicitud de consulta», que ya eran objetos de negocio en V4d y V5 pero no estaban definidos.
 
 ## 6. Agregados, comandos y eventos
 ### V6 Agregados, comandos y eventos
