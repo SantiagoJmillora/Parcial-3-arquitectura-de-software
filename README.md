@@ -376,8 +376,130 @@ Salieron de las respuestas del bloque 9 de la entrevista. "Entra" y "sale" se mi
 Quedan las 6 interoperabilidades que pedía el enunciado (servicio al cliente, financiero, planeación, redes de pago, instituciones que certifican y autoridad de transporte) y 8 que surgieron de la entrevista y del mapa de capacidades: el proveedor y sus validadores, la fiduciaria, Operaciones, los canales de recarga, Hacienda, los operadores, los entes de control y comunicaciones. La experta dijo que la integración más crítica para el día a día es la de los validadores con la plataforma central; en segundo lugar la red de recargas, y en lo financiero la fiducia, porque de ella depende que los operadores reciban su plata.
 
 ## 5. Dominios y lenguaje ubicuo
+
+### V5 borrador
+
+## 5. T23 — Extracción de dominios
+
+La extracción de dominios se realiza a partir de la estructura organizacional identificada en la entrevista, la cadena de valor y el proceso E2E representados en V3, y los servicios de negocio agrupados por capas y delimitados por alcance en V4.
+
+El objetivo es agrupar las responsabilidades del negocio en dominios coherentes, identificando sus límites a partir de los eventos del proceso y de los cambios de responsabilidad.
+
+### 5.1. Paso 1: Estructura organizacional
+
+La entrevista identifica las siguientes áreas y actores que participan en el proceso de recaudo:
+
+| Área o actor                          | Responsabilidades                                                                                                                |
+| ------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| Recaudo y Tarifas                     | Definir reglas de recaudo, administrar tarifas y perfiles, supervisar al proveedor, consolidar, conciliar y liquidar el recaudo. |
+| Servicio al Cliente                   | Gestionar tarjetas y perfiles registrados, bloqueos, PQR, devoluciones y traslados de saldo.                                     |
+| Finanzas y Tesorería                  | Revisar liquidaciones, gestionar información financiera, controlar subsidios y cartera, y preparar reportes contables.           |
+| Operaciones                           | Controlar la operación, certificar kilómetros recorridos y reportar novedades de flota y validadores.                            |
+| Planeación                            | Diseñar rutas y servicios, estudiar la demanda y proporcionar información que afecta las reglas de integración tarifaria.        |
+| Tecnología                            | Gestionar infraestructura e intercambio de información con el proveedor de recaudo.                                              |
+| Jurídica                              | Gestionar contratos, actos tarifarios y asuntos relacionados con la protección de datos.                                         |
+| Gerencia General                      | Tomar decisiones institucionales y autorizar los pagos según las responsabilidades establecidas.                                 |
+| Proveedor de recaudo                  | Operar los validadores, lectores, canales contratados y la plataforma de transacciones.                                          |
+| Redes de pago y entidades financieras | Participar en la autorización, procesamiento y liquidación de pagos bancarios.                                                   |
+| Operadores del SIT                    | Operar los servicios de transporte, reportar novedades y revisar u objetar liquidaciones.                                        |
+| Fiduciaria                            | Custodiar los recursos y ejecutar los giros autorizados.                                                                         |
+| Instituciones certificadoras          | Certificar las condiciones de los usuarios que solicitan perfiles tarifarios especiales.                                         |
+| Autoridad de transporte y Alcaldía    | Emitir decisiones y actos administrativos que condicionan las tarifas y la operación del sistema.                                |
+| Usuario del sistema                   | Utilizar los medios de pago, realizar viajes y solicitar consultas o reclamaciones relacionadas con el recaudo.                  |
+
+La estructura organizacional evidencia que el proceso de recaudo involucra responsabilidades diferenciadas: definición de reglas, administración de medios de pago y perfiles, procesamiento de transacciones, conciliación, liquidación y consulta de información.
+
+Según la frontera definida en V4, la operación de validadores, la gestión de flota y rutas, la atención general de PQR, la contabilidad y tesorería, y la certificación externa de perfiles se mantienen fuera del alcance de implementación. El software consume o intercambia información con estos servicios.
+
+### 5.2. Paso 2: Tormenta de eventos del proceso
+
+A partir del proceso E2E de V3 y de los servicios de negocio de V4, se identifican los siguientes eventos relevantes. Estos representan hechos que ocurren durante el proceso, no funcionalidades del software.
+
+| ID   | Evento de negocio                                                                | Responsabilidad relacionada                  |
+| ---- | -------------------------------------------------------------------------------- | -------------------------------------------- |
+| EV01 | Se configura una tarifa, un perfil o una vigencia.                               | Gestión de reglas tarifarias.                |
+| EV02 | Un usuario obtiene o personaliza un medio de pago.                               | Gestión de tarjetas y saldos.                |
+| EV03 | Se registra una recarga o un cambio de saldo.                                    | Gestión de tarjetas y saldos.                |
+| EV04 | Se habilita, renueva o vence un perfil tarifario.                                | Gestión de usuarios y perfiles.              |
+| EV05 | Se registra una decisión de bloqueo o desbloqueo.                                | Gestión de listas de control.                |
+| EV06 | Se encuentra disponible un lote de transacciones en la plataforma del proveedor. | Integración y recepción de transacciones.    |
+| EV07 | Se reciben transacciones externas.                                               | Procesamiento de transacciones.              |
+| EV08 | Se detecta una transacción duplicada o una inconsistencia temporal.              | Procesamiento de transacciones.              |
+| EV09 | Se verifica un viaje y se aplican las reglas tarifarias correspondientes.        | Procesamiento de transacciones.              |
+| EV10 | Se consolida el recaudo por modo, ruta, operador y medio de pago.                | Consolidación del recaudo.                   |
+| EV11 | Se comparan las ventas, recargas y consignaciones.                               | Conciliación del recaudo.                    |
+| EV12 | Se detecta una diferencia de conciliación.                                       | Conciliación del recaudo.                    |
+| EV13 | Se resuelve una diferencia y se reprocesan los datos afectados.                  | Conciliación del recaudo.                    |
+| EV14 | Se calcula el subsidio y se prepara la liquidación.                              | Liquidación a operadores.                    |
+| EV15 | Se aprueba una liquidación y se autoriza una instrucción de pago.                | Liquidación y aprobación de la distribución. |
+| EV16 | La fiduciaria confirma la ejecución de un pago.                                  | Integración financiera externa.              |
+| EV17 | Se cierra un periodo de recaudo.                                                 | Cierre y reporte de resultados.              |
+| EV18 | Se publican informes e indicadores del periodo.                                  | Consulta, reportes e indicadores.            |
+| EV19 | Se registra un cobro bancario rechazado o un contracargo.                        | Cobro con tarjeta bancaria.                  |
+| EV20 | Se aprueba un ajuste o una devolución.                                           | Ajustes y devoluciones.                      |
+
+Los eventos muestran una secuencia de responsabilidades desde la configuración de las reglas y la recepción de transacciones hasta la consolidación, conciliación, liquidación, autorización de pagos y publicación de resultados.
+
+### 5.3. Paso 3: Identificación de puntos de corte
+
+Los puntos de corte permiten separar responsabilidades que tienen reglas, objetivos o resultados propios. Se identifican a partir de las transiciones entre los procesos de V3 y los servicios agrupados en V4.
+
+| ID   | Punto de corte                                       | Responsabilidad de origen                                                | Responsabilidad de destino                                                      | Justificación                                                                                     |
+| ---- | ---------------------------------------------------- | ------------------------------------------------------------------------ | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| PC01 | Configuración tarifaria / procesamiento del viaje    | Definir tarifas, perfiles y vigencias.                                   | Recibir transacciones y aplicar las reglas configuradas.                        | La configuración de reglas es diferente de su aplicación a cada viaje.                            |
+| PC02 | Medios de pago / perfiles tarifarios                 | Administrar tarjetas, recargas y saldos.                                 | Gestionar titulares, certificaciones y beneficios tarifarios.                   | El medio de pago y la elegibilidad para un beneficio representan responsabilidades distintas.     |
+| PC03 | Gestión de listas / validadores externos             | Registrar decisiones de bloqueo y distribuir listas.                     | Aplicar las listas durante la validación.                                       | La decisión pertenece al negocio; la operación del dispositivo está fuera del alcance.            |
+| PC04 | Recepción / procesamiento de transacciones           | Recibir los registros enviados por el proveedor.                         | Validar integridad, controlar duplicados, reconstruir viajes y aplicar tarifas. | La recepción de datos no equivale a su procesamiento completo.                                    |
+| PC05 | Procesamiento de viajes / cobro bancario             | Determinar las validaciones y los consumos.                              | Consolidar cobros y gestionar rechazos y contracargos.                          | El cobro bancario tiene estados y reglas diferentes a la validación del viaje.                    |
+| PC06 | Consolidación / conciliación                         | Agrupar las transacciones y obtener totales.                             | Comparar ventas, recargas y consignaciones, e investigar diferencias.           | Consolidar información no garantiza que los valores coincidan con los registros financieros.      |
+| PC07 | Conciliación / liquidación                           | Determinar y explicar las diferencias del recaudo.                       | Calcular los valores correspondientes a los operadores.                         | La liquidación utiliza información consolidada y conciliada junto con las reglas contractuales.   |
+| PC08 | Liquidación / ejecución del pago                     | Calcular, revisar y aprobar la distribución.                             | Ejecutar el giro a través de la fiduciaria.                                     | El software soporta el cálculo y la autorización; la fiduciaria ejecuta la transferencia.         |
+| PC09 | Ajustes de recaudo / atención general de PQR         | Registrar y soportar ajustes o devoluciones relacionados con el recaudo. | Gestionar la atención y respuesta al usuario.                                   | La atención general de PQR permanece fuera del alcance, aunque requiere información del software. |
+| PC10 | Gestión de perfiles / certificación externa          | Registrar y aplicar perfiles tarifarios.                                 | Verificar y certificar la condición del beneficiario.                           | La certificación corresponde a instituciones externas.                                            |
+| PC11 | Datos operativos / liquidación                       | Proporcionar información de rutas, flota y kilómetros recorridos.        | Utilizar los datos para consolidar y liquidar el recaudo.                       | Planeación y Operaciones suministran datos, pero no forman parte del software de recaudo.         |
+| PC12 | Procesamiento y liquidación / consulta de resultados | Generar y conservar los datos operativos y financieros.                  | Consultar, consolidar y publicar indicadores e informes.                        | Los reportes consumen información producida por otros procesos.                                   |
+
+### 5.4. Dominios identificados y responsabilidades
+
+A partir de la estructura organizacional, los eventos del proceso y los puntos de corte, se identifican los siguientes dominios candidatos. La agrupación conserva las responsabilidades de V4 y respeta la frontera del alcance definida para el proyecto.
+
+| ID    | Dominio                          | Servicios de V4 relacionados                                         | Responsabilidades del dominio                                                                                                         |
+| ----- | -------------------------------- | -------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| DOM01 | Gestión tarifaria                | Administración del tarifario.                                        | Administrar tarifas, perfiles aplicables, reglas de transbordo y vigencias tarifarias.                                                |
+| DOM02 | Gestión de medios de pago        | Ciclo de vida de la tarjeta; saldo calculado.                        | Gestionar tarjetas, recargas, saldos, bloqueos relacionados con el medio de pago y consultas de saldo.                                |
+| DOM03 | Gestión de usuarios y perfiles   | Titulares y datos personales; perfiles tarifarios.                   | Gestionar titulares, condiciones de elegibilidad, perfiles especiales, certificaciones recibidas y vigencias.                         |
+| DOM04 | Gestión de listas de control     | Decisiones de lista; distribución de listas.                         | Registrar decisiones de bloqueo y desbloqueo, mantener las listas y gestionar su distribución hacia los sistemas externos.            |
+| DOM05 | Procesamiento de transacciones   | Recepción de transacciones; reconstrucción y verificación del viaje. | Recibir transacciones, verificar integridad, controlar duplicados y temporalidad, reconstruir viajes y aplicar las reglas tarifarias. |
+| DOM06 | Cobro con tarjeta bancaria       | Cobro diferido; cartera y contracargos.                              | Consolidar consumos bancarios, registrar estados de cobro, gestionar rechazos y hacer seguimiento a cartera y contracargos.           |
+| DOM07 | Consolidación y conciliación     | Consolidación; conciliación.                                         | Consolidar el recaudo por modo, ruta, operador y medio de pago; comparar registros y gestionar diferencias.                           |
+| DOM08 | Liquidación a operadores         | Base de liquidación; esquema de remuneración; liquidación; subsidio. | Aplicar reglas contractuales, calcular liquidaciones, determinar subsidios y preparar la distribución para su aprobación.             |
+| DOM09 | Ajustes y devoluciones           | Gestión de solicitudes.                                              | Gestionar solicitudes de ajuste y devolución, registrar aprobaciones y conservar la trazabilidad de los cambios económicos.           |
+| DOM10 | Consulta, reportes e indicadores | Servicio de consulta.                                                | Permitir consultas autorizadas, generar reportes e indicadores y presentar resultados del recaudo.                                    |
+
+### 5.5. Relación con la frontera del alcance
+
+Los siguientes servicios participan en el proceso, pero permanecen fuera del alcance de implementación establecido en V4:
+
+| Servicio externo                                        | Tratamiento                                                                                                                                |
+| ------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| Operación de validadores, lectores y canales de recarga | El proveedor opera los dispositivos y canales; el software recibe e intercambia información.                                               |
+| Gestión de flota y kilómetros recorridos                | Operaciones proporciona los datos necesarios para el cálculo y la liquidación.                                                             |
+| Planeación de rutas y servicios                         | Planeación suministra las rutas, los servicios y la información operativa correspondiente.                                                 |
+| Atención general de PQR                                 | Servicio al Cliente gestiona los casos y consulta la información del recaudo para responder al usuario.                                    |
+| Contabilidad, tesorería y giro de la fiducia            | Finanzas y la fiduciaria conservan sus responsabilidades; el software proporciona datos y soportes para la liquidación y el pago.          |
+| Certificación de perfiles                               | Las instituciones correspondientes certifican la condición de los beneficiarios; el software consume y administra la información recibida. |
+
+### 5.6. Resultado de la extracción
+
+La T23 identifica diez dominios candidatos para organizar las responsabilidades del software de recaudo del SIT. La extracción se basa en la estructura organizacional, los eventos del proceso E2E y los puntos de corte entre responsabilidades.
+
+Los dominios permiten diferenciar la gestión de reglas y medios de pago, el procesamiento de transacciones, la conciliación financiera, la liquidación y la consulta de resultados. También mantienen explícita la separación entre las funciones implementadas por el software y los servicios externos que participan en el proceso.
+
+
 ### V5 Dominios
 ![V5 Dominios](vistas/V5_dominios.png)
+
+
 
 | Dominio | Clasificación | Argumento |
 |---|---|---|
