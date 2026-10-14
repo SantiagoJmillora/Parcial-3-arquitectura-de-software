@@ -917,7 +917,50 @@ La dirección de la información se interpreta desde el software del SIT. Los pa
 ### V11 Bounded Context Canvas
 ![V11 Bounded Context Canvas](vistas/V11_bounded_context_canvas.png)
 
-**Cómo lo resolvimos en ArchiMate (componente investigativo):** _…_
+#### Qué contexto va en el canvas y por qué
+
+El canvas es del **contexto de procesamiento de transacciones (BC05)**. De los siete contextos centrales de §5.7, es el que responde directamente a lo que pide el enunciado: *aplicar la tarifa correcta en cada validación, teniendo en cuenta los transbordos*. En él viven las reglas más difíciles que contó la experta:
+- la ventana de 90 minutos con hasta dos transbordos;
+- el primer transbordo gratis y el segundo con un valor reducido;
+- las transacciones que llegan hasta 48 horas tarde y los duplicados;
+- el saldo calculado, que difiere del que guarda la tarjeta.
+
+Además, es el contexto que más conversa con los otros: consulta el tarifario (BC01), la tarjeta (BC02) y el perfil (BC03), recibe del proveedor por la ACL y alimenta el cobro bancario (BC06), la conciliación (BC07) y la consulta (BC10). Por eso las secciones de comunicación del canvas quedan completas. Conciliación (BC07) también era candidato, porque atiende la meta que la experta marcó como prioritaria, pero depende de lo que BC05 produce: si el procesamiento se equivoca, no hay conciliación que lo arregle.
+
+#### Cómo lo resolvimos en ArchiMate (componente investigativo)
+
+**El canvas.** Usamos la versión 5 del [Bounded Context Canvas de ddd-crew](https://github.com/ddd-crew/bounded-context-canvas). Tiene 11 secciones: nombre, propósito, clasificación estratégica (tipo de dominio, papel en el modelo de negocio y evolución), roles del dominio, comunicación entrante, comunicación saliente, lenguaje ubicuo, decisiones de negocio, supuestos, métricas de verificación y preguntas abiertas.
+
+**El problema.** ArchiMate no tiene un elemento «canvas», y varias secciones (supuestos, preguntas abiertas, evolución) no corresponden a ningún concepto del lenguaje. Evaluamos tres opciones:
+
+| Opción | Qué es | Por qué sí o por qué no |
+|---|---|---|
+| A. Una sola nota con todo el texto, o la imagen del canvas pegada | Copiar el canvas de ddd-crew dentro de una vista | Es rápida, pero no usa el modelo: nada de lo que dice se puede trazar y puede contradecir las demás vistas sin que nadie lo note |
+| B. Celdas con notas | Un *Group* visual por sección, con el texto en notas | Respeta la forma del canvas, pero sigue siendo solo texto |
+| **C. Celdas con elementos del modelo (elegida)** | Un *Group* visual por sección. Adentro van los **mismos elementos** que ya están en V1, V5, V6, V7 y V8, y una nota solo donde ArchiMate no tiene un concepto que sirva | El canvas queda **coherente con el modelo por construcción**: si un término, un comando o un colaborador cambia en otra vista, cambia también aquí. Es lo que pide el criterio 7 («coherente con el modelo») |
+
+**Qué elemento va en cada sección (opción C):**
+
+| Sección del canvas | Elemento de ArchiMate | Origen | Por qué ese elemento |
+|---|---|---|---|
+| Nombre | Componente de aplicación «Contexto de procesamiento de transacciones» | V8 | Es el bounded context tal como está en el mapa de contextos |
+| Propósito | Nota con el propósito, y el requerimiento REQ01 que el contexto realiza | V1 (REQ01) | El propósito en lenguaje de negocio va en texto; la realización hacia REQ01 lo amarra a la motivación |
+| Clasificación estratégica: dominio | *Grouping* del dominio «Procesamiento de transacciones» (central) | V5 | Es la misma clasificación de §5.7 |
+| Clasificación estratégica: modelo de negocio y evolución | Nota | — | ArchiMate no tiene conceptos para eso. Valores: *generador de ingresos* (aquí se determina cuánto se cobra por cada viaje) y *construcción a medida* (las reglas del SIT no vienen en un producto, §5.7) |
+| Roles del dominio | Nota | — | Es una clasificación del comportamiento del contexto, no un elemento. Rol: *contexto de ejecución* (aplica reglas a cada validación), con algo de *análisis* (detecta diferencias entre la tarifa esperada y la cobrada) |
+| Comunicación entrante | Comandos (*procesos de aplicación*) y eventos que lo disparan, el servicio «Transacciones procesadas» que consultan otros, y los colaboradores (ACL del proveedor, BC06, BC07 y BC10) | V6, V8 y V9 | Son los mensajes y colaboradores que ya están modelados, con sus relaciones de disparo y de servicio |
+| Comunicación saliente | Los servicios que consulta (tarifario, tarjeta, perfil), los eventos que emite (TransacciónDeViajeProcesada, TransacciónTardíaReprocesada) y quién los escucha | V6 y V8 | Igual que la entrante; aquí se ven las políticas hacia cobro bancario y conciliación |
+| Lenguaje ubicuo | *Significados* y objetos de negocio de V7 (validación, viaje, transbordo, tarifa aplicada, transacción de validación, transacción duplicada) | V7 | Es el mismo glosario; no se redefine nada |
+| Decisiones de negocio | *Principios* de V1 (equidad tarifaria, legalidad, continuidad del servicio, beneficio de la duda) y *restricciones* nuevas para las reglas concretas (ventana de 90 minutos, máximo dos transbordos, valor del segundo transbordo, cupo de viajes subsidiados) | V1 y nuevas | Los principios ya existen. Las reglas concretas se modelan como *restricción*, el elemento de motivación que limita cómo se realiza la solución |
+| Supuestos | Nota | — | ArchiMate no tiene un concepto de supuesto. Usar *evaluación* cambiaría su significado (es el resultado de analizar una situación, no algo que se da por cierto) |
+| Métricas de verificación | *Resultados* de V1 que dependen de este contexto (diferencias de conciliación ≤ 0,1 %, medición mensual de evasión) y una nota con métricas del límite | V1 y nota | Los resultados ya son métricas del modelo; las del límite del contexto van en texto |
+| Preguntas abiertas | Nota | — | Igual que los supuestos: no hay un concepto en ArchiMate |
+
+**Reglas de la vista.**
+- Todo en **una sola página**, con la distribución del canvas original: identidad y estrategia a la izquierda, comunicación en el centro, y lenguaje, decisiones y riesgos a la derecha.
+- Viewpoint **None**, porque mezcla las capas de motivación, estrategia y aplicación.
+- Las celdas son *Group* visuales (no agregan elementos al modelo). Solo se dibujan las relaciones que ayudan a leer una celda, como evento → quien lo escucha; las demás ya están en el modelo y se ven en V6 y V8.
+- Lo único nuevo en el modelo son las restricciones de las reglas concretas y la realización del contexto hacia REQ01.
 
 ## 9. Decisiones y supuestos
 ### V10 Trazabilidad vertical
