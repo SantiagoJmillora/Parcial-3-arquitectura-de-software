@@ -100,3 +100,18 @@ Registro de las decisiones tomadas al construir `modelo/recaudo.archimate`. Hay 
 **Pendientes:** al hacer V5 a V8 y V10, reutilizar estos servicios (para V10, las cadenas meta → capacidad → servicio de negocio → componente pueden salir de estos servicios y de los REQ).
 
 **Colores de V4, V4b, V4c, V4d y V9:** siguen la paleta de la presentación de TOGAF (`10_Arquitectura_Empresarial_TOGAF`) y no la de Archi por defecto. Negocio `#FEFF99` (amarillo), aplicación `#F0FFFF` (celeste muy claro), estrategia `#FBE0A7`, motivación `#ADB0FF` y tecnología `#CDFFCC`. Se guardan como color de relleno de cada objeto en la vista. En gris (`#D9D9D9`) van los servicios y los externos que quedan fuera del alcance. V1 y V2 conservan sus colores, y V2 usa colores propios por categoría (estratégica, misional y de apoyo). Esto se aparta de lo que dice CLAUDE.md §6 ("los de ArchiMate por defecto"), así que el equipo debe decidir si todas las vistas usan esta paleta.
+
+## 6. V5 Dominios (T25)
+
+**Contenido nuevo:** 11 elementos (los 10 dominios como elemento *Grouping* y el objeto de negocio «Solicitud de consulta») y 30 relaciones. Los dominios (DOM01 a DOM10) y su clasificación son los de README §5.4 y §5.5 (T23 y T24); la vista no los cambia.
+
+| Relación | Desde | Hacia | Para qué |
+|---|---|---|---|
+| Agregación | Dominio | Objeto de negocio | Los conceptos principales del dominio. Los objetos de negocio son los que ya creó V4d, así que V4 y V5 comparten elementos |
+| Asociación | Dominio | Servicio de plataforma de V4 (P1 a P10) | Cada dominio se apoya en el servicio de plataforma que corresponde (DOM01 con P1, DOM02 con P2, etc.). Está en el modelo pero no se dibuja |
+
+**Decisiones:**
+- Los dominios son el elemento *Grouping* (el enunciado pide «agrupación» en V5). Las franjas de la vista (centrales, de soporte, genérico) son *Group* visuales, como pide la convención de este archivo.
+- El color de cada dominio sale de su clasificación (central rojo, de soporte azul, genérico gris), no de su capa. Los objetos de negocio usan el amarillo de la paleta de TOGAF.
+- La «Base de liquidación» se muestra en DOM08 (Liquidación a operadores), como en el README §5.4, aunque en V4 vive en el servicio de consolidación.
+- V6 puede reutilizar estos objetos de negocio como raíces de agregado (objetos de datos que los realicen).

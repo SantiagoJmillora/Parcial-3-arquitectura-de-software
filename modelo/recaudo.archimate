@@ -1158,6 +1158,10 @@ Requisitos no funcionales: Sin trabajo manual; conserva el origen de cada dato.<
     <element xsi:type="archimate:BusinessActor" name="BA08 · Usuario del sistema" id="id-95d2456afdcc4550b6ba9c976857151d">
       <documentation>Pasajero que utiliza uno de los modos del SIT y valida el viaje mediante los medios de acceso disponibles.</documentation>
     </element>
+    <element xsi:type="archimate:BusinessObject" name="Solicitud de consulta" id="id-2c03c37f38d6b77938af0907bd557f70">
+      <documentation>Pedido de información de un usuario autorizado: quién consulta, con qué filtros y para qué periodo. Concepto del dominio de consulta, reportes e indicadores.</documentation>
+      <property key="ID" value="O20"/>
+    </element>
   </folder>
   <folder name="Application" id="id-a1b2c3d4e5f60718293a4b5c6d7e8f03" type="application">
     <element xsi:type="archimate:ApplicationComponent" name="Aplicación de recaudo SIT" id="id-83dccd3a61e64d5eb2a74ed638add2d7">
@@ -1598,7 +1602,68 @@ Requisitos no funcionales: Sin trabajo manual; conserva el origen de cada dato.<
     <element xsi:type="archimate:Outcome" name="CA06 · Incorporar la protección de datos y los reportes regulatorios desde el diseño" id="id-f25ec83048534e78bd888c9a371256e6"/>
   </folder>
   <folder name="Implementation &amp; Migration" id="id-a1b2c3d4e5f60718293a4b5c6d7e8f06" type="implementation_migration"/>
-  <folder name="Other" id="id-a1b2c3d4e5f60718293a4b5c6d7e8f07" type="other"/>
+  <folder name="Other" id="id-a1b2c3d4e5f60718293a4b5c6d7e8f07" type="other">
+    <element xsi:type="archimate:Grouping" name="Gestión tarifaria" id="id-9bbfb099a59837a5232f597299423428">
+      <documentation>Dominio DOM01 (Central).
+Responsabilidades: Administrar tarifas, perfiles aplicables, reglas de transbordo y vigencias tarifarias.
+Se relaciona con el servicio de plataforma P1 de V4. Argumento de la clasificación: ver README §5.</documentation>
+      <property key="ID" value="DOM01"/>
+    </element>
+    <element xsi:type="archimate:Grouping" name="Gestión de medios de pago" id="id-b3eaad4a20be302ff2519ee943c8f489">
+      <documentation>Dominio DOM02 (Central).
+Responsabilidades: Gestionar tarjetas, recargas, saldos, bloqueos relacionados con el medio de pago y consultas de saldo.
+Se relaciona con el servicio de plataforma P2 de V4. Argumento de la clasificación: ver README §5.</documentation>
+      <property key="ID" value="DOM02"/>
+    </element>
+    <element xsi:type="archimate:Grouping" name="Gestión de usuarios y perfiles" id="id-bb3fc01f59de236eb484a91b6f1bc57a">
+      <documentation>Dominio DOM03 (Central).
+Responsabilidades: Gestionar titulares, condiciones de elegibilidad, perfiles especiales, certificaciones recibidas y vigencias.
+Se relaciona con el servicio de plataforma P3 de V4. Argumento de la clasificación: ver README §5.</documentation>
+      <property key="ID" value="DOM03"/>
+    </element>
+    <element xsi:type="archimate:Grouping" name="Gestión de listas de control" id="id-8451a3bbe21183fa3958f48c937e3416">
+      <documentation>Dominio DOM04 (De soporte).
+Responsabilidades: Registrar decisiones de bloqueo y desbloqueo, mantener las listas y gestionar su distribución hacia los sistemas externos.
+Se relaciona con el servicio de plataforma P4 de V4. Argumento de la clasificación: ver README §5.</documentation>
+      <property key="ID" value="DOM04"/>
+    </element>
+    <element xsi:type="archimate:Grouping" name="Procesamiento de transacciones" id="id-9c4f602c6b312b1eb98002b3dec7a913">
+      <documentation>Dominio DOM05 (Central).
+Responsabilidades: Recibir transacciones, verificar integridad, controlar duplicados y temporalidad, reconstruir viajes y aplicar las reglas tarifarias.
+Se relaciona con el servicio de plataforma P5 de V4. Argumento de la clasificación: ver README §5.</documentation>
+      <property key="ID" value="DOM05"/>
+    </element>
+    <element xsi:type="archimate:Grouping" name="Cobro con tarjeta bancaria" id="id-3df2151654793acff483fe0b0403232e">
+      <documentation>Dominio DOM06 (De soporte).
+Responsabilidades: Consolidar consumos bancarios, registrar estados de cobro, gestionar rechazos y hacer seguimiento a cartera y contracargos.
+Se relaciona con el servicio de plataforma P6 de V4. Argumento de la clasificación: ver README §5.</documentation>
+      <property key="ID" value="DOM06"/>
+    </element>
+    <element xsi:type="archimate:Grouping" name="Consolidación y conciliación" id="id-461a662cd585fa40ac27125232a5a88d">
+      <documentation>Dominio DOM07 (Central).
+Responsabilidades: Consolidar el recaudo por modo, ruta, operador y medio de pago; comparar registros y gestionar diferencias.
+Se relaciona con el servicio de plataforma P7 de V4. Argumento de la clasificación: ver README §5.</documentation>
+      <property key="ID" value="DOM07"/>
+    </element>
+    <element xsi:type="archimate:Grouping" name="Liquidación a operadores" id="id-98797e0b0e252e79ca9d4b80d9cfea90">
+      <documentation>Dominio DOM08 (Central).
+Responsabilidades: Aplicar reglas contractuales, calcular liquidaciones, determinar subsidios y preparar la distribución para su aprobación.
+Se relaciona con el servicio de plataforma P8 de V4. Argumento de la clasificación: ver README §5.</documentation>
+      <property key="ID" value="DOM08"/>
+    </element>
+    <element xsi:type="archimate:Grouping" name="Ajustes y devoluciones" id="id-cfa9aac82da57cf582295673bc0ca4d2">
+      <documentation>Dominio DOM09 (De soporte).
+Responsabilidades: Gestionar solicitudes de ajuste y devolución, registrar aprobaciones y conservar la trazabilidad de los cambios económicos.
+Se relaciona con el servicio de plataforma P9 de V4. Argumento de la clasificación: ver README §5.</documentation>
+      <property key="ID" value="DOM09"/>
+    </element>
+    <element xsi:type="archimate:Grouping" name="Consulta, reportes e indicadores" id="id-8400091de414f4872b2a31e752e63841">
+      <documentation>Dominio DOM10 (Genérico).
+Responsabilidades: Permitir consultas autorizadas, generar reportes e indicadores y presentar resultados del recaudo.
+Se relaciona con el servicio de plataforma P10 de V4. Argumento de la clasificación: ver README §5.</documentation>
+      <property key="ID" value="DOM10"/>
+    </element>
+  </folder>
   <folder name="Relations" id="id-a1b2c3d4e5f60718293a4b5c6d7e8f08" type="relations">
     <element xsi:type="archimate:AssociationRelationship" id="id-5020941a1bfb4833b6cf1bce623f8657" source="id-92382e030b47462badd329cb62d61d4d" target="id-5047adfea8794307a5a569de5a153813"/>
     <element xsi:type="archimate:AssociationRelationship" id="id-fd4377e3d52d46009e3aabfc538993f6" source="id-92382e030b47462badd329cb62d61d4d" target="id-ba5ad3682a2847a59794e5e9d35a457b"/>
@@ -2035,6 +2100,36 @@ Requisitos no funcionales: Sin trabajo manual; conserva el origen de cada dato.<
     <element xsi:type="archimate:FlowRelationship" id="id-988879ea8f6f4c4f88a990b2a4fe4b03" source="id-b65028bda1c1475d90f187c70fe70011" target="id-a5253b83fb6943048fa1b377b67b1fae">
       <documentation>V3_GENERATED: Flujo de valor: VS01 · Preparar reglas, tarifas y perfiles hacia VS02 · Capturar viaje y medio de pago</documentation>
     </element>
+    <element xsi:type="archimate:AggregationRelationship" id="id-0e9bf3233a0b6cfb887511c16fe40718" source="id-9bbfb099a59837a5232f597299423428" target="id-2a8da82c4504260a28fe22e038fe852d"/>
+    <element xsi:type="archimate:AssociationRelationship" id="id-f7bcc57568b73966d68ba2f98a0b404f" source="id-9bbfb099a59837a5232f597299423428" target="id-d80fc3ec02cd22d6034440b7d06247ac" name="se apoya en"/>
+    <element xsi:type="archimate:AggregationRelationship" id="id-8f9b84257fedee638369ce6ccbf54b8c" source="id-b3eaad4a20be302ff2519ee943c8f489" target="id-5cd6daa9773320f9766c42772cd6a684"/>
+    <element xsi:type="archimate:AggregationRelationship" id="id-e5f3d52a2f260fe6dede455ef4e12212" source="id-b3eaad4a20be302ff2519ee943c8f489" target="id-ed0cf75083b7bdedca6b4ee680ac45a2"/>
+    <element xsi:type="archimate:AssociationRelationship" id="id-ac8021f88c4a8741377b1f59585d0db6" source="id-b3eaad4a20be302ff2519ee943c8f489" target="id-d63e32aa63ec54bb0c258f161020af70" name="se apoya en"/>
+    <element xsi:type="archimate:AggregationRelationship" id="id-becf8557313a4fa8e807180bbfa05e58" source="id-bb3fc01f59de236eb484a91b6f1bc57a" target="id-67c2e01ec6be78ecea237ef61053e7ea"/>
+    <element xsi:type="archimate:AggregationRelationship" id="id-2e078373300b16baa25071afa1023d59" source="id-bb3fc01f59de236eb484a91b6f1bc57a" target="id-535e141d9058d09128d915750bcf35d5"/>
+    <element xsi:type="archimate:AssociationRelationship" id="id-9c52fc263e893fe93c2ce71724960f74" source="id-bb3fc01f59de236eb484a91b6f1bc57a" target="id-9912aad737f8c3ab1f50d564fdde914b" name="se apoya en"/>
+    <element xsi:type="archimate:AggregationRelationship" id="id-d2bd41bee352b3721f881f2ac50b041b" source="id-8451a3bbe21183fa3958f48c937e3416" target="id-c28f351570387e09247ff82d3538af54"/>
+    <element xsi:type="archimate:AggregationRelationship" id="id-986af76219a41b1de2cb54eca6a30049" source="id-8451a3bbe21183fa3958f48c937e3416" target="id-b493109866674916ee1ef3816a1b121b"/>
+    <element xsi:type="archimate:AssociationRelationship" id="id-0b9ff0b221d978c27dd96b4843a5f47b" source="id-8451a3bbe21183fa3958f48c937e3416" target="id-ca9cc7acf2223a3978fbee3cadea3ffa" name="se apoya en"/>
+    <element xsi:type="archimate:AggregationRelationship" id="id-a27f16eec2513c0dec67d091cd260b3a" source="id-9c4f602c6b312b1eb98002b3dec7a913" target="id-c502c1508ee9dbe93822a048a2fa4624"/>
+    <element xsi:type="archimate:AggregationRelationship" id="id-e385e45682370acf594c4a35f2070fb7" source="id-9c4f602c6b312b1eb98002b3dec7a913" target="id-b95cc138186f8a37aa00fe4dab75a14c"/>
+    <element xsi:type="archimate:AssociationRelationship" id="id-8b0a6929ca37f29913a5dd88d3ca6911" source="id-9c4f602c6b312b1eb98002b3dec7a913" target="id-4820ccc43c974f3b1b1f393f2de5c7b8" name="se apoya en"/>
+    <element xsi:type="archimate:AggregationRelationship" id="id-d8d563548c68b0c63f60c3a9fb0a179d" source="id-3df2151654793acff483fe0b0403232e" target="id-b3de14af7567770500a642c07c4258b9"/>
+    <element xsi:type="archimate:AggregationRelationship" id="id-95e7b70077916fcd73564dfe80fd82c0" source="id-3df2151654793acff483fe0b0403232e" target="id-21775ba8e661c3f95e5b48512a0e11cf"/>
+    <element xsi:type="archimate:AssociationRelationship" id="id-81a3749a8a1c988e97ad861dddd602ed" source="id-3df2151654793acff483fe0b0403232e" target="id-c3de197eda48f9d597375f9a80aae37c" name="se apoya en"/>
+    <element xsi:type="archimate:AggregationRelationship" id="id-84e697f88e56b9e9be6376c84a598d3f" source="id-461a662cd585fa40ac27125232a5a88d" target="id-4184d16e784bb2bfdac5ffc2eb5aa9c3"/>
+    <element xsi:type="archimate:AggregationRelationship" id="id-d81607350ea5127cf8fb9d9d06193656" source="id-461a662cd585fa40ac27125232a5a88d" target="id-779051568dce83e930039b7f48c46ece"/>
+    <element xsi:type="archimate:AggregationRelationship" id="id-c92c853c9016c57820626c6ac9bdf241" source="id-461a662cd585fa40ac27125232a5a88d" target="id-6ad6dfbbbf803d0c32564ed653a85076"/>
+    <element xsi:type="archimate:AssociationRelationship" id="id-f2005402d2a11fe04d4dbd2d079b2076" source="id-461a662cd585fa40ac27125232a5a88d" target="id-6f67690a7a9766bbc4d6e45d3a022a95" name="se apoya en"/>
+    <element xsi:type="archimate:AggregationRelationship" id="id-feb19df3d2155d56359d5a713c5f48bd" source="id-98797e0b0e252e79ca9d4b80d9cfea90" target="id-65851f4ff2bf6f7d88a5532b91fe3772"/>
+    <element xsi:type="archimate:AggregationRelationship" id="id-fd295a476f0034c6cdd08f7e8290c6bc" source="id-98797e0b0e252e79ca9d4b80d9cfea90" target="id-e8393db51a8d596fc1884e7e2555784b"/>
+    <element xsi:type="archimate:AggregationRelationship" id="id-62ffb25fb5f020c8aabbd70261da7d64" source="id-98797e0b0e252e79ca9d4b80d9cfea90" target="id-9d2a2a29f6b41b36bff02971aec0107e"/>
+    <element xsi:type="archimate:AggregationRelationship" id="id-8e7d8272185d457d6cf5705de7013c1b" source="id-98797e0b0e252e79ca9d4b80d9cfea90" target="id-67927ce4739fac626535fe8e4c671ed6"/>
+    <element xsi:type="archimate:AssociationRelationship" id="id-1f7a9d0a4df4010a71ad4af13e07ecd8" source="id-98797e0b0e252e79ca9d4b80d9cfea90" target="id-93e8fb20c41f40359b6118bf12076a79" name="se apoya en"/>
+    <element xsi:type="archimate:AggregationRelationship" id="id-707c00743c631ab8c718174dd8662ebc" source="id-cfa9aac82da57cf582295673bc0ca4d2" target="id-6abf7541e2b3dbf5e6e968de780558a9"/>
+    <element xsi:type="archimate:AssociationRelationship" id="id-3ea1933e09500ee9c4c190f07af02745" source="id-cfa9aac82da57cf582295673bc0ca4d2" target="id-6e0658e2a4712e4ebfa3560c50c474be" name="se apoya en"/>
+    <element xsi:type="archimate:AggregationRelationship" id="id-32d4dc4a67e78fe53d06a2c4c32b4460" source="id-8400091de414f4872b2a31e752e63841" target="id-2c03c37f38d6b77938af0907bd557f70"/>
+    <element xsi:type="archimate:AssociationRelationship" id="id-1006c537dbe3e8ffdb27173704b60d8b" source="id-8400091de414f4872b2a31e752e63841" target="id-a2021de0ef93dd66ebbb0e2c50ac56d0" name="se apoya en"/>
   </folder>
   <folder name="Views" id="id-a1b2c3d4e5f60718293a4b5c6d7e8f09" type="diagrams">
     <element xsi:type="archimate:ArchimateDiagramModel" name="V1 Motivación" id="id-b0000000000000000000000000000001">
@@ -3895,7 +3990,152 @@ Dominio funcional</content>
       </child>
       <documentation>Quién ejecuta cada servicio de plataforma (rol y actor), la función que lo realiza y los objetos de negocio que maneja.</documentation>
     </element>
-    <element xsi:type="archimate:ArchimateDiagramModel" name="V5 Dominios" id="id-b0000000000000000000000000000005"/>
+    <element xsi:type="archimate:ArchimateDiagramModel" name="V5 Dominios" id="id-b0000000000000000000000000000005">
+      <documentation>Dominios del recaudo (DOM01 a DOM10) agrupados por clasificación: central (rojo), de soporte (azul) y genérico (gris). Cada dominio contiene sus objetos de negocio principales y se relaciona con un servicio de plataforma de V4.</documentation>
+      <child xsi:type="archimate:Group" id="id-8c21f0b46b2b3ea93d0b17719014f61a" name="DOMINIOS CENTRALES: diferencian la forma en que opera el SIT" fillColor="#FCE4D6">
+        <bounds x="10" y="10" width="2150" height="285"/>
+        <child xsi:type="archimate:DiagramObject" id="id-974eada92e80680fd01e3cb06bdd1d57" archimateElement="id-9bbfb099a59837a5232f597299423428" fillColor="#F8CBAD">
+          <bounds x="10" y="30" width="340" height="235"/>
+          <child xsi:type="archimate:DiagramObject" id="id-4e404143748870a778898907cda75aeb" archimateElement="id-2a8da82c4504260a28fe22e038fe852d" fillColor="#FEFF99">
+            <bounds x="12" y="38" width="152" height="44"/>
+          </child>
+          <child xsi:type="archimate:Note" id="id-c66ef5b266be02394a086b025338d8ef" fillColor="#FFFFFF">
+            <bounds x="12" y="98" width="316" height="125"/>
+            <content>DOM01 · Define tarifas, transbordos y vigencias propios del SIT; no existen reglas tarifarias listas para comprar.</content>
+          </child>
+        </child>
+        <child xsi:type="archimate:DiagramObject" id="id-5d16a06b8667593c29d16f0fe35cac54" archimateElement="id-b3eaad4a20be302ff2519ee943c8f489" fillColor="#F8CBAD">
+          <bounds x="365" y="30" width="340" height="235"/>
+          <child xsi:type="archimate:DiagramObject" id="id-59886b810cd28c23659e70ea3749c830" archimateElement="id-5cd6daa9773320f9766c42772cd6a684" fillColor="#FEFF99">
+            <bounds x="12" y="38" width="152" height="44"/>
+          </child>
+          <child xsi:type="archimate:DiagramObject" id="id-92cf3e08b2db9114d839011401faffb5" archimateElement="id-ed0cf75083b7bdedca6b4ee680ac45a2" fillColor="#FEFF99">
+            <bounds x="176" y="38" width="152" height="44"/>
+          </child>
+          <child xsi:type="archimate:Note" id="id-e5d23d50e9c7348481cee6f219ab5773" fillColor="#FFFFFF">
+            <bounds x="12" y="98" width="316" height="125"/>
+            <content>DOM02 · Tarjetas, recargas y saldos del modelo VAMOS: hay que adaptarlos a sus reglas de saldo.</content>
+          </child>
+        </child>
+        <child xsi:type="archimate:DiagramObject" id="id-a6b9c8b9b0a571069c8ccbac0bb708f3" archimateElement="id-bb3fc01f59de236eb484a91b6f1bc57a" fillColor="#F8CBAD">
+          <bounds x="720" y="30" width="340" height="235"/>
+          <child xsi:type="archimate:DiagramObject" id="id-8f93442291416627e4e06353d5f4a193" archimateElement="id-67c2e01ec6be78ecea237ef61053e7ea" fillColor="#FEFF99">
+            <bounds x="12" y="38" width="152" height="44"/>
+          </child>
+          <child xsi:type="archimate:DiagramObject" id="id-80ab1efc1c6d893a653302c6c9a964c3" archimateElement="id-535e141d9058d09128d915750bcf35d5" fillColor="#FEFF99">
+            <bounds x="176" y="38" width="152" height="44"/>
+          </child>
+          <child xsi:type="archimate:Note" id="id-ad7c721c7580a33ddcdc28b4944c3910" fillColor="#FFFFFF">
+            <bounds x="12" y="98" width="316" height="125"/>
+            <content>DOM03 · Condiciones de acceso a tarifas especiales (elegibilidad, certificación y vigencia) propias del SIT.</content>
+          </child>
+        </child>
+        <child xsi:type="archimate:DiagramObject" id="id-1fc3378f00d250bbdfb81ea08128b358" archimateElement="id-9c4f602c6b312b1eb98002b3dec7a913" fillColor="#F8CBAD">
+          <bounds x="1075" y="30" width="340" height="235"/>
+          <child xsi:type="archimate:DiagramObject" id="id-aff77877a8b258e18ffc727164cb2bd0" archimateElement="id-c502c1508ee9dbe93822a048a2fa4624" fillColor="#FEFF99">
+            <bounds x="12" y="38" width="152" height="44"/>
+          </child>
+          <child xsi:type="archimate:DiagramObject" id="id-75648f4a3886cfcfae6823ac433dc67c" archimateElement="id-b95cc138186f8a37aa00fe4dab75a14c" fillColor="#FEFF99">
+            <bounds x="176" y="38" width="152" height="44"/>
+          </child>
+          <child xsi:type="archimate:Note" id="id-dca3636c9edc9e3370ee349448ae1a26" fillColor="#FFFFFF">
+            <bounds x="12" y="98" width="316" height="125"/>
+            <content>DOM05 · Convierte validaciones en viajes con reglas de integración; su precisión afecta el recaudo.</content>
+          </child>
+        </child>
+        <child xsi:type="archimate:DiagramObject" id="id-c08ae3d0002ac79fb30b99bb4981d5da" archimateElement="id-461a662cd585fa40ac27125232a5a88d" fillColor="#F8CBAD">
+          <bounds x="1430" y="30" width="340" height="235"/>
+          <child xsi:type="archimate:DiagramObject" id="id-af77b245a889dddea89e3a9bd2ba0948" archimateElement="id-4184d16e784bb2bfdac5ffc2eb5aa9c3" fillColor="#FEFF99">
+            <bounds x="12" y="38" width="152" height="44"/>
+          </child>
+          <child xsi:type="archimate:DiagramObject" id="id-934750a0f11c148b5d188c2c1c3c158b" archimateElement="id-779051568dce83e930039b7f48c46ece" fillColor="#FEFF99">
+            <bounds x="176" y="38" width="152" height="44"/>
+          </child>
+          <child xsi:type="archimate:DiagramObject" id="id-81d5f7bb0c472fe42cd1d63c5754bab9" archimateElement="id-6ad6dfbbbf803d0c32564ed653a85076" fillColor="#FEFF99">
+            <bounds x="12" y="90" width="152" height="44"/>
+          </child>
+          <child xsi:type="archimate:Note" id="id-6c615690c8cddfa1baec0ad9aea399ed" fillColor="#FFFFFF">
+            <bounds x="12" y="150" width="316" height="73"/>
+            <content>DOM07 · Demuestra de dónde viene cada valor del recaudo; la transparencia financiera es meta del proyecto.</content>
+          </child>
+        </child>
+        <child xsi:type="archimate:DiagramObject" id="id-40241a896c7be56b599fbcdc7a8118e4" archimateElement="id-98797e0b0e252e79ca9d4b80d9cfea90" fillColor="#F8CBAD">
+          <bounds x="1785" y="30" width="340" height="235"/>
+          <child xsi:type="archimate:DiagramObject" id="id-ba0da02af26321f6b68321173c224254" archimateElement="id-65851f4ff2bf6f7d88a5532b91fe3772" fillColor="#FEFF99">
+            <bounds x="12" y="38" width="152" height="44"/>
+          </child>
+          <child xsi:type="archimate:DiagramObject" id="id-1f60f7f8a1258644b14103eb12eb488d" archimateElement="id-e8393db51a8d596fc1884e7e2555784b" fillColor="#FEFF99">
+            <bounds x="176" y="38" width="152" height="44"/>
+          </child>
+          <child xsi:type="archimate:DiagramObject" id="id-62bb1779d47e7e464f33904db0ccde67" archimateElement="id-9d2a2a29f6b41b36bff02971aec0107e" fillColor="#FEFF99">
+            <bounds x="12" y="90" width="152" height="44"/>
+          </child>
+          <child xsi:type="archimate:DiagramObject" id="id-b8f6874c4187cf32cc33074c6242e80b" archimateElement="id-67927ce4739fac626535fe8e4c671ed6" fillColor="#FEFF99">
+            <bounds x="176" y="90" width="152" height="44"/>
+          </child>
+          <child xsi:type="archimate:Note" id="id-ea5b7a11f4c417eb67598f85513c1a21" fillColor="#FFFFFF">
+            <bounds x="12" y="150" width="316" height="73"/>
+            <content>DOM08 · Reglas de remuneración por contrato y subsidios, particulares del SIT.</content>
+          </child>
+        </child>
+      </child>
+      <child xsi:type="archimate:Group" id="id-0713eb9a581ba6474de8a06b88d3cc41" name="DOMINIOS DE SOPORTE: habilitan el negocio sin ser su principal diferenciador" fillColor="#DDEBF7">
+        <bounds x="10" y="330" width="1085" height="285"/>
+        <child xsi:type="archimate:DiagramObject" id="id-c1b5c46cbc91efbe52841fc451f0b610" archimateElement="id-8451a3bbe21183fa3958f48c937e3416" fillColor="#BDD7EE">
+          <bounds x="10" y="30" width="340" height="235"/>
+          <child xsi:type="archimate:DiagramObject" id="id-d64019121a18444548ee142966266323" archimateElement="id-c28f351570387e09247ff82d3538af54" fillColor="#FEFF99">
+            <bounds x="12" y="38" width="152" height="44"/>
+          </child>
+          <child xsi:type="archimate:DiagramObject" id="id-0a6c76bffac176cfa43f919199130f5e" archimateElement="id-b493109866674916ee1ef3816a1b121b" fillColor="#FEFF99">
+            <bounds x="176" y="38" width="152" height="44"/>
+          </child>
+          <child xsi:type="archimate:Note" id="id-ab5a0cfd0bf3977a7410ae2a4d5532ad" fillColor="#FFFFFF">
+            <bounds x="12" y="98" width="316" height="125"/>
+            <content>DOM04 · Decisiones de bloqueo y desbloqueo; existen herramientas para gestionar y distribuir listas.</content>
+          </child>
+        </child>
+        <child xsi:type="archimate:DiagramObject" id="id-841a665591b239d91a844de5a8996ee5" archimateElement="id-3df2151654793acff483fe0b0403232e" fillColor="#BDD7EE">
+          <bounds x="365" y="30" width="340" height="235"/>
+          <child xsi:type="archimate:DiagramObject" id="id-5a15ec473095767b7c7201b84935188b" archimateElement="id-b3de14af7567770500a642c07c4258b9" fillColor="#FEFF99">
+            <bounds x="12" y="38" width="152" height="44"/>
+          </child>
+          <child xsi:type="archimate:DiagramObject" id="id-64b4a274523a0209c5ba3ac088bf37b2" archimateElement="id-21775ba8e661c3f95e5b48512a0e11cf" fillColor="#FEFF99">
+            <bounds x="176" y="38" width="152" height="44"/>
+          </child>
+          <child xsi:type="archimate:Note" id="id-5cd70e57162464ed6ec06b2d9491e1c3" fillColor="#FFFFFF">
+            <bounds x="12" y="98" width="316" height="125"/>
+            <content>DOM06 · Cobro bancario diferido, rechazos y contracargos; se puede contratar con adquirentes.</content>
+          </child>
+        </child>
+        <child xsi:type="archimate:DiagramObject" id="id-fbdb7a9ddfacb02dacfde7c3c6dedf9f" archimateElement="id-cfa9aac82da57cf582295673bc0ca4d2" fillColor="#BDD7EE">
+          <bounds x="720" y="30" width="340" height="235"/>
+          <child xsi:type="archimate:DiagramObject" id="id-11457c38ade08088a8a94b6c56e5721a" archimateElement="id-6abf7541e2b3dbf5e6e968de780558a9" fillColor="#FEFF99">
+            <bounds x="12" y="38" width="152" height="44"/>
+          </child>
+          <child xsi:type="archimate:Note" id="id-83e6c91bc07869d1390dc2e710bc6a58" fillColor="#FFFFFF">
+            <bounds x="12" y="98" width="316" height="125"/>
+            <content>DOM09 · Corrige errores de cobro con aprobaciones; flujo común que se adapta a las políticas del SIT.</content>
+          </child>
+        </child>
+      </child>
+      <child xsi:type="archimate:Group" id="id-eb57f432ad7772ce20428b5c714c7e68" name="DOMINIO GENÉRICO: capacidad común de mercado" fillColor="#EDEDED">
+        <bounds x="10" y="650" width="375" height="285"/>
+        <child xsi:type="archimate:DiagramObject" id="id-7364bc599d7d9d1953626ef9d645a1de" archimateElement="id-8400091de414f4872b2a31e752e63841" fillColor="#E2E2E2">
+          <bounds x="10" y="30" width="340" height="235"/>
+          <child xsi:type="archimate:DiagramObject" id="id-6ea88ce1936cdac666a569966cbdd81f" archimateElement="id-2c03c37f38d6b77938af0907bd557f70" fillColor="#FEFF99">
+            <bounds x="12" y="38" width="152" height="44"/>
+          </child>
+          <child xsi:type="archimate:Note" id="id-a1467df7c55e56e317b95adb21ee1479" fillColor="#FFFFFF">
+            <bounds x="12" y="98" width="316" height="125"/>
+            <content>DOM10 · Consultas y reportes no son exclusivos del SIT; existen herramientas de inteligencia de negocios.</content>
+          </child>
+        </child>
+      </child>
+      <child xsi:type="archimate:Note" id="id-98ff6c4de73005c1afcd3bb2db9820d0" fillColor="#FFFFFF">
+        <bounds x="400" y="670" width="700" height="50"/>
+        <content>Fuera de los dominios: operación de validadores, flota y rutas, atención general de PQR, contabilidad y tesorería, y certificación de perfiles (ver README §5.5).</content>
+      </child>
+    </element>
     <element xsi:type="archimate:ArchimateDiagramModel" name="V6a Agregados - (dominio)" id="id-b0000000000000000000000000000006"/>
     <element xsi:type="archimate:ArchimateDiagramModel" name="V7 Lenguaje ubicuo" id="id-b0000000000000000000000000000007"/>
     <element xsi:type="archimate:ArchimateDiagramModel" name="V8 Mapa de contextos" id="id-b0000000000000000000000000000008" viewpoint="application_cooperation"/>
