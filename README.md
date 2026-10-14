@@ -379,7 +379,7 @@ Quedan las 6 interoperabilidades que pedía el enunciado (servicio al cliente, f
 
 ### V5 borrador
 
-## 5. T23 — Extracción de dominios
+## Extracción de dominios
 
 La extracción de dominios se realiza a partir de la estructura organizacional identificada en la entrevista, la cadena de valor y el proceso E2E representados en V3, y los servicios de negocio agrupados por capas y delimitados por alcance en V4.
 
