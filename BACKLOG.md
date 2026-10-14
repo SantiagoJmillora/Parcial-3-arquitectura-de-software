@@ -1,6 +1,6 @@
 # BACKLOG: Parcial 3, recaudo del sistema integrado de transporte
 
-> **Turno de modelo (archivo .archimate):** _libre_  ← escribe tu nombre aquí antes de abrir Archi y vuelve a dejarlo en _libre_ al terminar (ver [CLAUDE.md §7](CLAUDE.md#7-cómo-trabajamos-sin-responsables-fijos)).
+> **Turno de modelo (archivo .archimate):** Santiago Jaramillo (T33)  ← escribe tu nombre aquí antes de abrir Archi y vuelve a dejarlo en _libre_ al terminar (ver [CLAUDE.md §7](CLAUDE.md#7-cómo-trabajamos-sin-responsables-fijos)).
 
 ## Cómo usar este backlog
 - Las tareas están **en orden**. Toma la **primera tarea libre** (`[ ]`) cuyas dependencias estén en `[x]`.
@@ -78,7 +78,7 @@
 | ID | Estado | Tarea | Depende de | Entregable | Hecho cuando… | h |
 |---|---|---|---|---|---|---|
 | T32 | [x] Santiago Jaramillo 📝 | **Investigar** cómo representar el Bounded Context Canvas (ddd-crew) en Archi (agrupaciones como celdas, notas, elementos de motivación o aplicación) y **justificar** la elección | — | README §8 (justificación) | Hay una decisión de modelado escrita | 1 |
-| T33 | [ ] 🧩 | **V11 Bounded Context Canvas** del contexto **central**, en una sola página: propósito, clasificación estratégica, rol del dominio, lenguaje ubicuo, comunicación entrante y saliente, decisiones de negocio y supuestos | T32, T28, T30 | `vistas/V11_bounded_context_canvas.png` | Cabe en una página y es coherente con V5, V6, V7 y V8 | 2,5 |
+| T33 | [~] Santiago Jaramillo 🧩 | **V11 Bounded Context Canvas** del contexto **central**, en una sola página: propósito, clasificación estratégica, rol del dominio, lenguaje ubicuo, comunicación entrante y saliente, decisiones de negocio y supuestos | T32, T28, T30 | `vistas/V11_bounded_context_canvas.png` | Cabe en una página y es coherente con V5, V6, V7 y V8 | 2,5 |
 | T34 | [ ] 🧩 | **V10 Trazabilidad vertical**: meta (V1) → capacidad (V2) → servicio de negocio (V4) → servicio o componente de aplicación (V8), con realización, influencia, servicio y asignación | T31 | `vistas/V10_trazabilidad.png` | Al menos 2 cadenas completas se pueden seguir de punta a punta | 1,5 |
 | T35 | [ ] 🧩 | **Revisión de calidad del modelo**: notación correcta, relaciones válidas (Archi valida), sin elementos huérfanos y nombres según el glosario | T33, T34 | Modelo final | Pasa *Validate Model* en Archi sin errores | 1 |
 | T36 | [ ] 📝 | Exportar **todas** las vistas en PNG a `/vistas` y verificar que se vean en el README | T35 | `/vistas/*.png` | Las 11 vistas o más se ven en GitHub | 0,5 |
