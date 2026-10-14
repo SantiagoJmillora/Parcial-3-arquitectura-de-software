@@ -132,3 +132,22 @@ Registro de las decisiones tomadas al construir `modelo/recaudo.archimate`. Hay 
 - Las franjas por dominio son *Group* visuales; los términos de DDD del glosario no se modelan.
 - **Duplicado resuelto:** había dos actores para los operadores («Operadores de flota y operador del metro» de V4d y «BA05 · Operadores del SIT» de V3) y dos para la fiduciaria («Fiduciaria» de V4d y «BA06 · Fiduciaria / patrimonio autónomo» de V3). Los de V3 no tenían relaciones, así que se borraron y V3 apunta ahora a los de V4d, que conservan su `ID` (A2 y A3) y recogen la documentación de los borrados.
 - **Deuda de tarjeta y Cartera:** no se renombró el objeto de negocio. Son dos niveles del mismo concepto (una tarjeta frente al total que ve Finanzas), así que V7 asocia los dos significados al objeto «Deuda de tarjeta» y el glosario los diferencia.
+
+## 8. V6a a V6j Agregados, comandos y eventos (T29)
+
+**Contenido nuevo:** 105 elementos de aplicación (10 raíces `AG-DOMxx`, 2 entidades, 53 objetos de valor, 20 comandos `CMD-DOMxx` y 20 eventos `EVT-DOMxx`) y 130 relaciones. Una vista por dominio; V6a reutiliza la vista vacía original y las otras nueve se crearon a continuación.
+
+| Relación | Desde | Hacia | Para qué |
+|---|---|---|---|
+| Composición | Raíz (objeto de datos) | Entidad / objeto de valor | Lo que está dentro del límite del agregado. En la vista se muestra anidado |
+| Realización | Raíz | Objeto de negocio de V5 | Traza el modelo táctico al estratégico |
+| Acceso (lectura/escritura) | Comando (proceso de aplicación) | Raíz | El comando solo entra por la raíz |
+| Disparo | Comando | Evento (evento de aplicación) | El evento que emite cuando la raíz acepta el comando |
+| Disparo | Rol de V4d, evento de negocio de V3 o evento de otro dominio | Comando | Quién lo dispara. Entre dominios se nombra «política: …» |
+| Realización | Evento de aplicación | Evento de negocio de V3 | ResultadoConciliaciónRegistrado → BE03/BE04; LiquidaciónAprobada → BE05 |
+
+**Decisiones:**
+- Colores: raíz `#9FC9F3` en negrita, entidad `#CFE4FA`, objeto de valor y elementos de aplicación `#F0FFFF`, negocio `#FEFF99` y elementos de otro dominio en gris `#D9D9D9`.
+- Las invariantes van en una nota dentro del límite del agregado y también en la documentación de la raíz.
+- Los objetos de valor con el mismo nombre en dominios distintos son elementos distintos (cada contexto tiene su modelo; no hay núcleo compartido).
+- Las líneas de acceso de los comandos a la raíz usan puntos de quiebre para no cruzar las cajas; si se mueven elementos en Archi, hay que revisar esas líneas.

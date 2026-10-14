@@ -602,10 +602,31 @@ En los requisitos, contratos de servicios, eventos, comandos y documentación de
 
 ## 6. Agregados, comandos y eventos
 ### V6 Agregados, comandos y eventos
-_Un diagrama por dominio._
 
-#### V6a _Dominio…_
-![V6a](vistas/V6a_agregados_dominio.png)
+Hay una vista por dominio, de V6a (DOM01) a V6j (DOM10). Cada una está en la subsección de su dominio, debajo de la tabla del agregado.
+
+**Análisis.** Todas las vistas se leen igual. Arriba están los dos comandos del dominio como *procesos de aplicación*. A la izquierda de cada uno aparece quién lo dispara: un rol del ente gestor, un evento de negocio de V3 o un evento de otro dominio. A su derecha está el *evento de aplicación* que emite cuando la raíz lo acepta y, más a la derecha, quién escucha ese evento. Abajo se ve el límite del agregado. La raíz es un *objeto de datos* que contiene, por composición, sus entidades y objetos de valor; tiene al lado sus invariantes y realiza el objeto de negocio de V5. Los comandos acceden en lectura y escritura solo a la raíz, que es el único punto de entrada al agregado. En total son 10 raíces, 2 entidades, 53 objetos de valor, 20 comandos y 20 eventos.
+
+**Políticas entre dominios.** Las invariantes protegen la consistencia dentro de un agregado. La coordinación entre dominios se hace con políticas: un evento de un dominio dispara un comando de otro, sin que ninguno modifique el agregado ajeno. En las vistas, estas relaciones de disparo llevan el nombre «política: …».
+
+| Evento (dominio que lo emite) | Comando que dispara (dominio que escucha) | Regla de negocio |
+|---|---|---|
+| TarjetaBloqueada (DOM02) | RegistrarDecisiónControl (DOM04) | Una tarjeta reportada como perdida entra a la lista de control |
+| RespuestaDeCobroRegistrada (DOM06) | RegistrarDecisiónControl (DOM04) | Si el cobro bancario se rechaza en definitiva, la tarjeta queda en denegación hasta que pague |
+| DecisiónControlRegistrada (DOM04) | PublicarVersiónLista (DOM04) | Cada decisión nueva genera una versión de la lista para el proveedor |
+| TransacciónDeViajeProcesada (DOM05) | SolicitarCobroBancario (DOM06) | Los viajes con tarjeta bancaria se cobran en un cobro diario |
+| TransacciónTardíaReprocesada (DOM05) | EjecutarConciliación (DOM07) | Una transacción extemporánea (hasta 48 h) se incorpora a la conciliación |
+| SolicitudAjusteResuelta (DOM09) | EjecutarConciliación (DOM07) | Un ajuste aprobado tiene que verse en la conciliación del periodo |
+| ResultadoConciliaciónRegistrado (DOM07) | CalcularLiquidación (DOM08) | La liquidación solo se calcula sobre una base conciliada |
+| ConsultaSolicitada (DOM10) | GenerarResultadoConsulta (DOM10) | La consulta autorizada produce su resultado |
+
+**Decisiones.**
+- *Objeto de datos* para el agregado porque la raíz, las entidades y los objetos de valor son la estructura de información que maneja la aplicación. Cada raíz *realiza* el objeto de negocio de V5, y así se traza el modelo táctico hasta el estratégico.
+- *Proceso de aplicación* para los comandos y *evento de aplicación* para los eventos, como pide el enunciado. Los eventos que tienen un equivalente en el proceso E2E realizan el evento de negocio de V3: ResultadoConciliaciónRegistrado realiza BE03 y BE04, y LiquidaciónAprobada realiza BE05.
+- Cuando la tabla del dominio nombra como entidad a la misma raíz (Tarjeta en TarjetaVAMOS, AsignaciónPerfil en AsignaciónPerfilTarifario, TransacciónDeViaje, etc.), se modela solo la raíz para no duplicarla. Las únicas entidades aparte de la raíz son VersiónTarifaria (DOM01) y Titular (DOM03).
+- Las partes van *anidadas* dentro de la raíz, que es la notación de ArchiMate para la composición; la relación de composición existe en el modelo.
+- Un objeto de valor con el mismo nombre en dos dominios (por ejemplo, PeriodoVigencia o IdentificadorTarjeta) es un elemento distinto en cada uno, porque cada contexto tiene su propio modelo y no hay núcleo compartido (§7.4).
+- Quién dispara cada comando salió de los roles de V4d. El registro de recargas se asigna al asesor de Servicio al Cliente (recarga en taquilla); las recargas de los demás canales llegan por la ACL de canales de recarga.
 
 ### 6.1. Criterios de diseño
 
@@ -632,6 +653,9 @@ Este dominio concentra las reglas tarifarias que diferencian la operación del S
 
 **Alcance:** el agregado controla la configuración y publicación de las reglas tarifarias. No calcula por sí mismo el cobro de cada viaje ni realiza la liquidación a los operadores.
 
+#### V6a Agregados - Gestión tarifaria
+![V6a Agregados - Gestión tarifaria](vistas/V6a_agregados_gestion_tarifaria.png)
+
 ### 6.3. DOM02 — Gestión de medios de pago
 
 **Clasificación (§5.7):** Central.
@@ -643,6 +667,9 @@ Este dominio administra el ciclo de vida de la tarjeta VAMOS y su saldo. La tarj
 | TarjetaVAMOS    | **Entidad:** Tarjeta, identificada por un identificador único. **Objetos de valor:** IdentificadorTarjeta, SaldoCalculado, EstadoTarjeta, MontoRecarga. Se incluyen porque identifican la tarjeta, representan su saldo y describen las operaciones monetarias. | 1. Cada tarjeta debe tener un identificador único. 2. Una tarjeta bloqueada no puede autorizar nuevas operaciones de pago que requieran una tarjeta activa. 3. Una recarga confirmada debe reflejarse una sola vez en el saldo, evitando duplicar su efecto. | RegistrarRecarga; BloquearTarjeta. | RecargaRegistrada; TarjetaBloqueada. |
 
 **Alcance:** el agregado administra el estado y saldo de una tarjeta. La recepción de eventos del validador y el procesamiento de los viajes corresponden al dominio de Procesamiento de transacciones.
+
+#### V6b Agregados - Gestión de medios de pago
+![V6b Agregados - Gestión de medios de pago](vistas/V6b_agregados_medios_de_pago.png)
 
 ### 6.4. DOM03 — Gestión de usuarios y perfiles
 
@@ -656,6 +683,9 @@ Este dominio diferencia a la persona que utiliza el sistema, al titular de una t
 
 **Alcance:** el agregado controla la asignación del perfil tarifario. La certificación oficial de la condición de cada persona pertenece a una entidad externa; el SIT registra y utiliza el resultado recibido. Los perfiles de acceso al sistema son distintos de los perfiles tarifarios.
 
+#### V6c Agregados - Gestión de usuarios y perfiles
+![V6c Agregados - Gestión de usuarios y perfiles](vistas/V6c_agregados_usuarios_y_perfiles.png)
+
 ### 6.5. DOM04 — Gestión de listas de control
 
 **Clasificación (§5.7):** De soporte.
@@ -667,6 +697,9 @@ Este dominio gestiona las decisiones de inclusión y exclusión de tarjetas en l
 | EntradaListaControl | **Entidad:** EntradaControl, identificada por la tarjeta y su registro de control. **Objetos de valor:** IdentificadorTarjeta, TipoDecisión, MotivoControl, PeriodoVigencia, VersiónLista. Se incluyen porque expresan la decisión, su justificación y la versión que debe distribuirse. | 1. Cada entrada debe identificar la tarjeta y la decisión de control correspondiente. 2. Una decisión publicada debe tener una versión identificable y no puede distribuirse como si fuera una versión anterior. 3. Una entrada revocada no debe seguir figurando como una decisión vigente en la versión actual. | RegistrarDecisiónControl; PublicarVersiónLista. | DecisiónControlRegistrada; VersiónListaPublicada. |
 
 **Alcance:** el agregado conserva las decisiones de control y su publicación lógica. La operación de validadores y lectores queda fuera del alcance interno; estos consumen las listas a través de las interfaces correspondientes.
+
+#### V6d Agregados - Gestión de listas de control
+![V6d Agregados - Gestión de listas de control](vistas/V6d_agregados_listas_de_control.png)
 
 ### 6.6. DOM05 — Procesamiento de transacciones
 
@@ -680,6 +713,9 @@ Este dominio recibe registros de validación y los transforma en transacciones p
 
 **Alcance:** el agregado procesa cada registro y conserva su resultado. La reconstrucción de un viaje completo, con varias validaciones y transbordos, debe coordinar los registros relacionados; no se asume que cada validación sea por sí sola un viaje completo. La entrada original proviene de proveedores externos.
 
+#### V6e Agregados - Procesamiento de transacciones
+![V6e Agregados - Procesamiento de transacciones](vistas/V6e_agregados_procesamiento_transacciones.png)
+
 ### 6.7. DOM06 — Cobro con tarjeta bancaria
 
 **Clasificación (§5.7):** De soporte.
@@ -691,6 +727,9 @@ Este dominio administra el cobro bancario diferido y el seguimiento de respuesta
 | CobroBancario   | **Entidad:** CobroBancario, identificado por una referencia única de cobro. **Objetos de valor:** ReferenciaFinanciera, MontoCobro, EstadoCobro, CódigoRespuesta, ReferenciaExterna. Se incluyen para mantener la identidad de la operación, el valor solicitado y la respuesta del proveedor financiero. | 1. Cada solicitud de cobro debe tener una referencia única para evitar cobros duplicados por reintentos. 2. El importe del cobro debe ser positivo y corresponder al importe autorizado para la operación. 3. Un cobro confirmado no puede cambiar directamente a un estado incompatible sin una operación posterior trazable. | SolicitarCobroBancario; RegistrarRespuestaDeCobro. | CobroBancarioSolicitado; RespuestaDeCobroRegistrada. |
 
 **Alcance:** el agregado registra la solicitud y la respuesta del cobro. La autorización, el movimiento de fondos y la decisión final de la red financiera son responsabilidad del proveedor externo. Los contracargos pueden requerir un proceso adicional de gestión y resolución.
+
+#### V6f Agregados - Cobro con tarjeta bancaria
+![V6f Agregados - Cobro con tarjeta bancaria](vistas/V6f_agregados_cobro_bancario.png)
 
 ### 6.8. DOM07 — Consolidación y conciliación
 
@@ -704,6 +743,9 @@ Este dominio agrupa importes y contrasta los registros del recaudo con las venta
 
 **Alcance:** el agregado controla una ejecución de conciliación y su resultado. La consolidación previa de los registros puede alimentar el proceso; la liquidación utiliza los resultados validados como insumo, pero mantiene su propio agregado.
 
+#### V6g Agregados - Consolidación y conciliación
+![V6g Agregados - Consolidación y conciliación](vistas/V6g_agregados_consolidacion_conciliacion.png)
+
 ### 6.9. DOM08 — Liquidación a operadores
 
 **Clasificación (§5.7):** Central.
@@ -715,6 +757,9 @@ Este dominio determina los importes que corresponden a los operadores a partir d
 | LiquidaciónOperador | **Entidad:** LiquidaciónOperador, identificada por operador y periodo de liquidación. **Objetos de valor:** IdentificadorOperador, PeriodoLiquidación, BaseLiquidación, EsquemaRemuneración, ImporteLiquidación, ImporteSubsidio, EstadoLiquidación. Se incluyen para establecer el destinatario, el periodo, las reglas y los importes calculados. | 1. Toda liquidación debe estar asociada a un operador, un periodo y una base de cálculo identificables. 2. Los importes deben calcularse con un esquema de remuneración aplicable al periodo correspondiente. 3. Una liquidación aprobada no puede modificarse silenciosamente; cualquier corrección debe quedar registrada mediante un ajuste o un nuevo proceso autorizado. | CalcularLiquidación; AprobarLiquidación. | LiquidaciónCalculada; LiquidaciónAprobada. |
 
 **Alcance:** el agregado calcula y controla el estado de la liquidación de cada operador. La aprobación habilita la instrucción de pago, pero la ejecución de la transferencia y su confirmación corresponden a la fiduciaria o al sistema financiero externo.
+
+#### V6h Agregados - Liquidación a operadores
+![V6h Agregados - Liquidación a operadores](vistas/V6h_agregados_liquidacion_operadores.png)
 
 ### 6.10. DOM09 — Ajustes y devoluciones
 
@@ -728,6 +773,9 @@ Este dominio gestiona solicitudes de corrección o devolución relacionadas con 
 
 **Alcance:** el agregado registra, evalúa y resuelve la solicitud. La ejecución contable o financiera de una devolución debe integrarse con los dominios o sistemas responsables, sin asumir que la aprobación equivale a un reembolso ya pagado.
 
+#### V6i Agregados - Ajustes y devoluciones
+![V6i Agregados - Ajustes y devoluciones](vistas/V6i_agregados_ajustes_devoluciones.png)
+
 ### 6.11. DOM10 — Consulta, reportes e indicadores
 
 **Clasificación (§5.7):** Genérico.
@@ -739,6 +787,9 @@ Este dominio expone información de consulta y resultados agregados para los usu
 | SolicitudConsulta | **Entidad:** SolicitudConsulta, identificada por una referencia única. **Objetos de valor:** IdentificadorSolicitante, TipoConsulta, FiltrosConsulta, PeriodoConsulta, EstadoConsulta, ResultadoConsulta. Se incluyen para definir quién solicita la información, qué criterios utiliza y cuál es el estado de la consulta. | 1. Toda consulta debe identificar el tipo de información solicitada y los filtros necesarios. 2. La información solo puede entregarse si el solicitante está autorizado para acceder a ella. 3. El resultado debe corresponder a los filtros y al periodo solicitados, indicando cuando la información no esté disponible o esté incompleta. | SolicitarConsulta; GenerarResultadoConsulta. | ConsultaSolicitada; ResultadoConsultaGenerado. |
 
 **Alcance:** el agregado controla la solicitud y la generación del resultado. Los reportes e indicadores consumen datos de los dominios operacionales; no modifican directamente las tarjetas, las transacciones, las conciliaciones ni las liquidaciones.
+
+#### V6j Agregados - Consulta, reportes e indicadores
+![V6j Agregados - Consulta, reportes e indicadores](vistas/V6j_agregados_consulta_reportes.png)
 
 ### 6.12. Límites de consistencia e interacción entre dominios
 
