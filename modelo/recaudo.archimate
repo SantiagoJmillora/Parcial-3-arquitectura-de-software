@@ -148,6 +148,33 @@
     <element xsi:type="archimate:Resource" name="R05 · Sistemas existentes: Finanzas, PQR, perfiles y operación" id="id-2df824c6c7194e44b71c3ae695634685">
       <documentation>Sistemas externos/legados; nombres, APIs y responsables concretos quedan por confirmar en T19.</documentation>
     </element>
+    <element xsi:type="archimate:ValueStream" name="VS00 · Recaudo integrado del SIT" id="id-721bac24c1954b8a844f0860a2cb0652">
+      <documentation>Valor de extremo a extremo: recaudo íntegro, conciliable, trazable y distribuible para el ente gestor y los operadores.</documentation>
+    </element>
+    <element xsi:type="archimate:ValueStream" name="VS01 · Preparar reglas, tarifas y perfiles" id="id-b65028bda1c1475d90f187c70fe70011">
+      <documentation>Etapa habilitadora: mantener vigentes reglas tarifarias, transbordos y perfiles elegibles. No ocurre por cada transacción.</documentation>
+    </element>
+    <element xsi:type="archimate:ValueStream" name="VS02 · Capturar viaje y medio de pago" id="id-a5253b83fb6943048fa1b377b67b1fae">
+      <documentation>El usuario valida el viaje en equipos externos; estos no son administrados por la aplicación.</documentation>
+    </element>
+    <element xsi:type="archimate:ValueStream" name="VS03 · Recibir transacciones externas" id="id-d6f530368a2e4e4c9d623dabbeaf12c4">
+      <documentation>Obtener las transacciones transmitidas por la plataforma del proveedor y redes de pago.</documentation>
+    </element>
+    <element xsi:type="archimate:ValueStream" name="VS04 · Depurar y aplicar tarifas" id="id-3a3b1e7d51b849dfb3965fdc08a94cd5">
+      <documentation>Comprobar integridad, controlar duplicados y usar la hora efectiva de validación para aplicar reglas y transbordos.</documentation>
+    </element>
+    <element xsi:type="archimate:ValueStream" name="VS05 · Consolidar el recaudo" id="id-fbba340f74104befa282ca592c7db760">
+      <documentation>Consolidar por modo, ruta, operador y medio de pago.</documentation>
+    </element>
+    <element xsi:type="archimate:ValueStream" name="VS06 · Conciliar ventas y consignaciones" id="id-8723b68e82ad44be8357aa05fa292c69">
+      <documentation>Comparar transacciones, recargas, liquidaciones, extractos y consignaciones; gestionar diferencias.</documentation>
+    </element>
+    <element xsi:type="archimate:ValueStream" name="VS07 · Liquidar y aprobar distribución" id="id-2a5f46570a8a4c9bb5a983976e63d82a">
+      <documentation>Preparar soportes, calcular subsidios y cartera cuando corresponda y obtener aprobación financiera.</documentation>
+    </element>
+    <element xsi:type="archimate:ValueStream" name="VS08 · Cerrar y reportar resultados" id="id-43c3e055ba45441bb153a6c817cb78c9">
+      <documentation>Registrar confirmación fiduciaria, cerrar el período y producir reportes trazables.</documentation>
+    </element>
   </folder>
   <folder name="Business" id="id-a1b2c3d4e5f60718293a4b5c6d7e8f02" type="business">
     <element xsi:type="archimate:BusinessService" name="Recaudo del SIT (proceso E2E)" id="id-cbabe9190c6001cf0323d92e3e5b36cb">
@@ -1050,6 +1077,87 @@ Requisitos no funcionales: Sin trabajo manual; conserva el origen de cada dato.<
       <documentation>Objeto de negocio que maneja el servicio P9.</documentation>
       <property key="ID" value="O19"/>
     </element>
+    <element xsi:type="archimate:BusinessEvent" name="BE08 · Viaje validado en el acceso (externo)" id="id-39c7a8c3ee73412bb5048d85e72f23a1">
+      <documentation>Evento del ecosistema de transporte: la validación se genera en sistemas/dispositivos externos.</documentation>
+    </element>
+    <element xsi:type="archimate:BusinessProcess" name="BP00 · Configurar tarifas, perfiles y vigencias" id="id-683083494047474bb153f084c97d300a">
+      <documentation>Preparación transversal: configura las reglas aprobadas y los perfiles vigentes; no se ejecuta por cada viaje.</documentation>
+    </element>
+    <element xsi:type="archimate:BusinessEvent" name="BE01 · Lote disponible en plataforma del proveedor" id="id-ed5106878a214593b7c7f300d1723715">
+      <documentation>Evento externo que habilita la recepción; no implica administración del validador ni de IoT.</documentation>
+    </element>
+    <element xsi:type="archimate:BusinessProcess" name="BP01 · Recibir transacciones del proveedor y redes de pago" id="id-3e05224efb0946efb3dee5e4d12b6124">
+      <documentation>Recibe lotes/transacciones externas. El origen y la hora efectiva del evento deben conservarse; la llegada puede ser extemporánea.</documentation>
+    </element>
+    <element xsi:type="archimate:BusinessProcess" name="BP02 · Validar integridad, duplicados y temporalidad" id="id-13567698de9f42caba6b9870ffda34dd">
+      <documentation>Valida formato, identificadores, integridad e idempotencia; distingue hora de validación y hora de recepción para tratar transacciones tardías.</documentation>
+    </element>
+    <element xsi:type="archimate:BusinessProcess" name="BP03 · Aplicar tarifa, perfiles y transbordos" id="id-269bd082485a40e8907f88f0c09c3ae8">
+      <documentation>Evalúa la tarifa con las reglas vigentes aplicables, el perfil del usuario y las reglas de integración entre modos.</documentation>
+    </element>
+    <element xsi:type="archimate:BusinessProcess" name="BP04 · Consolidar por modo, ruta, operador y medio" id="id-852d9d1385d344109ef89f39e36cad5f">
+      <documentation>Agrupa los movimientos procesados para formar bases verificables del recaudo.</documentation>
+    </element>
+    <element xsi:type="archimate:BusinessProcess" name="BP05 · Conciliar ventas, recargas y consignaciones" id="id-1a188af777d8406e9f76dafb1a16e752">
+      <documentation>Contrasta los registros del sistema con información del proveedor, canales de recarga, redes de pago y consignaciones fiduciarias.</documentation>
+    </element>
+    <element xsi:type="archimate:BusinessEvent" name="BE02 · Transacciones recibidas" id="id-a6a30e94e1fa4a59bed7296ea881dea6">
+      <documentation>Confirma que las transacciones/lotes fueron recibidos por el proceso de recaudo.</documentation>
+    </element>
+    <element xsi:type="archimate:BusinessEvent" name="BE03 · Diferencias de conciliación detectadas" id="id-f9ed97bf792c42cbbb9ac5ca01a151c0">
+      <documentation>Evento de excepción que inicia la gestión de diferencias y puede causar reproceso.</documentation>
+    </element>
+    <element xsi:type="archimate:BusinessEvent" name="BE04 · Conciliación conforme" id="id-b568fbf099154442812ed58ed9c6a3aa">
+      <documentation>Evento de salida cuando no quedan diferencias bloqueantes para liquidar.</documentation>
+    </element>
+    <element xsi:type="archimate:BusinessProcess" name="BP06 · Resolver diferencias y reprocesar tardías" id="id-26d89954343d488baca8e642eb27454d">
+      <documentation>Actividad condicional: investiga diferencias, corrige datos autorizados y reingresa transacciones extemporáneas; luego vuelve a conciliación.</documentation>
+    </element>
+    <element xsi:type="archimate:BusinessProcess" name="BP07 · Calcular subsidios y preparar liquidación" id="id-4bdb172e2b024fbc9dc049f3c23b10b3">
+      <documentation>Prepara la liquidación por operador y calcula subsidios/cartera cuando aplique, dejando evidencia de las bases utilizadas.</documentation>
+    </element>
+    <element xsi:type="archimate:BusinessProcess" name="BP08 · Aprobar liquidación y remitir instrucción de pago" id="id-d3c690534b3e410e86cf5cedec75f13c">
+      <documentation>Finanzas/Tesorería revisa soportes y reglas contractuales; una vez aprobada, remite la instrucción de pago autorizada.</documentation>
+    </element>
+    <element xsi:type="archimate:BusinessProcess" name="BP09 · Ejecutar transferencia fiduciaria (externo)" id="id-95d1f8345e7148e592c9025fa253d4ae">
+      <documentation>Actividad externa al software: la fiduciaria ejecuta la transferencia de acuerdo con la instrucción recibida y devuelve confirmación.</documentation>
+    </element>
+    <element xsi:type="archimate:BusinessProcess" name="BP10 · Registrar cierre y publicar informes" id="id-d6ce01f5ab0f40f6a6e0c98d5a62d4ce">
+      <documentation>Tras recibir confirmación fiduciaria, registra el cierre del período y publica indicadores/reportes con trazabilidad.</documentation>
+    </element>
+    <element xsi:type="archimate:BusinessEvent" name="BE05 · Liquidación aprobada e instrucción autorizada" id="id-aec7cb9b35bf4b38ade4735d34d4163f">
+      <documentation>Evento que habilita el envío de instrucciones de pago a la fiduciaria.</documentation>
+    </element>
+    <element xsi:type="archimate:BusinessEvent" name="BE06 · Confirmación fiduciaria de pago recibida" id="id-f97432092d9e4fbab5720aec273985b3">
+      <documentation>Evento externo que confirma la ejecución del pago por la fiduciaria.</documentation>
+    </element>
+    <element xsi:type="archimate:BusinessEvent" name="BE07 · Período de recaudo cerrado" id="id-5bf476a558394621bd39d1015f2fd054">
+      <documentation>Evento final: cierre registrado y reportes publicados.</documentation>
+    </element>
+    <element xsi:type="archimate:BusinessActor" name="BA01 · Proveedor de recaudo" id="id-dad69a5d5b4d44feadfa0cc0d6d22402">
+      <documentation>Actor externo que opera la plataforma de recaudo y transmite las transacciones; los dispositivos e IoT están fuera del alcance del software.</documentation>
+    </element>
+    <element xsi:type="archimate:BusinessActor" name="BA02 · Redes de pago y entidades financieras" id="id-c911f9d707bf4a6da30ef16bd1940f3c">
+      <documentation>Actores externos para autorizaciones, presentaciones, cobros y extractos de pagos con tarjetas bancarias.</documentation>
+    </element>
+    <element xsi:type="archimate:BusinessActor" name="BA03 · Equipo de Recaudo y Tarifas" id="id-e0b6b42785b54efcb0ddbc1de4607a58">
+      <documentation>Responsable de reglas de recaudo, seguimiento de transacciones, consolidación, conciliación y preparación de liquidaciones.</documentation>
+    </element>
+    <element xsi:type="archimate:BusinessActor" name="BA04 · Finanzas y Tesorería" id="id-09f8092df59f4273b620fcd2bb3ef7c1">
+      <documentation>Revisa y aprueba soportes financieros, tramita instrucciones y participa en el cierre.</documentation>
+    </element>
+    <element xsi:type="archimate:BusinessActor" name="BA05 · Operadores del SIT" id="id-43220597e97a497fae2b5375ac427f3f">
+      <documentation>Receptores de liquidaciones y soportes de distribución del recaudo.</documentation>
+    </element>
+    <element xsi:type="archimate:BusinessActor" name="BA06 · Fiduciaria / patrimonio autónomo" id="id-4ad58b05ca9a40e2a73aec6360055371">
+      <documentation>Actor externo que ejecuta pagos según instrucciones autorizadas y emite confirmación.</documentation>
+    </element>
+    <element xsi:type="archimate:BusinessActor" name="BA07 · Instituciones certificadoras de perfiles" id="id-15cf7cbf9db7439fa9815f394b7f6ce7">
+      <documentation>Fuentes externas que certifican condiciones de elegibilidad para tarifas especiales.</documentation>
+    </element>
+    <element xsi:type="archimate:BusinessActor" name="BA08 · Usuario del sistema" id="id-95d2456afdcc4550b6ba9c976857151d">
+      <documentation>Pasajero que utiliza uno de los modos del SIT y valida el viaje mediante los medios de acceso disponibles.</documentation>
+    </element>
   </folder>
   <folder name="Application" id="id-a1b2c3d4e5f60718293a4b5c6d7e8f03" type="application">
     <element xsi:type="archimate:ApplicationComponent" name="Aplicación de recaudo SIT" id="id-83dccd3a61e64d5eb2a74ed638add2d7">
@@ -1852,6 +1960,81 @@ Requisitos no funcionales: Sin trabajo manual; conserva el origen de cada dato.<
     <element xsi:type="archimate:FlowRelationship" name="Sale: liquidación y soporte de cálculo" id="id-c1b01b86c13d43dc5e5601ba1917cc6e" source="id-c0c330fadc6177bb7d3ab640ce6a02fc" target="id-aacb3617102d346845dc4fd0a7efbe99"/>
     <element xsi:type="archimate:FlowRelationship" name="Sale: reportes obligatorios" id="id-44ccfda46874a10c6bee902029b486c3" source="id-c0c330fadc6177bb7d3ab640ce6a02fc" target="id-fa39ffaff3ffd20aed3a219d4a929afd"/>
     <element xsi:type="archimate:FlowRelationship" name="Sale: avisos de perfil vencido, deuda y tarifa" id="id-6cbd4909e43a5da4e61d40acee363230" source="id-83dccd3a61e64d5eb2a74ed638add2d7" target="id-a4fa974d2c8304fbd28c6957a5abd109"/>
+    <element xsi:type="archimate:TriggeringRelationship" id="id-727da0b0be48436a87db26f434d539c8" source="id-13567698de9f42caba6b9870ffda34dd" target="id-269bd082485a40e8907f88f0c09c3ae8">
+      <documentation>V3_GENERATED: La depuración habilita aplicar reglas tarifarias</documentation>
+    </element>
+    <element xsi:type="archimate:TriggeringRelationship" id="id-cc50687eddab44eab64a63e36162079f" source="id-1a188af777d8406e9f76dafb1a16e752" target="id-b568fbf099154442812ed58ed9c6a3aa">
+      <documentation>V3_GENERATED: Cuando la conciliación resulta conforme, se genera el hito</documentation>
+    </element>
+    <element xsi:type="archimate:TriggeringRelationship" id="id-7e1d651e1e9d4d97aa7140a714c16a42" source="id-f97432092d9e4fbab5720aec273985b3" target="id-d6ce01f5ab0f40f6a6e0c98d5a62d4ce">
+      <documentation>V3_GENERATED: La confirmación habilita el cierre del período</documentation>
+    </element>
+    <element xsi:type="archimate:TriggeringRelationship" id="id-6df241584b5d46289651a072d1fec31d" source="id-aec7cb9b35bf4b38ade4735d34d4163f" target="id-95d1f8345e7148e592c9025fa253d4ae">
+      <documentation>V3_GENERATED: La instrucción aprobada se remite a la fiduciaria</documentation>
+    </element>
+    <element xsi:type="archimate:TriggeringRelationship" id="id-d4d7bf0d798b46eeb65ca37fc17af37b" source="id-ed5106878a214593b7c7f300d1723715" target="id-3e05224efb0946efb3dee5e4d12b6124">
+      <documentation>V3_GENERATED: La disponibilidad del lote dispara la recepción</documentation>
+    </element>
+    <element xsi:type="archimate:FlowRelationship" id="id-b5202f51b9a14132810532f56ac59544" source="id-2a5f46570a8a4c9bb5a983976e63d82a" target="id-43c3e055ba45441bb153a6c817cb78c9">
+      <documentation>V3_GENERATED: Flujo de valor: VS07 · Liquidar y aprobar distribución hacia VS08 · Cerrar y reportar resultados</documentation>
+    </element>
+    <element xsi:type="archimate:TriggeringRelationship" id="id-13779b4ab83146a29ae8bc8dd98e6f51" source="id-d6ce01f5ab0f40f6a6e0c98d5a62d4ce" target="id-5bf476a558394621bd39d1015f2fd054">
+      <documentation>V3_GENERATED: El proceso produce cierre y reportes publicados</documentation>
+    </element>
+    <element xsi:type="archimate:TriggeringRelationship" id="id-db0e19f0b0f843b2860396750a39c9bd" source="id-b568fbf099154442812ed58ed9c6a3aa" target="id-4bdb172e2b024fbc9dc049f3c23b10b3">
+      <documentation>V3_GENERATED: La conciliación conforme habilita preparar la liquidación</documentation>
+    </element>
+    <element xsi:type="archimate:TriggeringRelationship" id="id-3fcd1643346c46df912d43e8a53ef543" source="id-1a188af777d8406e9f76dafb1a16e752" target="id-f9ed97bf792c42cbbb9ac5ca01a151c0">
+      <documentation>V3_GENERATED: Si se detectan diferencias, se genera evento de excepción</documentation>
+    </element>
+    <element xsi:type="archimate:TriggeringRelationship" id="id-1af8aed0890648858679ac299921699c" source="id-39c7a8c3ee73412bb5048d85e72f23a1" target="id-ed5106878a214593b7c7f300d1723715">
+      <documentation>V3_GENERATED: La validación es transmitida posteriormente por el proveedor; la disponibilidad puede ser diferida</documentation>
+    </element>
+    <element xsi:type="archimate:TriggeringRelationship" id="id-84283b6310c24e4891a55f36565a8eab" source="id-a6a30e94e1fa4a59bed7296ea881dea6" target="id-13567698de9f42caba6b9870ffda34dd">
+      <documentation>V3_GENERATED: La recepción dispara la validación de integridad</documentation>
+    </element>
+    <element xsi:type="archimate:FlowRelationship" id="id-fda3c6b303134ea9b80be6c50d3f08bf" source="id-d6f530368a2e4e4c9d623dabbeaf12c4" target="id-3a3b1e7d51b849dfb3965fdc08a94cd5">
+      <documentation>V3_GENERATED: Flujo de valor: VS03 · Recibir transacciones externas hacia VS04 · Depurar y aplicar tarifas</documentation>
+    </element>
+    <element xsi:type="archimate:FlowRelationship" id="id-3d190ad31b2044b7a31065ac05344b04" source="id-3a3b1e7d51b849dfb3965fdc08a94cd5" target="id-fbba340f74104befa282ca592c7db760">
+      <documentation>V3_GENERATED: Flujo de valor: VS04 · Depurar y aplicar tarifas hacia VS05 · Consolidar el recaudo</documentation>
+    </element>
+    <element xsi:type="archimate:TriggeringRelationship" id="id-b04859ca36504257a48b9764a8fbf0f0" source="id-f9ed97bf792c42cbbb9ac5ca01a151c0" target="id-26d89954343d488baca8e642eb27454d">
+      <documentation>V3_GENERATED: Las diferencias disparan su resolución</documentation>
+    </element>
+    <element xsi:type="archimate:FlowRelationship" id="id-be268c281bfe496182d6d1b09388a9cd" source="id-8723b68e82ad44be8357aa05fa292c69" target="id-2a5f46570a8a4c9bb5a983976e63d82a">
+      <documentation>V3_GENERATED: Flujo de valor: VS06 · Conciliar ventas y consignaciones hacia VS07 · Liquidar y aprobar distribución</documentation>
+    </element>
+    <element xsi:type="archimate:TriggeringRelationship" id="id-f9e0b10f231d4ef2a2fbc253c5fea378" source="id-852d9d1385d344109ef89f39e36cad5f" target="id-1a188af777d8406e9f76dafb1a16e752">
+      <documentation>V3_GENERATED: El consolidado inicia la conciliación</documentation>
+    </element>
+    <element xsi:type="archimate:TriggeringRelationship" id="id-929aa7123aa24228a52f965e74bd04de" source="id-95d1f8345e7148e592c9025fa253d4ae" target="id-f97432092d9e4fbab5720aec273985b3">
+      <documentation>V3_GENERATED: La fiduciaria ejecuta externamente y devuelve confirmación</documentation>
+    </element>
+    <element xsi:type="archimate:FlowRelationship" id="id-f7d6b542edcc49e69c1c8764aa8ee666" source="id-fbba340f74104befa282ca592c7db760" target="id-8723b68e82ad44be8357aa05fa292c69">
+      <documentation>V3_GENERATED: Flujo de valor: VS05 · Consolidar el recaudo hacia VS06 · Conciliar ventas y consignaciones</documentation>
+    </element>
+    <element xsi:type="archimate:TriggeringRelationship" id="id-eee4afe0fe7140729a6a02545a001584" source="id-26d89954343d488baca8e642eb27454d" target="id-1a188af777d8406e9f76dafb1a16e752">
+      <documentation>V3_GENERATED: Tras resolver diferencias, se repite la conciliación</documentation>
+    </element>
+    <element xsi:type="archimate:TriggeringRelationship" id="id-e814b1c3b6eb4848b4d8570011a57c77" source="id-269bd082485a40e8907f88f0c09c3ae8" target="id-852d9d1385d344109ef89f39e36cad5f">
+      <documentation>V3_GENERATED: Las transacciones tarifadas se consolidan</documentation>
+    </element>
+    <element xsi:type="archimate:TriggeringRelationship" id="id-89523b884c9b43a2ad8adf5a7caf5d4a" source="id-4bdb172e2b024fbc9dc049f3c23b10b3" target="id-d3c690534b3e410e86cf5cedec75f13c">
+      <documentation>V3_GENERATED: La propuesta de liquidación pasa a revisión financiera</documentation>
+    </element>
+    <element xsi:type="archimate:FlowRelationship" id="id-b0df75bf27cb437c9c07c064a27bbc1d" source="id-a5253b83fb6943048fa1b377b67b1fae" target="id-d6f530368a2e4e4c9d623dabbeaf12c4">
+      <documentation>V3_GENERATED: Flujo de valor: VS02 · Capturar viaje y medio de pago hacia VS03 · Recibir transacciones externas</documentation>
+    </element>
+    <element xsi:type="archimate:TriggeringRelationship" id="id-0cfba55cff7347c5ba382fe64845dec0" source="id-3e05224efb0946efb3dee5e4d12b6124" target="id-a6a30e94e1fa4a59bed7296ea881dea6">
+      <documentation>V3_GENERATED: La recepción produce el evento de transacciones recibidas</documentation>
+    </element>
+    <element xsi:type="archimate:TriggeringRelationship" id="id-2fc0ea540509434f89442a457bef4c3a" source="id-d3c690534b3e410e86cf5cedec75f13c" target="id-aec7cb9b35bf4b38ade4735d34d4163f">
+      <documentation>V3_GENERATED: La aprobación habilita la instrucción autorizada</documentation>
+    </element>
+    <element xsi:type="archimate:FlowRelationship" id="id-988879ea8f6f4c4f88a990b2a4fe4b03" source="id-b65028bda1c1475d90f187c70fe70011" target="id-a5253b83fb6943048fa1b377b67b1fae">
+      <documentation>V3_GENERATED: Flujo de valor: VS01 · Preparar reglas, tarifas y perfiles hacia VS02 · Capturar viaje y medio de pago</documentation>
+    </element>
   </folder>
   <folder name="Views" id="id-a1b2c3d4e5f60718293a4b5c6d7e8f09" type="diagrams">
     <element xsi:type="archimate:ArchimateDiagramModel" name="V1 Motivación" id="id-b0000000000000000000000000000001">
@@ -2475,7 +2658,154 @@ Apoyo - Verde</content>
 </content>
       </child>
     </element>
-    <element xsi:type="archimate:ArchimateDiagramModel" name="V3 Cadena de valor y proceso E2E" id="id-b0000000000000000000000000000003"/>
+    <element xsi:type="archimate:ArchimateDiagramModel" name="V3 Cadena de valor y proceso E2E" id="id-b0000000000000000000000000000003">
+      <child xsi:type="archimate:Note" id="id-dcfe460317244a988c002ac46f9dc1c6" name="V3_value_header" font="1|Segoe UI|10.0|1|WINDOWS|1|-12|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" fontColor="#FFFFFF" lineColor="#244B68" fillColor="#244B68" textPosition="1" borderType="2">
+        <bounds x="12" y="24" width="1940" height="28"/>
+        <content>CADENA DE VALOR&#xD;
+</content>
+      </child>
+      <child xsi:type="archimate:DiagramObject" id="id-79c9081f8d6f42018786e307020c3784" font="1|Segoe UI|10.0|1|WINDOWS|1|-12|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" fontColor="#16324F" lineColor="#376B93" fillColor="#DCE8F3" alpha="100" textPosition="1" archimateElement="id-721bac24c1954b8a844f0860a2cb0652">
+        <bounds x="22" y="60" width="1920" height="45"/>
+      </child>
+      <child xsi:type="archimate:DiagramObject" id="id-4e57d7474bfd4af2b4b03206c47f56aa" font="1|Segoe UI|9.0|1|WINDOWS|1|-11|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" fontColor="#17324D" lineColor="#4472A4" fillColor="#E6EEF7" alpha="100" textPosition="1" archimateElement="id-b65028bda1c1475d90f187c70fe70011">
+        <bounds x="22" y="116" width="230" height="66"/>
+        <sourceConnection xsi:type="archimate:Connection" id="id-c8550951e19e441ab148c5a6464f1185" source="id-4e57d7474bfd4af2b4b03206c47f56aa" target="id-66558929a9c945c4a91b7a8dea57534f" archimateRelationship="id-988879ea8f6f4c4f88a990b2a4fe4b03"/>
+      </child>
+      <child xsi:type="archimate:DiagramObject" id="id-66558929a9c945c4a91b7a8dea57534f" targetConnections="id-c8550951e19e441ab148c5a6464f1185" font="1|Segoe UI|9.0|1|WINDOWS|1|-11|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" fontColor="#17324D" lineColor="#4472A4" fillColor="#E6EEF7" alpha="100" textPosition="1" archimateElement="id-a5253b83fb6943048fa1b377b67b1fae">
+        <bounds x="264" y="116" width="230" height="66"/>
+        <sourceConnection xsi:type="archimate:Connection" id="id-adef4083960441699ce8a9edeb858485" source="id-66558929a9c945c4a91b7a8dea57534f" target="id-0c5f24384bc94e04800eaf8ebdb93f10" archimateRelationship="id-b0df75bf27cb437c9c07c064a27bbc1d"/>
+      </child>
+      <child xsi:type="archimate:DiagramObject" id="id-0c5f24384bc94e04800eaf8ebdb93f10" targetConnections="id-adef4083960441699ce8a9edeb858485" font="1|Segoe UI|9.0|1|WINDOWS|1|-11|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" fontColor="#17324D" lineColor="#4472A4" fillColor="#E6EEF7" alpha="100" textPosition="1" archimateElement="id-d6f530368a2e4e4c9d623dabbeaf12c4">
+        <bounds x="506" y="116" width="230" height="66"/>
+        <sourceConnection xsi:type="archimate:Connection" id="id-2740ff7217804bcea7b3cd6b905cf226" source="id-0c5f24384bc94e04800eaf8ebdb93f10" target="id-ef95dceb0e33484caa2c955dc4142bdd" archimateRelationship="id-fda3c6b303134ea9b80be6c50d3f08bf"/>
+      </child>
+      <child xsi:type="archimate:DiagramObject" id="id-ef95dceb0e33484caa2c955dc4142bdd" targetConnections="id-2740ff7217804bcea7b3cd6b905cf226" font="1|Segoe UI|9.0|1|WINDOWS|1|-11|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" fontColor="#17324D" lineColor="#4472A4" fillColor="#E6EEF7" alpha="100" textPosition="1" archimateElement="id-3a3b1e7d51b849dfb3965fdc08a94cd5">
+        <bounds x="748" y="116" width="230" height="66"/>
+        <sourceConnection xsi:type="archimate:Connection" id="id-6f72bc98f66644df8a1a6d9ffd82a04f" source="id-ef95dceb0e33484caa2c955dc4142bdd" target="id-eff3fb0a469b411fb328a8b93fea117a" archimateRelationship="id-3d190ad31b2044b7a31065ac05344b04"/>
+      </child>
+      <child xsi:type="archimate:DiagramObject" id="id-eff3fb0a469b411fb328a8b93fea117a" targetConnections="id-6f72bc98f66644df8a1a6d9ffd82a04f" font="1|Segoe UI|9.0|1|WINDOWS|1|-11|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" fontColor="#17324D" lineColor="#4472A4" fillColor="#E6EEF7" alpha="100" textPosition="1" archimateElement="id-fbba340f74104befa282ca592c7db760">
+        <bounds x="990" y="116" width="230" height="66"/>
+        <sourceConnection xsi:type="archimate:Connection" id="id-e50fa660069145d98e68a122e148eb81" source="id-eff3fb0a469b411fb328a8b93fea117a" target="id-86a7823523314ebf8d5aebc362a6db30" archimateRelationship="id-f7d6b542edcc49e69c1c8764aa8ee666"/>
+      </child>
+      <child xsi:type="archimate:DiagramObject" id="id-86a7823523314ebf8d5aebc362a6db30" targetConnections="id-e50fa660069145d98e68a122e148eb81" font="1|Segoe UI|9.0|1|WINDOWS|1|-11|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" fontColor="#17324D" lineColor="#4472A4" fillColor="#E6EEF7" alpha="100" textPosition="1" archimateElement="id-8723b68e82ad44be8357aa05fa292c69">
+        <bounds x="1232" y="116" width="230" height="66"/>
+        <sourceConnection xsi:type="archimate:Connection" id="id-2bdbefbc81694e1c8d9e09067b13af40" source="id-86a7823523314ebf8d5aebc362a6db30" target="id-100e34cd017243bb967c4e185febce55" archimateRelationship="id-be268c281bfe496182d6d1b09388a9cd"/>
+      </child>
+      <child xsi:type="archimate:DiagramObject" id="id-100e34cd017243bb967c4e185febce55" targetConnections="id-2bdbefbc81694e1c8d9e09067b13af40" font="1|Segoe UI|9.0|1|WINDOWS|1|-11|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" fontColor="#17324D" lineColor="#4472A4" fillColor="#E6EEF7" alpha="100" textPosition="1" archimateElement="id-2a5f46570a8a4c9bb5a983976e63d82a">
+        <bounds x="1474" y="116" width="230" height="66"/>
+        <sourceConnection xsi:type="archimate:Connection" id="id-28c0367f5ce04570a5a39bcd4c01affa" source="id-100e34cd017243bb967c4e185febce55" target="id-2a596d4b28564bf98a9a67cffb83ac3a" archimateRelationship="id-b5202f51b9a14132810532f56ac59544"/>
+      </child>
+      <child xsi:type="archimate:DiagramObject" id="id-2a596d4b28564bf98a9a67cffb83ac3a" targetConnections="id-28c0367f5ce04570a5a39bcd4c01affa" font="1|Segoe UI|9.0|1|WINDOWS|1|-11|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" fontColor="#17324D" lineColor="#4472A4" fillColor="#E6EEF7" alpha="100" textPosition="1" archimateElement="id-43c3e055ba45441bb153a6c817cb78c9">
+        <bounds x="1716" y="116" width="230" height="66"/>
+      </child>
+      <child xsi:type="archimate:Note" id="id-a15dcd284fb84a5990f79e51229e7884" name="V3_process_header" font="1|Segoe UI|10.0|1|WINDOWS|1|-12|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" fontColor="#FFFFFF" lineColor="#244B68" fillColor="#244B68" textPosition="1" borderType="2">
+        <bounds x="12" y="198" width="1940" height="28"/>
+        <content>PROCESO E2E · flujo operativo, eventos de negocio y tratamiento de excepciones</content>
+      </child>
+      <child xsi:type="archimate:DiagramObject" id="id-29dab083dbba4b45a072a20c493acb0a" font="1|Segoe UI|9.0|1|WINDOWS|1|-11|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" fontColor="#000000" lineColor="#C65911" fillColor="#80ffff" alpha="100" textPosition="1" archimateElement="id-39c7a8c3ee73412bb5048d85e72f23a1">
+        <bounds x="12" y="236" width="136" height="58"/>
+        <sourceConnection xsi:type="archimate:Connection" id="id-dc076f236b5e4a3eb6129bb503632893" source="id-29dab083dbba4b45a072a20c493acb0a" target="id-59772dbcf9164877b012d12e7c2b91ef" archimateRelationship="id-1af8aed0890648858679ac299921699c"/>
+      </child>
+      <child xsi:type="archimate:DiagramObject" id="id-ff38d58e98144a1d8e8ea6a1d66b6b4c" font="1|Segoe UI|9.0|1|WINDOWS|1|-11|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" fontColor="#4D3B00" lineColor="#BF9000" fillColor="#FFF2CC" alpha="100" textPosition="1" archimateElement="id-683083494047474bb153f084c97d300a">
+        <bounds x="1587" y="236" width="322" height="58"/>
+      </child>
+      <child xsi:type="archimate:DiagramObject" id="id-59772dbcf9164877b012d12e7c2b91ef" targetConnections="id-dc076f236b5e4a3eb6129bb503632893" font="1|Segoe UI|9.0|1|WINDOWS|1|-11|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" fontColor="#000000" lineColor="#C65911" fillColor="#80ffff" alpha="100" textPosition="1" archimateElement="id-ed5106878a214593b7c7f300d1723715">
+        <bounds x="17" y="346" width="131" height="68"/>
+        <sourceConnection xsi:type="archimate:Connection" id="id-e6ade5f23e514d6b9ba04285d9eea58e" source="id-59772dbcf9164877b012d12e7c2b91ef" target="id-83c9ae3d23c34d0f9c8346c6382f60d2" archimateRelationship="id-d4d7bf0d798b46eeb65ca37fc17af37b"/>
+      </child>
+      <child xsi:type="archimate:DiagramObject" id="id-83c9ae3d23c34d0f9c8346c6382f60d2" targetConnections="id-e6ade5f23e514d6b9ba04285d9eea58e" font="1|Segoe UI|9.0|1|WINDOWS|1|-11|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" fontColor="#4D3B00" lineColor="#BF9000" fillColor="#FFF2CC" alpha="100" textPosition="1" archimateElement="id-3e05224efb0946efb3dee5e4d12b6124">
+        <bounds x="194" y="331" width="237" height="77"/>
+        <sourceConnection xsi:type="archimate:Connection" id="id-7532f7c43ac04d97958b16974c4c6339" source="id-83c9ae3d23c34d0f9c8346c6382f60d2" target="id-1ed03a1c27cc4f15ad6daef7b1c65dec" archimateRelationship="id-0cfba55cff7347c5ba382fe64845dec0"/>
+      </child>
+      <child xsi:type="archimate:DiagramObject" id="id-e66f4e0299404290b186044e2cb29313" targetConnections="id-06e6fc45041f4d31aed2d91f21d45d8d" font="1|Segoe UI|9.0|1|WINDOWS|1|-11|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" fontColor="#4D3B00" lineColor="#BF9000" fillColor="#FFF2CC" alpha="100" textPosition="1" archimateElement="id-13567698de9f42caba6b9870ffda34dd">
+        <bounds x="492" y="331" width="237" height="77"/>
+        <sourceConnection xsi:type="archimate:Connection" id="id-87e20cf40de346889858278d2724db52" source="id-e66f4e0299404290b186044e2cb29313" target="id-2a95a96b0dab465781435810fbaf5349" archimateRelationship="id-727da0b0be48436a87db26f434d539c8"/>
+      </child>
+      <child xsi:type="archimate:DiagramObject" id="id-2a95a96b0dab465781435810fbaf5349" targetConnections="id-87e20cf40de346889858278d2724db52" font="1|Segoe UI|9.0|1|WINDOWS|1|-11|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" fontColor="#4D3B00" lineColor="#BF9000" fillColor="#FFF2CC" alpha="100" textPosition="1" archimateElement="id-269bd082485a40e8907f88f0c09c3ae8">
+        <bounds x="798" y="331" width="237" height="77"/>
+        <sourceConnection xsi:type="archimate:Connection" id="id-7bad70a010f049ebacfef286aac5bbe0" source="id-2a95a96b0dab465781435810fbaf5349" target="id-04fe743cf3c940eb813759431a841856" archimateRelationship="id-e814b1c3b6eb4848b4d8570011a57c77"/>
+      </child>
+      <child xsi:type="archimate:DiagramObject" id="id-04fe743cf3c940eb813759431a841856" targetConnections="id-7bad70a010f049ebacfef286aac5bbe0" font="1|Segoe UI|9.0|1|WINDOWS|1|-11|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" fontColor="#4D3B00" lineColor="#BF9000" fillColor="#FFF2CC" alpha="100" textPosition="1" archimateElement="id-852d9d1385d344109ef89f39e36cad5f">
+        <bounds x="1118" y="331" width="237" height="77"/>
+        <sourceConnection xsi:type="archimate:Connection" id="id-4af5bc3414174d399abd47df3e9c7248" source="id-04fe743cf3c940eb813759431a841856" target="id-8281c48343ee415da2c68e1c6be9635a" archimateRelationship="id-f9e0b10f231d4ef2a2fbc253c5fea378"/>
+      </child>
+      <child xsi:type="archimate:DiagramObject" id="id-8281c48343ee415da2c68e1c6be9635a" targetConnections="id-28014ad0d84d4fb0ad4ff2493d58bc97 id-4af5bc3414174d399abd47df3e9c7248" font="1|Segoe UI|9.0|1|WINDOWS|1|-11|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" fontColor="#4D3B00" lineColor="#BF9000" fillColor="#FFF2CC" alpha="100" textPosition="1" archimateElement="id-1a188af777d8406e9f76dafb1a16e752">
+        <bounds x="1438" y="331" width="237" height="77"/>
+        <sourceConnection xsi:type="archimate:Connection" id="id-3691fc0e14f74be9926df01640fb0868" source="id-8281c48343ee415da2c68e1c6be9635a" target="id-f44d186ffb0147628c3e3d5199fee0ff" archimateRelationship="id-cc50687eddab44eab64a63e36162079f"/>
+        <sourceConnection xsi:type="archimate:Connection" id="id-adcea40d27184ef09b71477bcd9403a8" source="id-8281c48343ee415da2c68e1c6be9635a" target="id-53a71221e9344794923d7534d3d43631" archimateRelationship="id-3fcd1643346c46df912d43e8a53ef543"/>
+      </child>
+      <child xsi:type="archimate:DiagramObject" id="id-1ed03a1c27cc4f15ad6daef7b1c65dec" targetConnections="id-7532f7c43ac04d97958b16974c4c6339" font="1|Segoe UI|9.0|1|WINDOWS|1|-11|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" fontColor="#000000" lineColor="#C65911" fillColor="#80ffff" alpha="100" textPosition="1" archimateElement="id-a6a30e94e1fa4a59bed7296ea881dea6">
+        <bounds x="207" y="432" width="170" height="48"/>
+        <sourceConnection xsi:type="archimate:Connection" id="id-06e6fc45041f4d31aed2d91f21d45d8d" source="id-1ed03a1c27cc4f15ad6daef7b1c65dec" target="id-e66f4e0299404290b186044e2cb29313" archimateRelationship="id-84283b6310c24e4891a55f36565a8eab"/>
+      </child>
+      <child xsi:type="archimate:DiagramObject" id="id-53a71221e9344794923d7534d3d43631" targetConnections="id-adcea40d27184ef09b71477bcd9403a8" font="1|Segoe UI|9.0|1|WINDOWS|1|-11|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" fontColor="#000000" lineColor="#C65911" fillColor="#80ffff" alpha="100" textPosition="1" archimateElement="id-f9ed97bf792c42cbbb9ac5ca01a151c0">
+        <bounds x="1587" y="432" width="181" height="58"/>
+        <sourceConnection xsi:type="archimate:Connection" id="id-6503e147b7104460a564b29e879e0be0" source="id-53a71221e9344794923d7534d3d43631" target="id-468f3b5e10d148b2a06de5aef2899f13" archimateRelationship="id-b04859ca36504257a48b9764a8fbf0f0"/>
+      </child>
+      <child xsi:type="archimate:DiagramObject" id="id-f44d186ffb0147628c3e3d5199fee0ff" targetConnections="id-3691fc0e14f74be9926df01640fb0868" font="1|Segoe UI|9.0|1|WINDOWS|1|-11|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" fontColor="#000000" lineColor="#4472C4" fillColor="#80ffff" alpha="100" textPosition="1" archimateElement="id-b568fbf099154442812ed58ed9c6a3aa">
+        <bounds x="1334" y="432" width="202" height="57"/>
+        <sourceConnection xsi:type="archimate:Connection" id="id-168e1ccaf61245f7894f55c196a45b06" source="id-f44d186ffb0147628c3e3d5199fee0ff" target="id-86c829eff40e4ad292450c760c4ba19d" archimateRelationship="id-db0e19f0b0f843b2860396750a39c9bd"/>
+      </child>
+      <child xsi:type="archimate:DiagramObject" id="id-468f3b5e10d148b2a06de5aef2899f13" targetConnections="id-6503e147b7104460a564b29e879e0be0" font="1|Segoe UI|9.0|1|WINDOWS|1|-11|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" fontColor="#4D3B00" lineColor="#BF9000" fillColor="#FFF2CC" alpha="100" textPosition="1" archimateElement="id-26d89954343d488baca8e642eb27454d">
+        <bounds x="1438" y="514" width="237" height="77"/>
+        <sourceConnection xsi:type="archimate:Connection" id="id-28014ad0d84d4fb0ad4ff2493d58bc97" source="id-468f3b5e10d148b2a06de5aef2899f13" target="id-8281c48343ee415da2c68e1c6be9635a" archimateRelationship="id-eee4afe0fe7140729a6a02545a001584"/>
+      </child>
+      <child xsi:type="archimate:DiagramObject" id="id-86c829eff40e4ad292450c760c4ba19d" targetConnections="id-168e1ccaf61245f7894f55c196a45b06" font="1|Segoe UI|9.0|1|WINDOWS|1|-11|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" fontColor="#4D3B00" lineColor="#BF9000" fillColor="#FFF2CC" alpha="100" textPosition="1" archimateElement="id-4bdb172e2b024fbc9dc049f3c23b10b3">
+        <bounds x="1118" y="514" width="237" height="77"/>
+        <sourceConnection xsi:type="archimate:Connection" id="id-829fc07aa6444d19a06a4ab4e514ce78" source="id-86c829eff40e4ad292450c760c4ba19d" target="id-95d773710ce14a3b9e1f1efb3fe8de82" archimateRelationship="id-89523b884c9b43a2ad8adf5a7caf5d4a"/>
+      </child>
+      <child xsi:type="archimate:DiagramObject" id="id-95d773710ce14a3b9e1f1efb3fe8de82" targetConnections="id-829fc07aa6444d19a06a4ab4e514ce78" font="1|Segoe UI|9.0|1|WINDOWS|1|-11|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" fontColor="#4D3B00" lineColor="#BF9000" fillColor="#FFF2CC" alpha="100" textPosition="1" archimateElement="id-d3c690534b3e410e86cf5cedec75f13c">
+        <bounds x="798" y="514" width="237" height="77"/>
+        <sourceConnection xsi:type="archimate:Connection" id="id-a4bc5cdbcbd44032a47e36d932be3319" source="id-95d773710ce14a3b9e1f1efb3fe8de82" target="id-61f96f5893c1436db5b93317998481e4" archimateRelationship="id-2fc0ea540509434f89442a457bef4c3a"/>
+      </child>
+      <child xsi:type="archimate:DiagramObject" id="id-30ff0bb4127b404182d97904befd89a6" targetConnections="id-9d5f08d8858c4b909ba89183fcdb5a74" font="1|Segoe UI|9.0|1|WINDOWS|1|-11|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" fontColor="#4D3B00" lineColor="#BF9000" fillColor="#FFF2CC" alpha="100" textPosition="1" archimateElement="id-95d1f8345e7148e592c9025fa253d4ae">
+        <bounds x="478" y="514" width="237" height="77"/>
+        <sourceConnection xsi:type="archimate:Connection" id="id-66ad77f053e4441483158ba4357f0e20" source="id-30ff0bb4127b404182d97904befd89a6" target="id-f506d119d7eb4dfabf9536919c010118" archimateRelationship="id-929aa7123aa24228a52f965e74bd04de"/>
+      </child>
+      <child xsi:type="archimate:DiagramObject" id="id-3a0109fbf587426c979e989db9905a0b" targetConnections="id-9643c0720ee241989bac8a835673a078" font="1|Segoe UI|9.0|1|WINDOWS|1|-11|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" fontColor="#4D3B00" lineColor="#BF9000" fillColor="#FFF2CC" alpha="100" textPosition="1" archimateElement="id-d6ce01f5ab0f40f6a6e0c98d5a62d4ce">
+        <bounds x="158" y="514" width="237" height="77"/>
+        <sourceConnection xsi:type="archimate:Connection" id="id-587f255af5c14723858f47953b6d31a5" source="id-3a0109fbf587426c979e989db9905a0b" target="id-53803c8a5dd24981834be4a0cfb2c5a9" archimateRelationship="id-13779b4ab83146a29ae8bc8dd98e6f51"/>
+      </child>
+      <child xsi:type="archimate:DiagramObject" id="id-61f96f5893c1436db5b93317998481e4" targetConnections="id-a4bc5cdbcbd44032a47e36d932be3319" font="1|Segoe UI|9.0|1|WINDOWS|1|-11|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" fontColor="#000000" lineColor="#4472C4" fillColor="#80ffff" alpha="100" textPosition="1" archimateElement="id-aec7cb9b35bf4b38ade4735d34d4163f">
+        <bounds x="827" y="618" width="208" height="64"/>
+        <sourceConnection xsi:type="archimate:Connection" id="id-9d5f08d8858c4b909ba89183fcdb5a74" source="id-61f96f5893c1436db5b93317998481e4" target="id-30ff0bb4127b404182d97904befd89a6" archimateRelationship="id-6df241584b5d46289651a072d1fec31d"/>
+      </child>
+      <child xsi:type="archimate:DiagramObject" id="id-f506d119d7eb4dfabf9536919c010118" targetConnections="id-66ad77f053e4441483158ba4357f0e20" font="1|Segoe UI|9.0|1|WINDOWS|1|-11|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" fontColor="#000000" lineColor="#4472C4" fillColor="#80ffff" alpha="100" textPosition="1" archimateElement="id-f97432092d9e4fbab5720aec273985b3">
+        <bounds x="492" y="618" width="223" height="64"/>
+        <sourceConnection xsi:type="archimate:Connection" id="id-9643c0720ee241989bac8a835673a078" source="id-f506d119d7eb4dfabf9536919c010118" target="id-3a0109fbf587426c979e989db9905a0b" archimateRelationship="id-7e1d651e1e9d4d97aa7140a714c16a42"/>
+      </child>
+      <child xsi:type="archimate:DiagramObject" id="id-53803c8a5dd24981834be4a0cfb2c5a9" targetConnections="id-587f255af5c14723858f47953b6d31a5" font="1|Segoe UI|9.0|1|WINDOWS|1|-11|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" fontColor="#000000" lineColor="#6AA84F" fillColor="#80ffff" alpha="100" textPosition="1" archimateElement="id-5bf476a558394621bd39d1015f2fd054">
+        <bounds x="152" y="618" width="211" height="64"/>
+      </child>
+      <child xsi:type="archimate:Note" id="id-05b721a87e7a4be4b5629323ec0167ee" name="actors_header" font="1|Segoe UI|10.0|1|WINDOWS|1|-12|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" fontColor="#FFFFFF" lineColor="#244B68" fillColor="#244B68" textPosition="1" borderType="2">
+        <bounds x="13" y="712" width="1940" height="28"/>
+        <content>ACTORES DE NEGOCIO Y SISTEMAS EXTERNOS PARTICIPANTES</content>
+      </child>
+      <child xsi:type="archimate:DiagramObject" id="id-1f8432d5273f4fbea477c75764def476" font="1|Segoe UI|9.0|1|WINDOWS|1|-11|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" fontColor="#000000" lineColor="#527A9D" fillColor="#008040" alpha="40" textPosition="1" archimateElement="id-dad69a5d5b4d44feadfa0cc0d6d22402">
+        <bounds x="19" y="754" width="235" height="68"/>
+      </child>
+      <child xsi:type="archimate:DiagramObject" id="id-8e57614d8bbc4f2f8006340a75f5013f" font="1|Segoe UI|9.0|1|WINDOWS|1|-11|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" fontColor="#000000" lineColor="#527A9D" fillColor="#008040" alpha="40" textPosition="1" archimateElement="id-c911f9d707bf4a6da30ef16bd1940f3c">
+        <bounds x="262" y="754" width="235" height="68"/>
+      </child>
+      <child xsi:type="archimate:DiagramObject" id="id-79b472c04a0f405f95adb5705f0a1187" font="1|Segoe UI|9.0|1|WINDOWS|1|-11|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" fontColor="#000000" lineColor="#527A9D" fillColor="#008040" alpha="40" textPosition="1" archimateElement="id-e0b6b42785b54efcb0ddbc1de4607a58">
+        <bounds x="505" y="754" width="235" height="68"/>
+      </child>
+      <child xsi:type="archimate:DiagramObject" id="id-9101a01bd3704b51ad6cfcebe11e0df7" font="1|Segoe UI|9.0|1|WINDOWS|1|-11|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" fontColor="#000000" lineColor="#527A9D" fillColor="#008040" alpha="40" textPosition="1" archimateElement="id-09f8092df59f4273b620fcd2bb3ef7c1">
+        <bounds x="748" y="754" width="235" height="68"/>
+      </child>
+      <child xsi:type="archimate:DiagramObject" id="id-71a6cbe91b564c568f764da8dcfbbc68" font="1|Segoe UI|9.0|1|WINDOWS|1|-11|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" fontColor="#000000" lineColor="#527A9D" fillColor="#008040" alpha="40" textPosition="1" archimateElement="id-43220597e97a497fae2b5375ac427f3f">
+        <bounds x="991" y="754" width="235" height="68"/>
+      </child>
+      <child xsi:type="archimate:DiagramObject" id="id-cb3672cec9db46048edd9e4f71c300c0" font="1|Segoe UI|9.0|1|WINDOWS|1|-11|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" fontColor="#000000" lineColor="#527A9D" fillColor="#008040" alpha="40" textPosition="1" archimateElement="id-4ad58b05ca9a40e2a73aec6360055371">
+        <bounds x="1234" y="754" width="235" height="68"/>
+      </child>
+      <child xsi:type="archimate:DiagramObject" id="id-ad471090c64d4163913a14e1d87a9866" font="1|Segoe UI|9.0|1|WINDOWS|1|-11|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" fontColor="#000000" lineColor="#527A9D" fillColor="#008040" alpha="40" textPosition="1" archimateElement="id-15cf7cbf9db7439fa9815f394b7f6ce7">
+        <bounds x="1477" y="754" width="235" height="68"/>
+      </child>
+      <child xsi:type="archimate:DiagramObject" id="id-20a8a9028b7c42f9bb34cee2ea311294" font="1|Segoe UI|9.0|1|WINDOWS|1|-11|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" fontColor="#000000" lineColor="#527A9D" fillColor="#008040" alpha="40" textPosition="1" archimateElement="id-95d2456afdcc4550b6ba9c976857151d">
+        <bounds x="1720" y="754" width="235" height="68"/>
+      </child>
+    </element>
     <element xsi:type="archimate:ArchimateDiagramModel" name="V4 Descomposición de servicios" id="id-b0000000000000000000000000000004">
       <child xsi:type="archimate:DiagramObject" id="id-d66f49d0f8d08ee73fc61a1713872d6e" archimateElement="id-cbabe9190c6001cf0323d92e3e5b36cb">
         <bounds x="1560" y="20" width="340" height="60"/>
