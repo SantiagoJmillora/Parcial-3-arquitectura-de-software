@@ -523,9 +523,73 @@ Un dominio es central cuando contiene reglas o capacidades que diferencian la fo
 ### V7 Lenguaje ubicuo
 ![V7 Lenguaje ubicuo](vistas/V7_lenguaje_ubicuo.png)
 
-| Término | Definición | Dominio/contexto | Ejemplo |
+# Glosario de lenguaje ubicuo
+
+## 1. Objetivo
+
+Establecer un lenguaje común entre el equipo de arquitectura, Recaudo y Tarifas y las demás áreas involucradas en el SIT. El glosario define los términos utilizados en el proceso de recaudo y en los dominios identificados en la T23, evitando que una misma palabra se interprete de manera diferente según el contexto.
+
+Cuando un término tiene más de un significado, se identifica explícitamente el contexto al que pertenece cada definición.
+
+## 2. Glosario de términos
+
+| Término | Definición | Dominio | Ejemplo |
 |---|---|---|---|
-| | | | |
+| Viaje | Trayecto realizado por un pasajero, que puede comprender una o varias validaciones y transbordos. No equivale necesariamente a una única validación. | Procesamiento de transacciones | Un pasajero utiliza un bus alimentador y después el metro para completar su desplazamiento. |
+| Validación | Registro generado cuando un medio de pago se presenta ante un validador. Puede ser aceptada o rechazada y no siempre implica un cobro efectivo. | Procesamiento de transacciones | Un pasajero presenta su tarjeta VAMOS y el validador registra el resultado de la operación. |
+| Transbordo | Cambio de un servicio o modo de transporte a otro dentro de las condiciones de integración tarifaria establecidas. Puede tener un cobro adicional o beneficiarse de una tarifa integrada. | Gestión tarifaria | Un pasajero cambia de un bus alimentador al metro dentro de la ventana de integración permitida. |
+| Tarifa | **Contexto 1 — Configuración tarifaria:** valor o regla definido en el tarifario vigente. **Contexto 2 — Aplicación al viaje:** valor que corresponde cobrar después de aplicar las reglas a una validación o secuencia de viaje. La tarifa configurada no necesariamente coincide con el importe efectivamente cobrado. | Gestión tarifaria / Procesamiento de transacciones | El tarifario establece una tarifa plena, pero una validación puede recibir una tarifa reducida por un transbordo válido. |
+| Saldo | **Contexto 1 — Medio de pago:** valor disponible asociado a una tarjeta prepago. **Contexto 2 — Liquidación:** valor pendiente de pagar, recibir o ajustar entre las partes involucradas en la liquidación. Los dos significados no deben confundirse. | Gestión de medios de pago / Liquidación a operadores | Una tarjeta tiene saldo disponible para viajar, mientras que un operador tiene un saldo pendiente de liquidación. |
+| Usuario | Persona que utiliza los servicios del SIT o interactúa con sus canales. El término por sí solo no determina si es quien viaja, quien posee la tarjeta o quien presenta una reclamación. | Gestión de usuarios y perfiles | Una persona consulta el saldo de su tarjeta VAMOS. |
+| Pasajero | Persona que realiza un desplazamiento en alguno de los modos de transporte del SIT. | Procesamiento de transacciones | Un pasajero valida su tarjeta al ingresar al metro. |
+| Titular | Persona registrada como titular de un medio de pago personalizado. No necesariamente debe coincidir con quien presenta una consulta o reclamación. | Gestión de medios de pago | Una tarjeta personalizada está registrada a nombre de una persona. |
+| Cliente | Persona que establece una relación de atención o servicio con la organización. En este proyecto, el término debe precisarse según el proceso, porque puede referirse a un usuario que presenta una PQR y no necesariamente al titular de la tarjeta. | Ajustes y devoluciones | Una persona solicita la revisión de un cobro y se registra su caso de atención. |
+| Perfil | **Contexto 1 — Perfil tarifario:** condición que determina si una persona puede acceder a un beneficio tarifario. **Contexto 2 — Perfil de usuario del sistema:** conjunto de permisos que determina qué información o funciones puede consultar una persona dentro del software. No son equivalentes. | Gestión de usuarios y perfiles / Infraestructura y seguridad | Un estudiante tiene un perfil tarifario especial; un analista tiene permisos para consultar liquidaciones. |
+| Operador | **Contexto 1 — Operador de transporte:** empresa que presta el servicio de transporte y cuya remuneración se calcula según su contrato. **Contexto 2 — Operador de recaudo:** proveedor responsable de los dispositivos y servicios de recaudo contratados. El significado debe aclararse en cada conversación y registro. | Liquidación a operadores / Integración con el proveedor | El operador de transporte recibe una liquidación; el operador de recaudo entrega las transacciones registradas por los validadores. |
+| Transacción | **Contexto 1 — Transacción de validación:** registro generado por un validador que contiene información del intento o uso del medio de pago. **Contexto 2 — Transacción financiera:** operación de pago o movimiento procesado por una red financiera. Una validación no equivale necesariamente a una transacción financiera aprobada. | Procesamiento de transacciones / Cobro con tarjeta bancaria | El proveedor envía un registro de validación y posteriormente la red financiera informa el resultado del cobro. |
+| Tarjeta VAMOS | Medio de pago propio del escenario del SIT, disponible en modalidad personalizada o al portador, utilizado para acceder al servicio y gestionar saldo prepago. | Gestión de medios de pago | Un usuario recarga su tarjeta VAMOS antes de viajar. |
+| Recarga | Operación mediante la cual se incorpora valor a un medio de pago prepago. Debe distinguirse del registro de la venta y de la confirmación financiera del ingreso. | Gestión de medios de pago | Un usuario realiza una recarga y el sistema registra la operación correspondiente. |
+| Saldo calculado | Saldo que el sistema central determina a partir de las recargas, validaciones, ajustes y demás movimientos conocidos. Puede diferir temporalmente del saldo registrado en la tarjeta cuando existen transacciones pendientes de recepción. | Gestión de medios de pago | Una transacción todavía no recibida hace que el saldo reconstruido por el sistema central sea diferente del saldo registrado previamente. |
+| Bloqueo | Decisión que impide o restringe el uso de un medio de pago, por ejemplo, por pérdida o por una condición de control. Su aplicación efectiva depende de la actualización de los sistemas que participan en la validación. | Gestión de listas de control | Una tarjeta reportada como perdida se bloquea y la decisión se distribuye a los validadores. |
+| Lista de control | Conjunto de registros que comunica condiciones de bloqueo u otras decisiones que los dispositivos deben aplicar según las reglas operativas. | Gestión de listas de control | El proveedor recibe una lista actualizada para impedir el uso de tarjetas bloqueadas. |
+| Transacción duplicada | Registro recibido más de una vez que corresponde a una misma operación de origen y debe identificarse para evitar contabilizaciones o cobros repetidos. | Procesamiento de transacciones | Un lote se transmite nuevamente y el sistema identifica registros que ya habían sido procesados. |
+| Conciliación | Proceso de comparar registros de diferentes fuentes para identificar coincidencias, diferencias y valores pendientes de explicación. | Consolidación y conciliación | Se comparan las ventas registradas con las consignaciones recibidas y se investiga una diferencia. |
+| Diferencia de conciliación | Desviación identificada entre los valores o registros que deberían coincidir según las reglas de conciliación. Debe investigarse y documentarse antes de considerarse resuelta. | Consolidación y conciliación | El valor reportado por el proveedor no coincide con el valor consignado a la fiducia. |
+| Liquidación | Proceso de determinar los valores que corresponden a cada operador, aplicando las reglas contractuales y la información operativa y financiera pertinente. | Liquidación a operadores | Se calcula el valor que corresponde pagar a un operador por un periodo. |
+| Base de liquidación | Conjunto de datos y parámetros utilizados para calcular la remuneración de los operadores y los valores relacionados. | Liquidación a operadores | La base reúne el recaudo consolidado y los datos operativos necesarios para aplicar la fórmula contractual. |
+| Esquema de remuneración | Reglas contractuales que determinan cómo se calcula el pago correspondiente a un operador. | Liquidación a operadores | La liquidación aplica la fórmula establecida en el contrato del operador. |
+| Subsidio | Recurso destinado a cubrir el beneficio tarifario o la diferencia económica que corresponda según las reglas aplicables y la entidad responsable de financiarlo. | Liquidación a operadores | El sistema calcula el valor de los subsidios que debe solicitarse a la Alcaldía. |
+| Cartera | Valores pendientes de cobro o recuperación, por ejemplo, cuando un cobro bancario no se procesa correctamente. El término debe asociarse explícitamente al responsable y al tipo de obligación. | Cobro con tarjeta bancaria | Un pago rechazado genera un importe pendiente de recuperación. |
+| Contracargo | Reversión o disputa de una operación de pago iniciada a través del mecanismo financiero correspondiente. Requiere seguimiento y conciliación con los actores financieros. | Cobro con tarjeta bancaria | Una operación bancaria es disputada y se registra para su revisión. |
+| Ajuste | Modificación autorizada de un registro o valor económico para corregir una diferencia o un error documentado. Debe conservarse su motivo y trazabilidad. | Ajustes y devoluciones | Se registra un ajuste después de confirmar que un usuario recibió un cobro incorrecto. |
+| Devolución | Operación mediante la cual se retorna un valor al usuario después de la revisión y aprobación correspondientes. | Ajustes y devoluciones | Se aprueba devolver un cobro duplicado identificado durante una reclamación. |
+| Evento de negocio | Hecho relevante que ocurre en el negocio y que puede desencadenar actividades posteriores. Se expresa como algo que sucedió, no como una orden para ejecutar una acción. | Transversal a los dominios | Se detectó una diferencia de conciliación. |
+| Comando | Solicitud que expresa la intención de ejecutar una acción de negocio. Generalmente se formula como una acción en imperativo. | Transversal a los dominios | `RecargarTarjeta` solicita registrar una recarga. |
+| Entidad | Objeto del dominio que posee identidad propia y cuyo estado puede cambiar a lo largo del tiempo. | Transversal a los dominios | Una tarjeta conserva su identidad aunque cambien su saldo o su estado de bloqueo. |
+| Objeto de valor | Objeto definido por sus atributos y no por una identidad independiente; sus valores se tratan como inmutables. | Transversal a los dominios | `Dinero` representa un importe y una moneda determinados. |
+| Agregado | Conjunto de objetos de dominio que mantiene un límite de consistencia y protege reglas que deben cumplirse en sus operaciones. | Transversal a los dominios | Un agregado de tarjeta puede proteger la regla de que una tarjeta bloqueada no valide. |
+| Invariante | Regla que debe mantenerse verdadera dentro del límite de consistencia de un agregado. | Transversal a los dominios | El saldo no puede quedar por debajo del límite permitido por las reglas del medio de pago. |
+| Política de negocio | Regla que coordina actividades o reacciones entre procesos, servicios o eventos y que no necesariamente se resuelve dentro de un único agregado. | Transversal a los dominios | Cuando se aprueba un ajuste, una política determina qué proceso debe recibir la novedad para actualizar la conciliación. |
+| Contrato de servicio | Definición explícita de lo que un servicio recibe, devuelve, los errores que comunica y sus requisitos no funcionales. | Transversal a los servicios | El contrato de recepción de transacciones define el formato de entrada y la respuesta ante registros inválidos. |
+| Capa anticorrupción (ACL) | Mecanismo de integración que transforma o adapta los conceptos de un sistema externo para preservar el lenguaje y las reglas del dominio interno. | Integración con sistemas externos | Una ACL traduce el formato de transacciones del proveedor al modelo utilizado por el procesamiento del SIT. |
+
+## 3. Resolución explícita de términos ambiguos
+
+Los términos siguientes requieren especial cuidado al hablar, documentar requisitos o definir contratos de servicios.
+
+| Término ambiguo | Significados que deben distinguirse | Regla de uso |
+|---|---|---|
+| Viaje / Validación / Transbordo | El viaje representa el trayecto; la validación representa un registro de uso del medio de pago; el transbordo representa el cambio entre servicios o modos bajo condiciones tarifarias. | No utilizar «viaje» como sinónimo de una única validación. |
+| Tarifa | Tarifa configurada en el tarifario frente a tarifa aplicada a una validación o viaje. | Especificar si se habla del valor configurado, calculado o efectivamente cobrado. |
+| Saldo | Saldo disponible en un medio de pago frente a valor pendiente en una liquidación financiera. | Usar «saldo de tarjeta» o «saldo pendiente de liquidación», según corresponda. |
+| Usuario / Pasajero / Titular / Cliente | Usuario del sistema; persona que viaja; titular registrado de una tarjeta; persona que interactúa con la atención al cliente. | Identificar el rol específico de la persona en cada proceso. No asumir que todos corresponden a la misma persona. |
+| Perfil | Perfil tarifario que habilita beneficios frente a perfil de acceso al software que determina permisos. | Utilizar «perfil tarifario» o «perfil de acceso» de forma explícita. |
+| Operador | Empresa operadora del transporte frente al proveedor operador del recaudo. | Especificar «operador de transporte» u «operador de recaudo». |
+| Transacción | Registro de validación recibido del proveedor frente a operación financiera de pago. | Especificar «transacción de validación» o «transacción financiera» y no asumir que ambas se producen o aprueban simultáneamente. |
+
+## 4. Regla general de uso del lenguaje ubicuo
+
+En los requisitos, contratos de servicios, eventos, comandos y documentación de los dominios se deben utilizar los términos definidos en este glosario. Cuando un término tenga más de un significado, se debe indicar el contexto o emplear la expresión específica establecida en la sección 3. Las áreas de negocio y el equipo de arquitectura deben mantener estas definiciones consistentes en los modelos, las interfaces y las conversaciones del proyecto.
 
 ## 6. Agregados, comandos y eventos
 ### V6 Agregados, comandos y eventos
