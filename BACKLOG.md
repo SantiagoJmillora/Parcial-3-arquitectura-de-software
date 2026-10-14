@@ -1,6 +1,6 @@
 # BACKLOG: Parcial 3, recaudo del sistema integrado de transporte
 
-> **Turno de modelo (archivo .archimate):** _libre_  ← escribe tu nombre aquí antes de abrir Archi y vuelve a dejarlo en _libre_ al terminar (ver [CLAUDE.md §7](CLAUDE.md#7-cómo-trabajamos-sin-responsables-fijos)).
+> **Turno de modelo (archivo .archimate):** Santiago Jaramillo (T29)  ← escribe tu nombre aquí antes de abrir Archi y vuelve a dejarlo en _libre_ al terminar (ver [CLAUDE.md §7](CLAUDE.md#7-cómo-trabajamos-sin-responsables-fijos)).
 
 ## Cómo usar este backlog
 - Las tareas están **en orden**. Toma la **primera tarea libre** (`[ ]`) cuyas dependencias estén en `[x]`.
@@ -69,7 +69,7 @@
 | T26 | [x] David Pabon 📝 | **Glosario de lenguaje ubicuo**: término, definición, dominio y ejemplo. Resolver los términos ambiguos de [CLAUDE.md §5](CLAUDE.md#5-términos-ambiguos-que-hay-que-resolver-en-el-lenguaje-ubicuo) y dejar explícito **cuando un término cambia de significado entre contextos** | T23 | README §5 | ≥ 25 términos y ≥ 3 términos con doble significado | 2 |
 | T27 | [x] Santiago Jaramillo 🧩 | **V7 Lenguaje ubicuo**: representation y significado asociados a los objetos de negocio | T26 | `vistas/V7_lenguaje_ubicuo.png` | Los términos de V7 son los mismos que se usan en las demás vistas | 1 |
 | T28 | [x] David Pabon 📝 | **DDD táctico** por dominio: entidades vs objetos de valor; agregados con **raíz, límites e invariantes**; **comandos → eventos**. Argumentar el alcance de cada entidad y cada agregado | T24, T26 | README §6 (una tabla por dominio) | Cada agregado tiene ≥ 2 invariantes y su lista de comandos y eventos | 3 |
-| T29 | [ ] 🧩 | **V6a…V6n Agregados, comandos y eventos**: **un diagrama por dominio** (objeto de negocio y de datos, proceso de aplicación = comando, evento de aplicación o de negocio) | T28 | `vistas/V6x_agregados_<dominio>.png` | Hay una vista por dominio | 3 |
+| T29 | [~] Santiago Jaramillo 🧩 | **V6a…V6n Agregados, comandos y eventos**: **un diagrama por dominio** (objeto de negocio y de datos, proceso de aplicación = comando, evento de aplicación o de negocio) | T28 | `vistas/V6x_agregados_<dominio>.png` | Hay una vista por dominio | 3 |
 | T30 | [x] David Pabon 📝 | **Mapa de contextos**: listar los bounded contexts y el **patrón de relación** entre cada par y con los externos (C/S, conformista, núcleo compartido, OHS, PL, ACL), con justificación | T24, T19 | README §7 | Es coherente con la ACL de la Fase 2 (T19 y T22) | 1,5 |
 | T31 | [ ] 🧩 | **V8 Mapa de contextos** (componentes, interfaces, servicios de aplicación, flujos y relaciones de servicio), con los patrones etiquetados | T30 | `vistas/V8_mapa_contextos.png` | Cada relación tiene su patrón visible | 1,5 |
 
