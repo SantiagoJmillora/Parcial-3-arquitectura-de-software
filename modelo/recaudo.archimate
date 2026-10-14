@@ -2301,6 +2301,30 @@ Requisitos no funcionales: Sin trabajo manual; conserva el origen de cada dato.<
       <documentation>Glosario §5.8. Precisar el rol: pasajero, titular o cliente.</documentation>
       <property key="ID" value="SIG37"/>
     </element>
+    <element xsi:type="archimate:Constraint" name="Ventana de transbordo: 90 minutos desde la primera validación pagada, en un servicio distinto" id="id-c44e2e0aca1840b4a2ad1b28bc782b36">
+      <documentation>Regla de negocio del contexto de procesamiento de transacciones (BC05). Entrevista, pregunta 4.2. Un cambio de línea dentro del área paga no genera validación y no cuenta como transbordo.</documentation>
+      <property key="ID" value="RN-BC05-01"/>
+    </element>
+    <element xsi:type="archimate:Constraint" name="Máximo dos transbordos por viaje: el primero cuesta $0 y el segundo un valor reducido (≈ $400)" id="id-8a2929b9f95d43d2bd90dc5de9ca299c">
+      <documentation>Regla de negocio del contexto de procesamiento de transacciones (BC05). Entrevista, preguntas 4.2 y 4.3. El primer transbordo pasa aunque la tarjeta no tenga saldo; el segundo sí necesita saldo.</documentation>
+      <property key="ID" value="RN-BC05-02"/>
+    </element>
+    <element xsi:type="archimate:Constraint" name="Las reglas de transbordo son iguales para todos los perfiles; el perfil solo cambia la tarifa del primer tramo" id="id-e0eb773bb09b4f1b8f4e2e772111e510">
+      <documentation>Regla de negocio del contexto de procesamiento de transacciones (BC05). Entrevista, pregunta 4.3. La tarifa es única para los tres modos.</documentation>
+      <property key="ID" value="RN-BC05-03"/>
+    </element>
+    <element xsi:type="archimate:Constraint" name="Estudiantes: cupo de unos 50 viajes subsidiados al mes; desde el 51 pagan tarifa plena y los transbordos gratuitos no cuentan" id="id-c1b02ef722634a6399c88259fbc0758e">
+      <documentation>Regla de negocio del contexto de procesamiento de transacciones (BC05). Entrevista, pregunta 4.6 (límites de uso).</documentation>
+      <property key="ID" value="RN-BC05-04"/>
+    </element>
+    <element xsi:type="archimate:Constraint" name="Tarjeta bancaria: un solo cobro diario por la suma de los viajes del día, ya con los transbordos aplicados" id="id-21be91d0dd244684a1f96774069dc37f">
+      <documentation>Regla de negocio del contexto de procesamiento de transacciones (BC05). Entrevista, preguntas 2.6 y 4.8. El cobro lo hace el contexto de cobro bancario con lo que procesa este contexto.</documentation>
+      <property key="ID" value="RN-BC05-05"/>
+    </element>
+    <element xsi:type="archimate:Constraint" name="Transacción extemporánea (hasta 48 h): se procesa con las reglas vigentes en la fecha de la validación; si el periodo ya cerró, entra como ajuste extemporáneo" id="id-f8e2cf3930d245ef9705794d98d1f414">
+      <documentation>Regla de negocio del contexto de procesamiento de transacciones (BC05). Entrevista, pregunta 2.3 y repregunta R4.b. Fuente frecuente de diferencias de conciliación.</documentation>
+      <property key="ID" value="RN-BC05-06"/>
+    </element>
   </folder>
   <folder name="Implementation &amp; Migration" id="id-a1b2c3d4e5f60718293a4b5c6d7e8f06" type="implementation_migration"/>
   <folder name="Other" id="id-a1b2c3d4e5f60718293a4b5c6d7e8f07" type="other">
@@ -3073,6 +3097,33 @@ Se relaciona con el servicio de plataforma P10 de V4. Argumento de la clasificac
     <element xsi:type="archimate:FlowRelationship" id="id-b765cffa61ac4f7faf020e94d15b8a8d" source="id-ae578cb031c54dbf8121d5241f9addeb" target="id-c62baff106bf4cd493a8b7fb4928716c" name="evento: TransacciónTardíaReprocesada"/>
     <element xsi:type="archimate:FlowRelationship" id="id-efc48fcbee0a4e9db472ac81b9d4a326" source="id-a80091ce84104c838ca530770353d2ba" target="id-c62baff106bf4cd493a8b7fb4928716c" name="evento: SolicitudAjusteResuelta"/>
     <element xsi:type="archimate:FlowRelationship" id="id-090027113a2f4cbb8bd0a3cc64d91e53" source="id-c62baff106bf4cd493a8b7fb4928716c" target="id-cedc5bd6eab548c6aa081e7eb15d3494" name="evento: ResultadoConciliaciónRegistrado"/>
+    <element xsi:type="archimate:AssignmentRelationship" id="id-eaa598200cef43d5b791ceaea3e59144" source="id-364d2d39f8d64b949c836b6f74ed699a" target="id-79175024a565497ba584c5babec47bf4"/>
+    <element xsi:type="archimate:AssignmentRelationship" id="id-c45098438ee8450180dadb968dfda396" source="id-364d2d39f8d64b949c836b6f74ed699a" target="id-387f14f08824407490900d39f3f1fe5d"/>
+    <element xsi:type="archimate:AssignmentRelationship" id="id-5988f05f51924e749084de6e007eb58c" source="id-c5c0e69503c64baa95a8cbde14aac9a7" target="id-70413d52bb5746119a55d0ed38fd3f82"/>
+    <element xsi:type="archimate:AssignmentRelationship" id="id-cdebf0a2614f4ee49e6dd5228b7f7434" source="id-c5c0e69503c64baa95a8cbde14aac9a7" target="id-3ebd2dd689af4a77ba945775c0ff74b0"/>
+    <element xsi:type="archimate:AssignmentRelationship" id="id-15886562323d43d2918c33ce120b1b17" source="id-ee88ea8e7bcb4cb4b7fdfe73f6fa3dde" target="id-5b7509c2feb546ac98fcb0e5da88df35"/>
+    <element xsi:type="archimate:AssignmentRelationship" id="id-4e37877807f7454f85fb38e4b155bf54" source="id-ee88ea8e7bcb4cb4b7fdfe73f6fa3dde" target="id-24dfc8e660d84416902b66027d54af64"/>
+    <element xsi:type="archimate:AssignmentRelationship" id="id-cd5379b483ba473dac8f5fba63764318" source="id-53dae82695df497593b3d0adc809cfa1" target="id-4fc4439908964641b11fbf676b37c0ce"/>
+    <element xsi:type="archimate:AssignmentRelationship" id="id-62ca1b9b6a9548069d5ffe133b200c90" source="id-53dae82695df497593b3d0adc809cfa1" target="id-e1de10f0de154889bed7b30e9a6100e7"/>
+    <element xsi:type="archimate:AssignmentRelationship" id="id-18e3ae20008c4855956381b2f60d93bc" source="id-ae578cb031c54dbf8121d5241f9addeb" target="id-1255ac6ccb9c45de91a832c130c91213"/>
+    <element xsi:type="archimate:AssignmentRelationship" id="id-2c74074445994a12a446bf81ba5930ae" source="id-ae578cb031c54dbf8121d5241f9addeb" target="id-faf7db9567794d61988fd12aff8f89f6"/>
+    <element xsi:type="archimate:AssignmentRelationship" id="id-3d2c085504184ab58fc768626195e943" source="id-faf417686f9a40609a34a5a2bc1a5da3" target="id-7c385fe78ffc4ba38243daf81b79b18f"/>
+    <element xsi:type="archimate:AssignmentRelationship" id="id-18a50ff14502459bacb375ca60347e89" source="id-faf417686f9a40609a34a5a2bc1a5da3" target="id-17a11559e3064f0fb300dc8e9f687546"/>
+    <element xsi:type="archimate:AssignmentRelationship" id="id-1bbcae0ccf294edc976e4752b78994ca" source="id-c62baff106bf4cd493a8b7fb4928716c" target="id-9c903f1dcaa0498d887de27974410741"/>
+    <element xsi:type="archimate:AssignmentRelationship" id="id-125403be8f944d049865d7cf1cf52c54" source="id-c62baff106bf4cd493a8b7fb4928716c" target="id-a82bf5ef335f4feb822435854aaacdcf"/>
+    <element xsi:type="archimate:AssignmentRelationship" id="id-218dc9a2291c43e484db915b64a47e3c" source="id-cedc5bd6eab548c6aa081e7eb15d3494" target="id-bb6c0b3df9e1497aa77fa8f2012a2771"/>
+    <element xsi:type="archimate:AssignmentRelationship" id="id-812a00529e184a77aacba2624cc18bff" source="id-cedc5bd6eab548c6aa081e7eb15d3494" target="id-d4db97ab659641aa8d5f28cb5e57ae8e"/>
+    <element xsi:type="archimate:AssignmentRelationship" id="id-130d7c33863c4f0991461ee666e65127" source="id-a80091ce84104c838ca530770353d2ba" target="id-295f60b885784e36bdaf8cb12fc22358"/>
+    <element xsi:type="archimate:AssignmentRelationship" id="id-20f25cf178de48558927f12c1e7bea3a" source="id-a80091ce84104c838ca530770353d2ba" target="id-6384e551df2c44b1b4216920ca8ce48b"/>
+    <element xsi:type="archimate:AssignmentRelationship" id="id-e80042e37113408fabf58748fad64e8d" source="id-0a8045efb085432a83ef6a294943c9a3" target="id-348ed6f2308148e586d12652c2b48338"/>
+    <element xsi:type="archimate:AssignmentRelationship" id="id-9734b68acdca45069c1b36d2ca258206" source="id-0a8045efb085432a83ef6a294943c9a3" target="id-028144f784384a689227939006cebe62"/>
+    <element xsi:type="archimate:RealizationRelationship" id="id-3cd0d6a3782d467eb1839b5eec8dc08c" source="id-ae578cb031c54dbf8121d5241f9addeb" target="id-b2e76fca1c1c4e53a5bc6a1cadbd6e9d"/>
+    <element xsi:type="archimate:RealizationRelationship" id="id-32e7561d70704a05a7ea70ec88190f5f" source="id-ae578cb031c54dbf8121d5241f9addeb" target="id-c44e2e0aca1840b4a2ad1b28bc782b36"/>
+    <element xsi:type="archimate:RealizationRelationship" id="id-eed019bc2e6846ca8bd71b1f398631d3" source="id-ae578cb031c54dbf8121d5241f9addeb" target="id-8a2929b9f95d43d2bd90dc5de9ca299c"/>
+    <element xsi:type="archimate:RealizationRelationship" id="id-0e08c01125e4425994d4e6509b8b45c7" source="id-ae578cb031c54dbf8121d5241f9addeb" target="id-e0eb773bb09b4f1b8f4e2e772111e510"/>
+    <element xsi:type="archimate:RealizationRelationship" id="id-a53059bfc3c1444c8444de1dab65e7fc" source="id-ae578cb031c54dbf8121d5241f9addeb" target="id-c1b02ef722634a6399c88259fbc0758e"/>
+    <element xsi:type="archimate:RealizationRelationship" id="id-d353d5bb046649208a634aff2e4afb5c" source="id-ae578cb031c54dbf8121d5241f9addeb" target="id-21be91d0dd244684a1f96774069dc37f"/>
+    <element xsi:type="archimate:RealizationRelationship" id="id-e9d544a23da24cd89cb0fac9b617c465" source="id-ae578cb031c54dbf8121d5241f9addeb" target="id-f8e2cf3930d245ef9705794d98d1f414"/>
   </folder>
   <folder name="Views" id="id-a1b2c3d4e5f60718293a4b5c6d7e8f09" type="diagrams">
     <element xsi:type="archimate:ArchimateDiagramModel" name="V1 Motivación" id="id-b0000000000000000000000000000001">
@@ -6510,6 +6561,261 @@ A la izquierda: externos con ACL. A la derecha: externos con interacción direct
       <documentation>Los 14 externos de la tabla de servicios externos (README §4). Las ACL (amarillo) protegen a la aplicación de los modelos de 8 externos; con los otros 6 se interopera de forma directa (conformista o por la interfaz de reportes). Entra y Sale se miran desde la aplicación.</documentation>
     </element>
     <element xsi:type="archimate:ArchimateDiagramModel" name="V10 Trazabilidad vertical" id="id-b0000000000000000000000000000010"/>
-    <element xsi:type="archimate:ArchimateDiagramModel" name="V11 Bounded Context Canvas" id="id-b0000000000000000000000000000011"/>
+    <element xsi:type="archimate:ArchimateDiagramModel" name="V11 Bounded Context Canvas" id="id-b0000000000000000000000000000011">
+      <documentation>Bounded Context Canvas (ddd-crew v5) del contexto central de procesamiento de transacciones (BC05). Cada sección es un grupo visual con elementos reutilizados del modelo; ver README §8.</documentation>
+      <child xsi:type="archimate:Note" id="id-ca8d8aeca32a40b29199ca667b58d214" fillColor="#FFFFFF">
+        <bounds x="10" y="10" width="2560" height="60"/>
+        <content>V11 · BOUNDED CONTEXT CANVAS (ddd-crew v5) · CONTEXTO DE PROCESAMIENTO DE TRANSACCIONES (BC05, central)    Celdas = grupos visuales; adentro, los mismos elementos de V1, V3, V5, V6, V7, V8 y V9. Notas solo donde ArchiMate no tiene concepto (README §8).</content>
+      </child>
+      <child xsi:type="archimate:Group" id="id-aba89ce0849d4303ad47ab50ac4816ce" name="1. NOMBRE" fillColor="#FFFFFF">
+        <bounds x="10" y="80" width="470" height="120"/>
+        <child xsi:type="archimate:DiagramObject" id="id-0a43eb5e347e46ebbc37f2edc62edfc1" font="1|Segoe UI|9.0|1|WINDOWS|1|-12|0|0|0|700|0|0|0|0|3|2|1|34|Segoe UI" archimateElement="id-ae578cb031c54dbf8121d5241f9addeb" fillColor="#F8CBAD">
+          <bounds x="20" y="35" width="430" height="70"/>
+          <sourceConnection xsi:type="archimate:Connection" id="id-aa44de39fcd24d408860e6650aed96e6" source="id-0a43eb5e347e46ebbc37f2edc62edfc1" target="id-9eb71b4c192249cbb0e0e61cd9906aa9" archimateRelationship="id-3cd0d6a3782d467eb1839b5eec8dc08c"/>
+        </child>
+      </child>
+      <child xsi:type="archimate:Group" id="id-f40365f6e03547a09a4a11a152d08a63" name="2. PROPÓSITO" fillColor="#FFFFFF">
+        <bounds x="10" y="210" width="470" height="250"/>
+        <child xsi:type="archimate:Note" id="id-f857515845c1411da11f446816c762a0" fillColor="#FFFFFF">
+          <bounds x="10" y="100" width="450" height="140"/>
+          <content>Convertir cada validación que llega del proveedor en una transacción procesada con la tarifa correcta: reconstruye el viaje y sus transbordos, aplica el perfil y el tarifario vigentes en la fecha de la validación, descarta duplicados e incorpora las transacciones que llegan tarde. Sirve a Recaudo y Tarifas y alimenta el cobro bancario, la conciliación y la consulta. Realiza REQ01.</content>
+        </child>
+        <child xsi:type="archimate:DiagramObject" id="id-9eb71b4c192249cbb0e0e61cd9906aa9" targetConnections="id-aa44de39fcd24d408860e6650aed96e6" archimateElement="id-b2e76fca1c1c4e53a5bc6a1cadbd6e9d" fillColor="#ADB0FF">
+          <bounds x="110" y="32" width="250" height="58"/>
+        </child>
+      </child>
+      <child xsi:type="archimate:Group" id="id-601df788f81b43d7a212090ae4c0f527" name="3. CLASIFICACIÓN ESTRATÉGICA" fillColor="#FFFFFF">
+        <bounds x="10" y="470" width="470" height="210"/>
+        <child xsi:type="archimate:DiagramObject" id="id-b4512364b98e4631bf206da173cb8346" archimateElement="id-9c4f602c6b312b1eb98002b3dec7a913" fillColor="#F8CBAD">
+          <bounds x="10" y="30" width="450" height="60"/>
+        </child>
+        <child xsi:type="archimate:Note" id="id-7e1f5eee28b9434ebb52b7eb9a81c196" fillColor="#FFFFFF">
+          <bounds x="10" y="100" width="450" height="100"/>
+          <content>Dominio: CENTRAL (V5, §5.7).
+Modelo de negocio: GENERADOR DE INGRESOS (aquí se determina cuánto se cobra por cada viaje).
+Evolución: CONSTRUCCIÓN A MEDIDA (las reglas de integración del SIT no vienen en un producto).</content>
+        </child>
+      </child>
+      <child xsi:type="archimate:Group" id="id-d1d783cfc9184a92a21f4c8decca901e" name="4. ROLES DEL DOMINIO" fillColor="#FFFFFF">
+        <bounds x="10" y="690" width="470" height="150"/>
+        <child xsi:type="archimate:Note" id="id-e635cd5bf84247d0879434631eb19607" fillColor="#FFFFFF">
+          <bounds x="10" y="30" width="450" height="108"/>
+          <content>CONTEXTO DE EJECUCIÓN: aplica las reglas tarifarias a cada validación y produce la transacción procesada.
+Con algo de ANÁLISIS: compara la tarifa esperada con la que cobró el validador y señala las diferencias.</content>
+        </child>
+      </child>
+      <child xsi:type="archimate:Group" id="id-e9fda5785697430a8ba2b7dcb47f0837" name="5. COMUNICACIÓN ENTRANTE" fillColor="#FFFFFF">
+        <bounds x="490" y="80" width="600" height="760"/>
+        <child xsi:type="archimate:Note" id="id-7aed8946e96847a88b29b5b22ad8ff67" fillColor="#FFFFFF">
+          <bounds x="10" y="30" width="580" height="50"/>
+          <content>Tipos de mensaje: COMANDO = proceso de aplicación · EVENTO = evento · CONSULTA = servicio de aplicación. Las flechas son relaciones del modelo.</content>
+        </child>
+        <child xsi:type="archimate:DiagramObject" id="id-31dd043fcb9b4e3387a4295f3031aea5" archimateElement="id-dc90e38f78fb23350e3b91ce5822c0da" fillColor="#E7E6E6">
+          <bounds x="10" y="130" width="220" height="70"/>
+        </child>
+        <child xsi:type="archimate:DiagramObject" id="id-7634e78674dc47fcb2f57e9797fbcbca" archimateElement="id-a6a30e94e1fa4a59bed7296ea881dea6" fillColor="#FEFF99">
+          <bounds x="250" y="130" width="210" height="70"/>
+          <sourceConnection xsi:type="archimate:Connection" id="id-ee036695306445919ab0e4b7f18179c6" source="id-7634e78674dc47fcb2f57e9797fbcbca" target="id-365f625b039e4aaabd11420f09b88300" archimateRelationship="id-27b36d0262ef424195584b9dd01cbbf2"/>
+          <sourceConnection xsi:type="archimate:Connection" id="id-226a95c017814c5a8fd729e5bc653265" source="id-7634e78674dc47fcb2f57e9797fbcbca" target="id-a5155cba908047898fc609160b98a4d3" archimateRelationship="id-a7198be80f0447f2b45a37f5c7972c08"/>
+        </child>
+        <child xsi:type="archimate:Note" id="id-e64c4c072e5b4627a355bcb29439e817" fillColor="#FFFFFF">
+          <bounds x="10" y="205" width="570" height="40"/>
+          <content>El proveedor entrega los lotes por la ACL (V9); su llegada (BE02, V3) dispara los dos comandos.</content>
+        </child>
+        <child xsi:type="archimate:DiagramObject" id="id-81ed2eab25f041bd9f092bd8c40d3d84" targetConnections="id-73ebd9e5e7034cbab5a832e5ef1f8173" archimateElement="id-faf417686f9a40609a34a5a2bc1a5da3" fillColor="#BDD7EE">
+          <bounds x="290" y="290" width="300" height="65"/>
+        </child>
+        <child xsi:type="archimate:DiagramObject" id="id-ed852f6559da442a9d001fe62fe243e0" targetConnections="id-37eebfff2186408abb5b37702758ca13" archimateElement="id-c62baff106bf4cd493a8b7fb4928716c" fillColor="#F8CBAD">
+          <bounds x="290" y="375" width="300" height="65"/>
+        </child>
+        <child xsi:type="archimate:DiagramObject" id="id-c64a1529eaf5400cb557330c0fed356a" targetConnections="id-bab85232a5ec442884b3ecd8c90dc6c9" archimateElement="id-0a8045efb085432a83ef6a294943c9a3" fillColor="#D9D9D9">
+          <bounds x="290" y="460" width="300" height="65"/>
+        </child>
+        <child xsi:type="archimate:Note" id="id-5c895778179f48dd97e05aecf7f0f122" fillColor="#FFFFFF">
+          <bounds x="10" y="290" width="260" height="235"/>
+          <content>CONSULTAS que inician otros contextos sobre las transacciones procesadas (C/S + PL, §7.2): el cobro diario, la consolidación y los indicadores de completitud, viajes y transbordos.</content>
+        </child>
+        <child xsi:type="archimate:DiagramObject" id="id-2eae87a310ea492eabeb640bf2b344fc" archimateElement="id-121f4d2ae3f1fcfcfba77b7c381ab3b7" fillColor="#E7E6E6">
+          <bounds x="10" y="560" width="230" height="70"/>
+        </child>
+        <child xsi:type="archimate:Note" id="id-b0e983f5b675424bafe3cdcc53e21f63" fillColor="#FFFFFF">
+          <bounds x="260" y="560" width="330" height="110"/>
+          <content>CONFORMISTA: el catálogo de rutas, estaciones y asignaciones de operador se adopta tal como lo publica Planeación (§7.3). Se usa para ubicar la validación y reconocer el transbordo.</content>
+        </child>
+      </child>
+      <child xsi:type="archimate:Group" id="id-afc4cf3c281c450d9f389edb4f8ceeaa" name="CONTEXTO" fillColor="#FFFFFF">
+        <bounds x="1100" y="80" width="360" height="760"/>
+        <child xsi:type="archimate:DiagramObject" id="id-a4208ca82f014a79b7692a6bdc74189b" targetConnections="id-de6f1c3c657043ea877515ed672860e9 id-61fb0d4c82fb42a0a6803017aab6ff35 id-c1e87e980039495f98319af6ea6c19f8" font="1|Segoe UI|9.0|1|WINDOWS|1|-12|0|0|0|700|0|0|0|0|3|2|1|34|Segoe UI" archimateElement="id-ae578cb031c54dbf8121d5241f9addeb" fillColor="#F8CBAD">
+          <bounds x="10" y="35" width="340" height="470"/>
+          <child xsi:type="archimate:DiagramObject" id="id-365f625b039e4aaabd11420f09b88300" targetConnections="id-ee036695306445919ab0e4b7f18179c6" archimateElement="id-1255ac6ccb9c45de91a832c130c91213" fillColor="#F0FFFF">
+            <bounds x="15" y="40" width="310" height="60"/>
+            <sourceConnection xsi:type="archimate:Connection" id="id-01890b69c8b54cda916a5959fb0a7770" source="id-365f625b039e4aaabd11420f09b88300" target="id-ce3ca848ff5f4b3699a4321c4e37be68" archimateRelationship="id-50b22efef4ed4a5aba86431c828980c3"/>
+          </child>
+          <child xsi:type="archimate:DiagramObject" id="id-a5155cba908047898fc609160b98a4d3" targetConnections="id-226a95c017814c5a8fd729e5bc653265" archimateElement="id-faf7db9567794d61988fd12aff8f89f6" fillColor="#F0FFFF">
+            <bounds x="15" y="115" width="310" height="60"/>
+            <sourceConnection xsi:type="archimate:Connection" id="id-0d53a69516fe424990457ebd17bf1ec7" source="id-a5155cba908047898fc609160b98a4d3" target="id-cf2425f353d646308beaa527231b3019" archimateRelationship="id-718ea9ede0cb4803b7ae85dd458b7c67"/>
+          </child>
+          <child xsi:type="archimate:DiagramObject" id="id-5e6d0609e8ab4fd59e108c99607bd2c2" archimateElement="id-f984e92707404e75a222d8e6e7656272" fillColor="#F0FFFF">
+            <bounds x="15" y="240" width="310" height="60"/>
+            <sourceConnection xsi:type="archimate:Connection" id="id-73ebd9e5e7034cbab5a832e5ef1f8173" source="id-5e6d0609e8ab4fd59e108c99607bd2c2" target="id-81ed2eab25f041bd9f092bd8c40d3d84" archimateRelationship="id-1b14160681ef453fb31f6cb306f1a1b5"/>
+            <sourceConnection xsi:type="archimate:Connection" id="id-37eebfff2186408abb5b37702758ca13" source="id-5e6d0609e8ab4fd59e108c99607bd2c2" target="id-ed852f6559da442a9d001fe62fe243e0" archimateRelationship="id-c57adce1f50f43e8921fb3fd5f2917cd"/>
+            <sourceConnection xsi:type="archimate:Connection" id="id-bab85232a5ec442884b3ecd8c90dc6c9" source="id-5e6d0609e8ab4fd59e108c99607bd2c2" target="id-c64a1529eaf5400cb557330c0fed356a" archimateRelationship="id-d0a01676c6e248239af6fcdeeb18422f"/>
+          </child>
+        </child>
+        <child xsi:type="archimate:Note" id="id-dbd04131cd5f4e309afdfcfa27832372" fillColor="#FFFFFF">
+          <bounds x="10" y="520" width="340" height="225"/>
+          <content>Comandos asignados al contexto (V6e) y servicio que ofrece (V8). La raíz del agregado es TransacciónDeViaje: un mismo evento de origen no se procesa dos veces, conserva la referencia a las reglas usadas y el importe corresponde a las reglas y al perfil vigentes.</content>
+        </child>
+      </child>
+      <child xsi:type="archimate:Group" id="id-8e3755cc27dc4b80a6539cc5bf3f3cac" name="6. COMUNICACIÓN SALIENTE" fillColor="#FFFFFF">
+        <bounds x="1470" y="80" width="570" height="760"/>
+        <child xsi:type="archimate:Note" id="id-66e005341c7945e98917c1f42f4536f5" fillColor="#FFFFFF">
+          <bounds x="10" y="30" width="550" height="40"/>
+          <content>EVENTOS que emite y quién los escucha (políticas de V6), y CONSULTAS que hace a otros contextos.</content>
+        </child>
+        <child xsi:type="archimate:DiagramObject" id="id-ce3ca848ff5f4b3699a4321c4e37be68" targetConnections="id-01890b69c8b54cda916a5959fb0a7770" archimateElement="id-9861a9b14ef64b40a56fd857444678e6" fillColor="#F0FFFF">
+          <bounds x="10" y="80" width="210" height="65"/>
+          <sourceConnection xsi:type="archimate:Connection" id="id-c0ce6a94b5f4443e8810820f1980673d" source="id-ce3ca848ff5f4b3699a4321c4e37be68" target="id-5550a24008464ebd8f013d20e782212d" archimateRelationship="id-2fd6b97122ac4d4bbaefe0829ebb248e"/>
+        </child>
+        <child xsi:type="archimate:DiagramObject" id="id-cf2425f353d646308beaa527231b3019" targetConnections="id-0d53a69516fe424990457ebd17bf1ec7" archimateElement="id-12e2cf5aa42c490c93090810f4bcb1dc" fillColor="#F0FFFF">
+          <bounds x="10" y="160" width="210" height="65"/>
+          <sourceConnection xsi:type="archimate:Connection" id="id-6a42941e8aec4e0e9a85a98bf856fa1a" source="id-cf2425f353d646308beaa527231b3019" target="id-4b7e2730cb9444a98a24057181690448" archimateRelationship="id-45630553f6d74c50b10cb4f64870dc72"/>
+        </child>
+        <child xsi:type="archimate:DiagramObject" id="id-5550a24008464ebd8f013d20e782212d" targetConnections="id-c0ce6a94b5f4443e8810820f1980673d" archimateElement="id-7c385fe78ffc4ba38243daf81b79b18f" fillColor="#D9D9D9">
+          <bounds x="340" y="80" width="210" height="65"/>
+        </child>
+        <child xsi:type="archimate:DiagramObject" id="id-4b7e2730cb9444a98a24057181690448" targetConnections="id-6a42941e8aec4e0e9a85a98bf856fa1a" archimateElement="id-9c903f1dcaa0498d887de27974410741" fillColor="#D9D9D9">
+          <bounds x="340" y="160" width="210" height="65"/>
+        </child>
+        <child xsi:type="archimate:DiagramObject" id="id-e0e830d9dc23461597205a06a359411b" targetConnections="id-c37690fc45854eb4b0ed56e92be29c27" archimateElement="id-c004b586d7034373833a581ba305f462" fillColor="#F0FFFF">
+          <bounds x="10" y="300" width="250" height="65"/>
+          <sourceConnection xsi:type="archimate:Connection" id="id-de6f1c3c657043ea877515ed672860e9" source="id-e0e830d9dc23461597205a06a359411b" target="id-a4208ca82f014a79b7692a6bdc74189b" archimateRelationship="id-80757e655e204d219d3f384812938491"/>
+        </child>
+        <child xsi:type="archimate:DiagramObject" id="id-cc57830cadc6403890d5caadf755eddd" archimateElement="id-364d2d39f8d64b949c836b6f74ed699a" fillColor="#F8CBAD">
+          <bounds x="300" y="300" width="250" height="65"/>
+          <sourceConnection xsi:type="archimate:Connection" id="id-c37690fc45854eb4b0ed56e92be29c27" source="id-cc57830cadc6403890d5caadf755eddd" target="id-e0e830d9dc23461597205a06a359411b" archimateRelationship="id-46c69e739fff442a90282b4cf849df26"/>
+        </child>
+        <child xsi:type="archimate:DiagramObject" id="id-729fe83b7b5044aeb1b44d5a917789f4" targetConnections="id-63b3fa6f3b7747528bdec8288cedcf62" archimateElement="id-40af09c837e943d98cfc364f3b088c86" fillColor="#F0FFFF">
+          <bounds x="10" y="385" width="250" height="65"/>
+          <sourceConnection xsi:type="archimate:Connection" id="id-61fb0d4c82fb42a0a6803017aab6ff35" source="id-729fe83b7b5044aeb1b44d5a917789f4" target="id-a4208ca82f014a79b7692a6bdc74189b" archimateRelationship="id-f8214fd89a2c444c87000893737b431d"/>
+        </child>
+        <child xsi:type="archimate:DiagramObject" id="id-233ba3cea0554733a6d06e1bfec84a42" archimateElement="id-c5c0e69503c64baa95a8cbde14aac9a7" fillColor="#F8CBAD">
+          <bounds x="300" y="385" width="250" height="65"/>
+          <sourceConnection xsi:type="archimate:Connection" id="id-63b3fa6f3b7747528bdec8288cedcf62" source="id-233ba3cea0554733a6d06e1bfec84a42" target="id-729fe83b7b5044aeb1b44d5a917789f4" archimateRelationship="id-39775e049abc40a8920814f75eb00a60"/>
+        </child>
+        <child xsi:type="archimate:DiagramObject" id="id-c98eccc3407a40ef8f7d42b31f75b633" targetConnections="id-83e7bea1fb7744bda8bc29a13e2eb002" archimateElement="id-9641d3d4cbb944db896c7820df54af23" fillColor="#F0FFFF">
+          <bounds x="10" y="470" width="250" height="65"/>
+          <sourceConnection xsi:type="archimate:Connection" id="id-c1e87e980039495f98319af6ea6c19f8" source="id-c98eccc3407a40ef8f7d42b31f75b633" target="id-a4208ca82f014a79b7692a6bdc74189b" archimateRelationship="id-cf395a2d5d004104990e5ff28229b07e"/>
+        </child>
+        <child xsi:type="archimate:DiagramObject" id="id-997c148786024c7bb7e82e747c840070" archimateElement="id-ee88ea8e7bcb4cb4b7fdfe73f6fa3dde" fillColor="#F8CBAD">
+          <bounds x="300" y="470" width="250" height="65"/>
+          <sourceConnection xsi:type="archimate:Connection" id="id-83e7bea1fb7744bda8bc29a13e2eb002" source="id-997c148786024c7bb7e82e747c840070" target="id-c98eccc3407a40ef8f7d42b31f75b633" archimateRelationship="id-e8c13175afe34357a8870e7165fcedda"/>
+        </child>
+        <child xsi:type="archimate:Note" id="id-d008d87f1ee94c969408a762adcb8b1f" fillColor="#FFFFFF">
+          <bounds x="10" y="560" width="550" height="100"/>
+          <content>El tarifario se consulta por fecha de la validación (OHS + PL); la tarjeta y el perfil, con C/S + PL. Ningún otro contexto modifica la transacción procesada: solo la leen.</content>
+        </child>
+      </child>
+      <child xsi:type="archimate:Group" id="id-98b8c5c1ee384db8b8044725c471cce1" name="7. LENGUAJE UBICUO (V7)" fillColor="#FFFFFF">
+        <bounds x="2050" y="80" width="520" height="470"/>
+        <child xsi:type="archimate:DiagramObject" id="id-9b2e90b7c0a64a8fb147d14b0f3ea528" archimateElement="id-90caead2d3f342e99c67140d7c618c7b" fillColor="#ADB0FF">
+          <bounds x="10" y="30" width="500" height="55"/>
+        </child>
+        <child xsi:type="archimate:DiagramObject" id="id-94bacb6444fd4eb187dba12cfc5abd56" archimateElement="id-5b8e434e5d5541f1b35ab3a3acab1886" fillColor="#ADB0FF">
+          <bounds x="10" y="91" width="500" height="55"/>
+        </child>
+        <child xsi:type="archimate:DiagramObject" id="id-ff52c88a365f440cbe28471482728046" archimateElement="id-761d2ce903b249e7acc0d6dab894af75" fillColor="#ADB0FF">
+          <bounds x="10" y="152" width="500" height="55"/>
+        </child>
+        <child xsi:type="archimate:DiagramObject" id="id-55bdfd7be25a4c84a00226b000141f37" archimateElement="id-1bd9d8720acf439db90fe08e6ee19d44" fillColor="#FFC48C">
+          <bounds x="10" y="213" width="500" height="55"/>
+        </child>
+        <child xsi:type="archimate:DiagramObject" id="id-9315a2303b354f99aa8d28c6562a6f8c" archimateElement="id-f2e2699ee6164c2a97e8a26d8ff2e2ce" fillColor="#FFC48C">
+          <bounds x="10" y="274" width="500" height="55"/>
+        </child>
+        <child xsi:type="archimate:DiagramObject" id="id-2e1a4a2a6b1642da88876d77f9c81837" archimateElement="id-246bd10dfed34a98bd0a80e260324bec" fillColor="#ADB0FF">
+          <bounds x="10" y="335" width="500" height="55"/>
+        </child>
+        <child xsi:type="archimate:DiagramObject" id="id-80354d449a3844ef9b90ba82d9f8f0d8" archimateElement="id-ab44eb2e337544af87cdd974f9ecaac9" fillColor="#ADB0FF">
+          <bounds x="10" y="396" width="500" height="55"/>
+        </child>
+      </child>
+      <child xsi:type="archimate:Group" id="id-b923e84b24ce464aa27e1b07cf5826f4" name="8. DECISIONES DE NEGOCIO" fillColor="#FFFFFF">
+        <bounds x="2050" y="560" width="520" height="600"/>
+        <child xsi:type="archimate:Note" id="id-9bb2038d468d4d169f8f33e18dec326f" fillColor="#FFFFFF">
+          <bounds x="10" y="25" width="500" height="30"/>
+          <content>Principios de V1 (izquierda) y reglas concretas como restricciones (derecha).</content>
+        </child>
+        <child xsi:type="archimate:DiagramObject" id="id-63aa30e1f9104c99bba743467b05c459" archimateElement="id-6830b2b653b84f51b296c5e288e3e9e0" fillColor="#ADB0FF">
+          <bounds x="10" y="65" width="200" height="70"/>
+        </child>
+        <child xsi:type="archimate:DiagramObject" id="id-d3d25e97990b400e897b273004d742fd" archimateElement="id-b42a77b779ce4b7892cf0f8f97805730" fillColor="#ADB0FF">
+          <bounds x="10" y="150" width="200" height="70"/>
+        </child>
+        <child xsi:type="archimate:DiagramObject" id="id-a76565c191f3485a822fbd32b97ec86b" archimateElement="id-894bb2c7d1f74aacb5c4ee2530511ed4" fillColor="#ADB0FF">
+          <bounds x="10" y="235" width="200" height="70"/>
+        </child>
+        <child xsi:type="archimate:DiagramObject" id="id-8b60b88d39a240bdb64cd848415d69f2" archimateElement="id-62d5bd84d0f84cd09850b770b90f4f0e" fillColor="#ADB0FF">
+          <bounds x="10" y="320" width="200" height="70"/>
+        </child>
+        <child xsi:type="archimate:DiagramObject" id="id-680dbb5979f14ad4832c67f69c5ccf61" archimateElement="id-c44e2e0aca1840b4a2ad1b28bc782b36" fillColor="#ADB0FF">
+          <bounds x="220" y="65" width="290" height="80"/>
+        </child>
+        <child xsi:type="archimate:DiagramObject" id="id-8e2005099f9943c7bdf6c7bdc4c10c86" archimateElement="id-8a2929b9f95d43d2bd90dc5de9ca299c" fillColor="#ADB0FF">
+          <bounds x="220" y="153" width="290" height="80"/>
+        </child>
+        <child xsi:type="archimate:DiagramObject" id="id-71aa1d0e63b344c6b2fc4783e23e707c" archimateElement="id-e0eb773bb09b4f1b8f4e2e772111e510" fillColor="#ADB0FF">
+          <bounds x="220" y="241" width="290" height="80"/>
+        </child>
+        <child xsi:type="archimate:DiagramObject" id="id-f4aa8c78c58d4954a59825b78aede516" archimateElement="id-c1b02ef722634a6399c88259fbc0758e" fillColor="#ADB0FF">
+          <bounds x="220" y="329" width="290" height="80"/>
+        </child>
+        <child xsi:type="archimate:DiagramObject" id="id-2b0b40d186f64d6ca4e4a0895ab8c29d" archimateElement="id-21be91d0dd244684a1f96774069dc37f" fillColor="#ADB0FF">
+          <bounds x="220" y="417" width="290" height="80"/>
+        </child>
+        <child xsi:type="archimate:DiagramObject" id="id-d6ac327ab7fe436ea7954bc559ad2cbd" archimateElement="id-f8e2cf3930d245ef9705794d98d1f414" fillColor="#ADB0FF">
+          <bounds x="220" y="505" width="290" height="80"/>
+        </child>
+      </child>
+      <child xsi:type="archimate:Group" id="id-49b445c3ddf6425aa02e93f521cd11fb" name="9. SUPUESTOS" fillColor="#FFFFFF">
+        <bounds x="10" y="850" width="670" height="310"/>
+        <child xsi:type="archimate:Note" id="id-eec728cba2654f1da6a24d12b47ea99d" fillColor="#FFFFFF">
+          <bounds x="10" y="30" width="650" height="265"/>
+          <content>• El proveedor entrega el 100 % de las transacciones de un día en máximo 48 horas, como dice su contrato.
+• El validador decide en el momento con su tarifario y sus listas; este contexto no autoriza en línea: recalcula la tarifa esperada después y señala diferencias.
+• La tarifa es única para los tres modos; lo que cambia es el perfil y el transbordo.
+• El catálogo de Planeación es la única fuente de rutas, estaciones y operadores.
+• Las tarjetas que ya circulan no cambian de formato durante el proyecto.</content>
+        </child>
+      </child>
+      <child xsi:type="archimate:Group" id="id-8bdbe14bc0d24d7cb7ea6ca40e8e9977" name="10. MÉTRICAS DE VERIFICACIÓN" fillColor="#FFFFFF">
+        <bounds x="690" y="850" width="680" height="310"/>
+        <child xsi:type="archimate:DiagramObject" id="id-f37c203e83bd472c8f292edc0f0a2aef" archimateElement="id-d3155e934feb468388e84c2dafa3bd38" fillColor="#ADB0FF">
+          <bounds x="10" y="30" width="320" height="65"/>
+        </child>
+        <child xsi:type="archimate:DiagramObject" id="id-6ae1ed0ad7234675a99aebba86293ffc" archimateElement="id-a489d083d9c843b0ad40cbcdf81e45a8" fillColor="#ADB0FF">
+          <bounds x="345" y="30" width="320" height="65"/>
+        </child>
+        <child xsi:type="archimate:Note" id="id-3130a6f83be543e1acd078ee06cf7d1c" fillColor="#FFFFFF">
+          <bounds x="10" y="105" width="655" height="190"/>
+          <content>Del límite del contexto:
+• 0 transacciones procesadas dos veces (idempotencia).
+• 100 % de las transacciones de un día procesadas dentro de las 48 h del contrato.
+• Diferencias entre tarifa esperada y tarifa cobrada, reportadas a diario por ruta y operador.
+• Un cambio de tarifa solo toca BC01: si obliga a cambiar este contexto, el límite está mal puesto.</content>
+        </child>
+      </child>
+      <child xsi:type="archimate:Group" id="id-0eedf9c229e5452ba5dca1abd897e8a8" name="11. PREGUNTAS ABIERTAS" fillColor="#FFFFFF">
+        <bounds x="1380" y="850" width="660" height="310"/>
+        <child xsi:type="archimate:Note" id="id-2cfddda6537541eda58b3cdbf21aab3b" fillColor="#FFFFFF">
+          <bounds x="10" y="30" width="640" height="265"/>
+          <content>• ¿Qué pasa con un viaje cuyo segundo transbordo llega después de hecho el cobro diario de la tarjeta bancaria?
+• ¿El cupo de 50 viajes subsidiados lo controla el validador, el central o ambos? ¿Qué pasa si no coinciden?
+• ¿Hay transbordo entre una validación con tarjeta VAMOS y otra con tarjeta bancaria?
+• ¿Cuál es el valor exacto del segundo transbordo y quién lo actualiza cuando cambia la tarifa?
+• ¿Cuánto tiempo se guardan las validaciones rechazadas?</content>
+        </child>
+      </child>
+    </element>
   </folder>
 </archimate:model>

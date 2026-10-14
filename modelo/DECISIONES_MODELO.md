@@ -168,3 +168,15 @@ Registro de las decisiones tomadas al construir `modelo/recaudo.archimate`. Hay 
 - Nombres de los componentes: «Contexto de …», para no confundirlos con el *Grouping* del dominio de V5. El código `BCxx` va en la propiedad `ID`.
 - Colores: el de la clasificación del dominio en V5 (central `#F8CBAD`, de soporte `#BDD7EE`, genérico `#D9D9D9`); servicios e interfaces `#F0FFFF`; externos `#E7E6E6`.
 - Los externos se conectan al contenedor con los flujos de V9; los que tienen ida y vuelta se dibujan con un quiebre para que no se encimen.
+
+## 10. V11 Bounded Context Canvas (T33)
+
+**Contexto:** procesamiento de transacciones (BC05). Justificación y mapeo de secciones en README §8.
+
+**Contenido nuevo:** 6 restricciones `RN-BC05-01`–`06` (reglas de negocio de la entrevista) y 27 relaciones: realización de BC05 hacia REQ01 y hacia cada restricción, y **asignación de cada contexto (V8) a sus dos comandos (V6)**, 20 en total.
+
+**Decisiones:**
+- Las 11 secciones del canvas son *Group* visuales numerados. Dentro van elementos ya existentes (V1, V3, V5, V6, V7, V8, V9) y notas solo para modelo de negocio, evolución, roles, supuestos, métricas del límite y preguntas abiertas.
+- El contexto aparece dos veces: en «Nombre» y en el centro, donde contiene (anidados) sus comandos y su servicio para que las relaciones de comunicación entren y salgan de él.
+- Viewpoint **None** (mezcla motivación, negocio y aplicación).
+- Si se reorganiza, mantener la distribución de ddd-crew: identidad a la izquierda, comunicación en el centro, lenguaje y decisiones a la derecha, y supuestos, métricas y preguntas abajo.

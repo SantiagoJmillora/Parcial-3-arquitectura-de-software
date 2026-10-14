@@ -917,6 +917,17 @@ La dirección de la información se interpreta desde el software del SIT. Los pa
 ### V11 Bounded Context Canvas
 ![V11 Bounded Context Canvas](vistas/V11_bounded_context_canvas.png)
 
+**Análisis.** El canvas cabe en una página y sigue la distribución de ddd-crew.
+
+- **Izquierda (identidad y estrategia):** el contexto, su propósito (realiza REQ01, gestión de transacciones y ventas), su clasificación (dominio central de V5, generador de ingresos, construcción a medida) y su rol (contexto de ejecución con algo de análisis).
+- **Centro (comunicación):** en medio está el contexto, con sus dos comandos de V6 y el servicio «Transacciones procesadas» de V8.
+  - *Entrante:* el lote del proveedor llega por la ACL y su recepción (BE02 de V3) dispara los comandos. Cobro bancario, conciliación y consulta consultan las transacciones procesadas (C/S + PL). El catálogo de Planeación se adopta como viene (conformista).
+  - *Saliente:* los dos eventos que emite el contexto y las políticas que disparan en cobro bancario y conciliación, y las consultas que hace al tarifario (OHS + PL), a la tarjeta y al perfil (C/S + PL).
+- **Derecha (lenguaje y decisiones):** los siete términos de V7 que usa el contexto (los dos ambiguos en naranja), cuatro principios de V1 y seis reglas concretas como restricciones. Las reglas son las que dio la experta: ventana de 90 minutos, dos transbordos (el segundo con valor reducido), mismas reglas para todos los perfiles, cupo de viajes subsidiados, cobro diario de la tarjeta bancaria y transacciones extemporáneas.
+- **Abajo:** supuestos, métricas (dos resultados de V1 y cuatro métricas del límite del contexto) y preguntas abiertas que no resolvió la entrevista.
+
+**Decisiones.** Casi todo lo que aparece en el canvas ya estaba en el modelo; lo único nuevo son las seis restricciones (`RN-BC05-01` a `06`, realizadas por el contexto) y la realización del contexto hacia REQ01. Además, al hacer el canvas se asignó cada comando de V6 a su contexto de V8 (20 relaciones de asignación), así que ahora se puede seguir de un comando a su componente de aplicación, lo que usará V10.
+
 #### Qué contexto va en el canvas y por qué
 
 El canvas es del **contexto de procesamiento de transacciones (BC05)**. De los siete contextos centrales de §5.7, es el que responde directamente a lo que pide el enunciado: *aplicar la tarifa correcta en cada validación, teniendo en cuenta los transbordos*. En él viven las reglas más difíciles que contó la experta:

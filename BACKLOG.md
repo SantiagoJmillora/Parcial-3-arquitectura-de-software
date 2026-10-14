@@ -1,6 +1,6 @@
 # BACKLOG: Parcial 3, recaudo del sistema integrado de transporte
 
-> **Turno de modelo (archivo .archimate):** Santiago Jaramillo (T33)  ← escribe tu nombre aquí antes de abrir Archi y vuelve a dejarlo en _libre_ al terminar (ver [CLAUDE.md §7](CLAUDE.md#7-cómo-trabajamos-sin-responsables-fijos)).
+> **Turno de modelo (archivo .archimate):** Santiago Jaramillo (T34)  ← escribe tu nombre aquí antes de abrir Archi y vuelve a dejarlo en _libre_ al terminar (ver [CLAUDE.md §7](CLAUDE.md#7-cómo-trabajamos-sin-responsables-fijos)).
 
 ## Cómo usar este backlog
 - Las tareas están **en orden**. Toma la **primera tarea libre** (`[ ]`) cuyas dependencias estén en `[x]`.
@@ -44,7 +44,7 @@
 | T11 | [x] David Pabon 📝 | Inventario de **elementos de motivación** sacados de la entrevista (lista: interesados, impulsores, evaluaciones, metas, resultados, principios, requerimientos, restricciones) | T09 | Borrador en README §2 | Los 8 tipos tienen elementos | 1 |
 | T12 | [x] Santiago Jaramillo 🧩 | **V1 Motivación** en Archi: relaciones de influencia, asociación y realización entre los elementos, y cómo la aplicación de recaudo realiza los requerimientos | T11, T03 | `vistas/V1_motivacion.png` | Se lee la cadena interesado → impulsor → evaluación → meta → resultado → requerimiento | 1,5 |
 | T13 | [x] Santiago Jaramillo 📝 | Boceto del **mapa de capacidades COMPLETO** de la organización de transporte (estratégicas, misionales y de apoyo, como en la diapositiva 35 de 7_SOA), no solo recaudo | T09 | Boceto (papel o Excalidraw) | Hay ≥ 3 niveles de agrupación y están marcadas las capacidades impactadas | 1,5 |
-| T14 | [x] Vergara 🧩 | **V2 Mapa de capacidades** en Archi: capacidades, recursos y cursos de acción, con las **impactadas resaltadas** y una leyenda | T13, T12 | `vistas/V2_mapa_capacidades.png` | Mapa completo y relaciones a V1 (las metas se realizan con cursos de acción y capacidades). ⚠️ Falta exportar `vistas/V2_mapa_capacidades.png` | 2 |
+| T14 | [x] Vergara 🧩 | **V2 Mapa de capacidades** en Archi: capacidades, recursos y cursos de acción, con las **impactadas resaltadas** y una leyenda | T13, T12 | `vistas/V2_mapa_capacidades.png` | Mapa completo y relaciones a V1 (las metas se realizan con cursos de acción y capacidades) | 2 |
 | T15 | [x] Vergara 🧩 | **V3 Cadena de valor y proceso E2E**: flujo de valor de la organización → etapa donde opera el recaudo → proceso E2E de recaudo con eventos y actores de negocio | T13, T14 | `vistas/V3_cadena_valor_e2e.png` | Queda claro **dónde** se ubica la aplicación | 1,5 |
 | T16 | [~] Velez 📝 | README §1 (Contexto y entrevista), §2 (Motivación) y §3 (Capacidades y E2E): imagen y **análisis y argumentación** de cada vista | T10, T12, T14, T15 | README.md | Cada vista tiene al menos 1 párrafo de análisis y uno de decisiones. Hecho: §1, §2 (V1) y §3 (V2). Falta: análisis y decisiones de V3 | 2 |
 
@@ -78,8 +78,8 @@
 | ID | Estado | Tarea | Depende de | Entregable | Hecho cuando… | h |
 |---|---|---|---|---|---|---|
 | T32 | [x] Santiago Jaramillo 📝 | **Investigar** cómo representar el Bounded Context Canvas (ddd-crew) en Archi (agrupaciones como celdas, notas, elementos de motivación o aplicación) y **justificar** la elección | — | README §8 (justificación) | Hay una decisión de modelado escrita | 1 |
-| T33 | [~] Santiago Jaramillo 🧩 | **V11 Bounded Context Canvas** del contexto **central**, en una sola página: propósito, clasificación estratégica, rol del dominio, lenguaje ubicuo, comunicación entrante y saliente, decisiones de negocio y supuestos | T32, T28, T30 | `vistas/V11_bounded_context_canvas.png` | Cabe en una página y es coherente con V5, V6, V7 y V8 | 2,5 |
-| T34 | [ ] 🧩 | **V10 Trazabilidad vertical**: meta (V1) → capacidad (V2) → servicio de negocio (V4) → servicio o componente de aplicación (V8), con realización, influencia, servicio y asignación | T31 | `vistas/V10_trazabilidad.png` | Al menos 2 cadenas completas se pueden seguir de punta a punta | 1,5 |
+| T33 | [x] Santiago Jaramillo 🧩 | **V11 Bounded Context Canvas** del contexto **central**, en una sola página: propósito, clasificación estratégica, rol del dominio, lenguaje ubicuo, comunicación entrante y saliente, decisiones de negocio y supuestos | T32, T28, T30 | `vistas/V11_bounded_context_canvas.png` | Cabe en una página y es coherente con V5, V6, V7 y V8 | 2,5 |
+| T34 | [~] Santiago Jaramillo 🧩 | **V10 Trazabilidad vertical**: meta (V1) → capacidad (V2) → servicio de negocio (V4) → servicio o componente de aplicación (V8), con realización, influencia, servicio y asignación | T31 | `vistas/V10_trazabilidad.png` | Al menos 2 cadenas completas se pueden seguir de punta a punta | 1,5 |
 | T35 | [ ] 🧩 | **Revisión de calidad del modelo**: notación correcta, relaciones válidas (Archi valida), sin elementos huérfanos y nombres según el glosario | T33, T34 | Modelo final | Pasa *Validate Model* en Archi sin errores | 1 |
 | T36 | [ ] 📝 | Exportar **todas** las vistas en PNG a `/vistas` y verificar que se vean en el README | T35 | `/vistas/*.png` | Las 11 vistas o más se ven en GitHub | 0,5 |
 | T37 | [ ] 📝 | README §6, §7 y §8 con el análisis de cada vista, y **§9 Decisiones y supuestos** | T29, T31, T33 | README.md | Ninguna vista queda sin análisis | 2 |
