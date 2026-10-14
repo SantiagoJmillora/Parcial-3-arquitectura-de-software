@@ -1,6 +1,6 @@
 # BACKLOG: Parcial 3, recaudo del sistema integrado de transporte
 
-> **Turno de modelo (archivo .archimate):** Santiago Jaramillo (T31)  ← escribe tu nombre aquí antes de abrir Archi y vuelve a dejarlo en _libre_ al terminar (ver [CLAUDE.md §7](CLAUDE.md#7-cómo-trabajamos-sin-responsables-fijos)).
+> **Turno de modelo (archivo .archimate):** _libre_  ← escribe tu nombre aquí antes de abrir Archi y vuelve a dejarlo en _libre_ al terminar (ver [CLAUDE.md §7](CLAUDE.md#7-cómo-trabajamos-sin-responsables-fijos)).
 
 ## Cómo usar este backlog
 - Las tareas están **en orden**. Toma la **primera tarea libre** (`[ ]`) cuyas dependencias estén en `[x]`.
@@ -71,13 +71,13 @@
 | T28 | [x] David Pabon 📝 | **DDD táctico** por dominio: entidades vs objetos de valor; agregados con **raíz, límites e invariantes**; **comandos → eventos**. Argumentar el alcance de cada entidad y cada agregado | T24, T26 | README §6 (una tabla por dominio) | Cada agregado tiene ≥ 2 invariantes y su lista de comandos y eventos | 3 |
 | T29 | [x] Santiago Jaramillo 🧩 | **V6a…V6n Agregados, comandos y eventos**: **un diagrama por dominio** (objeto de negocio y de datos, proceso de aplicación = comando, evento de aplicación o de negocio) | T28 | `vistas/V6x_agregados_<dominio>.png` | Hay una vista por dominio | 3 |
 | T30 | [x] David Pabon 📝 | **Mapa de contextos**: listar los bounded contexts y el **patrón de relación** entre cada par y con los externos (C/S, conformista, núcleo compartido, OHS, PL, ACL), con justificación | T24, T19 | README §7 | Es coherente con la ACL de la Fase 2 (T19 y T22) | 1,5 |
-| T31 | [~] Santiago Jaramillo 🧩 | **V8 Mapa de contextos** (componentes, interfaces, servicios de aplicación, flujos y relaciones de servicio), con los patrones etiquetados | T30 | `vistas/V8_mapa_contextos.png` | Cada relación tiene su patrón visible | 1,5 |
+| T31 | [x] Santiago Jaramillo 🧩 | **V8 Mapa de contextos** (componentes, interfaces, servicios de aplicación, flujos y relaciones de servicio), con los patrones etiquetados | T30 | `vistas/V8_mapa_contextos.png` | Cada relación tiene su patrón visible | 1,5 |
 
 ## Día 5 (mié 14): Fase 6, trazabilidad y cierre
 
 | ID | Estado | Tarea | Depende de | Entregable | Hecho cuando… | h |
 |---|---|---|---|---|---|---|
-| T32 | [ ] 📝 | **Investigar** cómo representar el Bounded Context Canvas (ddd-crew) en Archi (agrupaciones como celdas, notas, elementos de motivación o aplicación) y **justificar** la elección | — | README §8 (justificación) | Hay una decisión de modelado escrita | 1 |
+| T32 | [~] Santiago Jaramillo 📝 | **Investigar** cómo representar el Bounded Context Canvas (ddd-crew) en Archi (agrupaciones como celdas, notas, elementos de motivación o aplicación) y **justificar** la elección | — | README §8 (justificación) | Hay una decisión de modelado escrita | 1 |
 | T33 | [ ] 🧩 | **V11 Bounded Context Canvas** del contexto **central**, en una sola página: propósito, clasificación estratégica, rol del dominio, lenguaje ubicuo, comunicación entrante y saliente, decisiones de negocio y supuestos | T32, T28, T30 | `vistas/V11_bounded_context_canvas.png` | Cabe en una página y es coherente con V5, V6, V7 y V8 | 2,5 |
 | T34 | [ ] 🧩 | **V10 Trazabilidad vertical**: meta (V1) → capacidad (V2) → servicio de negocio (V4) → servicio o componente de aplicación (V8), con realización, influencia, servicio y asignación | T31 | `vistas/V10_trazabilidad.png` | Al menos 2 cadenas completas se pueden seguir de punta a punta | 1,5 |
 | T35 | [ ] 🧩 | **Revisión de calidad del modelo**: notación correcta, relaciones válidas (Archi valida), sin elementos huérfanos y nombres según el glosario | T33, T34 | Modelo final | Pasa *Validate Model* en Archi sin errores | 1 |

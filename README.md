@@ -810,6 +810,19 @@ Los agregados definidos mantienen la consistencia de sus propias reglas y no deb
 ### V8 Mapa de contextos
 ![V8 Mapa de contextos](vistas/V8_mapa_contextos.png)
 
+**Análisis.** La «Aplicación de recaudo SIT» de V1 se compone de 10 componentes de aplicación, uno por bounded context (§7.1). Cada uno tiene el color de la clasificación de su dominio en V5: central, de soporte o genérico. Cada contexto *realiza* los servicios de aplicación que ofrece a los demás, y la relación de *servicio* hacia el contexto que los consume lleva escrito el patrón. Son las mismas 21 relaciones de §7.2:
+- **C/S + PL** cuando un contexto le sirve a otro con un contrato publicado.
+- **OHS + PL** para los tres contextos que exponen una API pública estable (§7.4): el tarifario (BC01), la tarjeta y el saldo (BC02) y los resultados conciliados (BC07). Esa API va dentro del contexto como *interfaz de aplicación*.
+
+Las flechas punteadas «evento: …» son *flujos* entre contextos: los mismos eventos que disparan las políticas de V6, como TarjetaBloqueada de medios de pago hacia listas de control o ResultadoConciliaciónRegistrado de conciliación hacia liquidación. BC10 (consulta) solo recibe; no le sirve a ningún contexto, porque no es la fuente de verdad de ningún dato.
+
+Fuera del contenedor están los mismos externos de V9, con los mismos flujos: los 8 componentes «ACL · …» a los lados, Planeación y la autoridad de transporte como conformistas en lo que entra, y la *Interfaz de reportes y liquidación* (OHS + PL) hacia la autoridad, Hacienda, los operadores y los entes de control.
+
+**Decisiones.**
+- Los contextos son *componentes de aplicación* y lo que se ofrecen entre ellos son *servicios de aplicación*, con relación de servicio, como pide el enunciado. La relación lleva el patrón como nombre para que se lea sin leyenda.
+- No hay núcleo compartido ni conformistas entre contextos internos: todos los modela el mismo equipo y cada uno conserva su lenguaje (§7.4). Los conformistas solo aparecen con los externos cuyo modelo adoptamos tal cual (Planeación y la autoridad).
+- Los externos se conectan al contenedor y no a cada contexto, para que la vista se pueda leer: serían 46 líneas. Qué contexto usa cada externo está en la tabla de §7.3; los flujos son los mismos elementos de V9, así que las dos vistas coinciden 1 a 1.
+
 ### 7.1. Bounded contexts identificados
 
 | Código | Bounded context | Responsabilidad |

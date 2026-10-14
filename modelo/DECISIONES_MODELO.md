@@ -151,3 +151,20 @@ Registro de las decisiones tomadas al construir `modelo/recaudo.archimate`. Hay 
 - Las invariantes van en una nota dentro del límite del agregado y también en la documentación de la raíz.
 - Los objetos de valor con el mismo nombre en dominios distintos son elementos distintos (cada contexto tiene su modelo; no hay núcleo compartido).
 - Las líneas de acceso de los comandos a la raíz usan puntos de quiebre para no cruzar las cajas; si se mueven elementos en Archi, hay que revisar esas líneas.
+
+## 9. V8 Mapa de contextos (T31)
+
+**Contenido nuevo:** 25 elementos de aplicación (10 componentes de contexto `BC01`–`BC10`, 12 servicios de aplicación `AS-Sxx` y 3 interfaces OHS `AI-BCxx`) y 52 relaciones. Reutiliza «Aplicación de recaudo SIT» (V1), la «Interfaz de reportes y liquidación», los 8 componentes ACL, los externos y todos los flujos de V9.
+
+| Relación | Desde | Hacia | Para qué |
+|---|---|---|---|
+| Composición | Aplicación de recaudo SIT | Componente de contexto | La aplicación se compone de los 10 bounded contexts (se usa en V10) |
+| Realización | Componente de contexto | Servicio de aplicación | Lo que el contexto ofrece a otros |
+| Servicio | Servicio de aplicación | Componente que lo consume | Las 21 relaciones de README §7.2; el nombre es el patrón (C/S + PL u OHS + PL) |
+| Composición | Contexto BC01, BC02 o BC07 | Interfaz «API pública … (OHS)» | El servicio abierto de §7.4 |
+| Flujo | Componente de contexto | Componente de contexto | Eventos de las políticas de V6; el nombre es «evento: …» |
+
+**Decisiones:**
+- Nombres de los componentes: «Contexto de …», para no confundirlos con el *Grouping* del dominio de V5. El código `BCxx` va en la propiedad `ID`.
+- Colores: el de la clasificación del dominio en V5 (central `#F8CBAD`, de soporte `#BDD7EE`, genérico `#D9D9D9`); servicios e interfaces `#F0FFFF`; externos `#E7E6E6`.
+- Los externos se conectan al contenedor con los flujos de V9; los que tienen ida y vuelta se dibujan con un quiebre para que no se encimen.
