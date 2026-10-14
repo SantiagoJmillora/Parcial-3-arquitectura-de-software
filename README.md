@@ -752,9 +752,90 @@ Los agregados definidos mantienen la consistencia de sus propias reglas y no deb
 ### V8 Mapa de contextos
 ![V8 Mapa de contextos](vistas/V8_mapa_contextos.png)
 
+# 7. Mapa de contextos (DDD)
+
+## 7.1. Bounded contexts identificados
+
+| Código | Bounded context | Responsabilidad |
+| ------ | --------------- | --------------- |
+| BC01 | Gestión tarifaria | Configurar, versionar, publicar y consultar las reglas tarifarias. |
+| BC02 | Gestión de medios de pago | Administrar tarjetas VAMOS, recargas, estados y saldos calculados. |
+| BC03 | Gestión de usuarios y perfiles | Gestionar titulares, datos personales, elegibilidad y perfiles tarifarios. |
+| BC04 | Gestión de listas de control | Registrar decisiones de bloqueo o denegación y publicar versiones de listas. |
+| BC05 | Procesamiento de transacciones | Recibir validaciones, reconstruir viajes, reconocer transbordos y determinar tarifas esperadas. |
+| BC06 | Cobro con tarjeta bancaria | Gestionar cobros diferidos, respuestas, deudas y contracargos. |
+| BC07 | Consolidación y conciliación | Consolidar usos y ventas, comparar fuentes y gestionar diferencias. |
+| BC08 | Liquidación a operadores | Calcular y aprobar liquidaciones y subsidios según las reglas y contratos vigentes. |
+| BC09 | Ajustes y devoluciones | Registrar y tramitar solicitudes de ajuste, devolución, reverso o traslado de saldo. |
+| BC10 | Consulta, reportes e indicadores | Consultar historiales, generar indicadores, detectar anomalías y producir reportes. |
+
+## 7.2. Relaciones entre bounded contexts internos
+
 | Contexto A | Contexto B | Patrón | Justificación |
-|---|---|---|---|
-| | | | |
+| ---------- | ---------- | ------ | ------------- |
+| BC05 Procesamiento de transacciones | BC01 Gestión tarifaria | C/S + PL | Procesamiento consulta las reglas y la versión tarifaria aplicable a la fecha de validación. Gestión tarifaria conserva la autoridad sobre las reglas publicadas. |
+| BC05 Procesamiento de transacciones | BC02 Gestión de medios de pago | C/S + PL | Procesamiento necesita identificar el medio de pago y consultar el estado o saldo pertinente. Medios de pago administra el ciclo de vida de la tarjeta. |
+| BC05 Procesamiento de transacciones | BC03 Gestión de usuarios y perfiles | C/S + PL | Procesamiento consulta el perfil tarifario y su vigencia para determinar la tarifa esperada. Gestión de perfiles conserva las reglas de elegibilidad y asignación. |
+| BC04 Gestión de listas de control | BC02 Gestión de medios de pago | C/S + PL | Las decisiones de control identifican tarjetas, mientras que el ciclo de vida y el saldo pertenecen a Medios de pago. El bloqueo de una tarjeta no equivale a registrar una decisión de lista. |
+| BC06 Cobro con tarjeta bancaria | BC05 Procesamiento de transacciones | C/S + PL | El cobro diferido necesita los viajes cerrados y sus importes. Procesamiento conserva los registros del viaje y el cálculo de la tarifa esperada. |
+| BC07 Consolidación y conciliación | BC05 Procesamiento de transacciones | C/S + PL | Consolidación consume las transacciones procesadas para agrupar los usos por periodo, modo, ruta y operador. |
+| BC07 Consolidación y conciliación | BC06 Cobro con tarjeta bancaria | C/S + PL | Conciliación necesita los resultados de cobros, rechazos y abonos para contrastarlos con los registros del recaudo. |
+| BC07 Consolidación y conciliación | BC02 Gestión de medios de pago | C/S + PL | La conciliación de ventas y recargas requiere información de recargas y movimientos, sin asumir que el saldo calculado sea idéntico al saldo físico de la tarjeta. |
+| BC08 Liquidación a operadores | BC07 Consolidación y conciliación | C/S + PL | Liquidación necesita una base aprobada y datos de recaudo conciliados. Consolidación y conciliación produce la información que sirve como base de cálculo. |
+| BC08 Liquidación a operadores | BC01 Gestión tarifaria | C/S + PL | Los subsidios y cálculos asociados a tarifas especiales requieren reglas tarifarias de referencia. Las fórmulas de remuneración contractual siguen perteneciendo al esquema de remuneración. |
+| BC09 Ajustes y devoluciones | BC02 Gestión de medios de pago | C/S + PL | Un ajuste a favor o traslado de saldo requiere una operación sobre la tarjeta. Ajustes autoriza la solicitud y Medios de pago registra el movimiento correspondiente. |
+| BC09 Ajustes y devoluciones | BC06 Cobro con tarjeta bancaria | C/S + PL | Una solicitud aprobada puede requerir un reverso bancario. Cobro con tarjeta bancaria registra la operación y la respuesta del proveedor financiero. |
+| BC09 Ajustes y devoluciones | BC07 Consolidación y conciliación | C/S + PL | Los ajustes aprobados deben reflejarse en la conciliación correspondiente, manteniendo la trazabilidad de la operación original. |
+| BC10 Consulta, reportes e indicadores | BC02 Gestión de medios de pago | C/S + PL | Las consultas de tarjeta necesitan el saldo calculado, las recargas pendientes, el estado y el historial. |
+| BC10 Consulta, reportes e indicadores | BC03 Gestión de usuarios y perfiles | C/S + PL | Las consultas autorizadas pueden necesitar el perfil tarifario y su vigencia, respetando las restricciones de datos personales. |
+| BC10 Consulta, reportes e indicadores | BC04 Gestión de listas de control | C/S + PL | Las consultas e indicadores pueden necesitar el estado de control de una tarjeta y las novedades de sincronización. |
+| BC10 Consulta, reportes e indicadores | BC05 Procesamiento de transacciones | C/S + PL | Los indicadores de completitud, viajes, transbordos y anomalías consumen datos generados por el procesamiento. |
+| BC10 Consulta, reportes e indicadores | BC06 Cobro con tarjeta bancaria | C/S + PL | Los informes pueden necesitar los resultados de cobro, la deuda y los contracargos. |
+| BC10 Consulta, reportes e indicadores | BC07 Consolidación y conciliación | C/S + PL | Los indicadores financieros y de recaudo requieren datos consolidados, diferencias y estados de conciliación. |
+| BC10 Consulta, reportes e indicadores | BC08 Liquidación a operadores | C/S + PL | Los informes de liquidación y subsidios consumen los resultados de cálculo y aprobación. |
+| BC10 Consulta, reportes e indicadores | BC09 Ajustes y devoluciones | C/S + PL | Los reportes consumen los estados y resultados de las solicitudes, sin modificarlas directamente. |
+
+## 7.3. Relaciones con sistemas externos
+
+La dirección de la información se interpreta desde el software del SIT. La ACL adapta los formatos y conceptos externos al modelo interno y, cuando corresponde, transforma las respuestas del SIT al formato esperado por el sistema externo.
+
+| Contexto A | Contexto B | Patrón | Justificación |
+| ---------- | ---------- | ------ | ------------- |
+| BC01, BC02, BC03, BC04 y BC05 | Plataforma central del proveedor de recaudo y validadores | C/S + PL + ACL | Entran transacciones, eventos y contadores; salen tarifarios, listas, recargas pendientes y novedades de perfil. La ACL adapta los formatos del proveedor. |
+| BC02, BC03, BC09 y BC10 | Servicio al Cliente / sistema de PQR | C/S + PL + ACL | El sistema consulta historiales y saldos, y remite solicitudes de bloqueo, traslado, ajuste y devolución. La ACL separa el modelo de PQR del modelo interno del recaudo. |
+| BC06, BC07, BC08, BC09 y BC10 | Finanzas / sistema financiero y contable | C/S + PL + ACL | Salen informes de recaudo, conciliación, liquidación, subsidios y devoluciones; entran aprobaciones y confirmaciones de giros. La ACL traduce las estructuras financieras. |
+| BC07 y BC08 | Fiduciaria / portal y cuentas del patrimonio autónomo | C/S + PL + ACL | Entran movimientos, saldos y consignaciones para conciliar las ventas con los importes consignados. El SIT no ejecuta la contabilidad ni el giro fiduciario. |
+| BC05, BC07, BC08 y BC10 | Planeación | C/S + PL + ACL | Entran catálogos de rutas, estaciones, paradas y asignaciones de operador; salen datos de uso y demanda agregada. La ACL adapta el catálogo externo. |
+| BC04, BC05, BC07, BC08 y BC10 | Operaciones / sistema de gestión de flota | C/S + PL + ACL | Entran kilómetros, fallas de validadores y conteos de pasajeros; salen alertas y datos agregados de uso. La operación de flota permanece fuera del alcance. |
+| BC06, BC07 y BC09 | Adquirente, redes y pasarelas de pago | C/S + PL + ACL | El SIT envía cobros y reversos y recibe resultados, abonos y contracargos. La ACL aísla los modelos financieros externos. |
+| BC02 y BC07 | Canales de recarga: taquillas, tiendas, máquinas, app y web | C/S + PL + ACL | Entran ventas, recargas y consignaciones por canal. La ACL normaliza los reportes de diferentes proveedores y puntos de venta. |
+| BC03 | Instituciones certificadoras de perfiles | C/S + PL + ACL | Entran listados y certificaciones; salen formatos uniformes y avisos de vencimiento. La ACL adapta los formatos de las instituciones. |
+| BC01, BC05 y BC10 | Autoridad de transporte / Secretaría de Movilidad | C/S + PL + ACL | Entran actos tarifarios y decisiones sobre servicios y rutas; salen datos de demanda, recaudo e indicadores. La ACL traduce los actos y catálogos recibidos. |
+| BC08 y BC10 | Alcaldía y Secretaría de Hacienda | C/S + PL + ACL | El SIT entrega el cálculo del subsidio mensual y sus soportes. Hacienda conserva la responsabilidad sobre su recepción y tratamiento. |
+| BC07, BC08 y BC10 | Operadores de flota y operador del metro | C/S + PL + ACL | Salen liquidaciones con soporte de cálculo; entran objeciones y novedades de flota. La ACL adapta el intercambio contractual. |
+| BC03, BC07, BC08 y BC10 | Entes de control y autoridades de reporte | C/S + PL + ACL | Salen reportes obligatorios y la información regulatoria aplicable. La ACL permite construir los formatos requeridos sin exponer directamente los modelos internos. |
+| BC01, BC03 y BC10 | Comunicaciones | C/S + PL + ACL | Salen avisos de vencimiento de perfil, deuda y cambios tarifarios. El SIT entrega mensajes normalizados y Comunicaciones se encarga de su distribución. |
+
+## 7.4. Patrones y decisiones transversales
+
+| Contexto A | Contexto B | Patrón | Justificación |
+| ---------- | ---------- | ------ | ------------- |
+| BC01 Gestión tarifaria | BC05 Procesamiento de transacciones y otros consumidores autorizados | OHS + PL | El tarifario vigente puede exponerse mediante una interfaz estable para consultar las reglas por fecha y perfil. El contrato documenta los datos devueltos. |
+| BC02 Gestión de medios de pago | BC10 Consulta, reportes e indicadores y Servicio al Cliente | OHS + PL | Las consultas de saldo e historial pueden ofrecerse mediante una interfaz estable con datos limitados según los permisos del solicitante. |
+| BC07 Consolidación y conciliación | BC08 Liquidación a operadores y BC10 Consulta, reportes e indicadores | OHS + PL | Los resultados consolidados y conciliados se publican mediante contratos para que otros contextos consuman la información sin modificarla. |
+| BC01–BC10 | Ningún contexto interno en particular | Sin núcleo compartido | Los contextos tienen reglas y responsabilidades distintas. Se prefiere intercambiar contratos y objetos de valor definidos por contexto, en lugar de compartir un modelo interno que aumente el acoplamiento. |
+| Contextos internos del SIT | Sistemas externos con contratos estables pero modelos incompatibles | Conformista o ACL, según el caso | Se adopta el contrato externo cuando sea necesario y compatible. Si sus conceptos o formatos contaminan el modelo interno, se utiliza una ACL para traducirlos. |
+
+## 7.5. Criterios de diseño
+
+1. Cada bounded context conserva sus reglas y datos de negocio.
+2. Las relaciones entre contextos se realizan mediante contratos documentados y no mediante modificaciones directas de sus agregados.
+3. Las ACL protegen el modelo interno frente a las diferencias de formato y significado de los sistemas externos.
+4. Los sistemas externos mantienen sus responsabilidades: el proveedor opera los validadores, las instituciones certifican perfiles, el adquirente procesa los cobros y Finanzas y la fiduciaria ejecutan sus funciones financieras.
+5. No se propone un núcleo compartido porque no existe una necesidad identificada que justifique acoplar los modelos internos.
+6. El contexto de consulta presenta información de los demás dominios, pero no se convierte en la fuente maestra de sus datos.
+7. Los patrones OHS y PL se aplican cuando se necesita ofrecer una interfaz estable y un contrato de intercambio documentado.
+8. Las relaciones C/S describen quién consume y quién proporciona información; no implican que ambos contextos deban implementarse en un mismo servicio o despliegue.
 
 ### V9 Interoperabilidad y anticorrupción
 ![V9 Interoperabilidad y anticorrupción](vistas/V9_interoperabilidad_acl.png)
