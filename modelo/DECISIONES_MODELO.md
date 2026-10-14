@@ -180,3 +180,20 @@ Registro de las decisiones tomadas al construir `modelo/recaudo.archimate`. Hay 
 - El contexto aparece dos veces: en «Nombre» y en el centro, donde contiene (anidados) sus comandos y su servicio para que las relaciones de comunicación entren y salgan de él.
 - Viewpoint **None** (mezcla motivación, negocio y aplicación).
 - Si se reorganiza, mantener la distribución de ddd-crew: identidad a la izquierda, comunicación en el centro, lenguaje y decisiones a la derecha, y supuestos, métricas y preguntas abajo.
+
+## 11. V10 Trazabilidad vertical (T34)
+
+**Corrección en V2:** CA01–CA06 pasaron de *Outcome* a *CourseOfAction* y a la carpeta Strategy. No tenían relaciones.
+
+**Relaciones nuevas (61), todas de realización:**
+
+| Desde | Hacia | Cuántas | Fuente |
+|---|---|---|---|
+| Servicio de plataforma (SN-P1…P10) | Capacidad | 23 | Columna «Capacidad en V2» de la tabla de descomposición (README §4) |
+| Capacidad | Curso de acción | 18 | CA01 ← CAP25, 26 · CA02 ← CAP27, 28, 29, 30, 34 · CA03 ← CAP19, 20, 21, 22, 24 · CA04 ← CAP07, 32, 40 · CA05 ← CAP37 · CA06 ← CAP08, 10 |
+| Curso de acción | Meta | 10 | CA01 → MET01, MET06 · CA02 → MET02 · CA03 → MET03, MET04 · CA04 → MET04, MET05 · CA05 → MET06, MET07 · CA06 → MET05 |
+| Contexto (BC01…BC10) | Servicio de plataforma (P1…P10) | 10 | Correspondencia DOMxx ↔ Px de V5 |
+
+**Vista:** tres cadenas (MET01 por BC05, MET02 por BC07 y BC08, MET04 por BC03) en franjas por capa: motivación, estrategia, negocio y aplicación. Las franjas son *Group* visuales. Viewpoint None.
+
+**Resaltado de impacto en V2 (rúbrica):** las capacidades con impacto directo llevan borde rojo `#C00000` de grosor 3 y las de impacto indirecto borde naranja `#ED7D31` de grosor 2 (con `deriveElementLineColor = false` para que Archi no derive el borde del relleno). Las que no tienen impacto conservan su borde. El relleno sigue siendo por categoría. Leyenda al pie de la vista.

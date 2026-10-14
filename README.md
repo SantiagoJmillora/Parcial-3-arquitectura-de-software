@@ -210,7 +210,7 @@ La meta prioritaria expresada por la experta es que el ente gestor pueda demostr
 
 **Análisis.** El mapa cubre a todo el ente gestor y no solo al recaudo, como pide la diapositiva 35 de 7_SOA. Tiene 44 capacidades repartidas en 9 grupos, y los colores separan las tres categorías que usó la experta al hablar de las funciones del ente: estratégicas (magenta), misionales (morado) y de apoyo (verde). Las estratégicas son Dirección y estrategia, Gobierno, riesgo y cumplimiento, y Relaciones institucionales. Las misionales son Planeación y operación del transporte, Acceso, tarifas y experiencia del usuario, y Recaudo, conciliación y liquidación. Las de apoyo son Finanzas y administración, Datos y tecnología, y Servicios corporativos. Al lado van 5 recursos (el registro histórico de transacciones y liquidaciones, el equipo de Recaudo y Tarifas, la plataforma central del proveedor, los contratos de operación, recaudo y fiducia, y los sistemas existentes) y 6 cursos de acción que se conectan con las metas de V1.
 
-**Capacidades impactadas.** Cada capacidad trae en su documentación el impacto que le asignamos. De las 44, 20 tienen impacto directo, 17 indirecto y 7 ninguno. Las directas son las que la aplicación ejecuta o automatiza: gestión de usuarios y medios de pago (CAP19), emisión, recarga y ciclo de vida de VAMOS (CAP20), tarifas y transbordos (CAP21), perfiles y elegibilidad (CAP22), toda la cadena desde la recepción de transacciones (CAP25) hasta la liquidación (CAP29), los subsidios (CAP30) y los indicadores (CAP32), además de varias de gobierno y de datos como auditoría y trazabilidad (CAP06), riesgos y fraude (CAP07) y ciberseguridad (CAP39). Las indirectas son las que mejoran porque reciben datos de la aplicación pero no la usan para ejecutarse, por ejemplo la atención de PQR (CAP23), la contabilidad (CAP33) y la tesorería (CAP34). Las que quedan sin impacto, como la supervisión del servicio de validación (CAP17), la gestión de compras y pagos (CAP36) o la comunicación institucional (CAP44), están cerca del recaudo pero fuera de lo que cubre el software.
+**Capacidades impactadas.** En la vista se resaltan con el borde: rojo grueso para impacto directo y naranja para indirecto, con su leyenda al pie (el relleno sigue indicando la categoría). Cada capacidad trae además en su documentación el impacto que le asignamos. De las 44, 20 tienen impacto directo, 17 indirecto y 7 ninguno. Las directas son las que la aplicación ejecuta o automatiza: gestión de usuarios y medios de pago (CAP19), emisión, recarga y ciclo de vida de VAMOS (CAP20), tarifas y transbordos (CAP21), perfiles y elegibilidad (CAP22), toda la cadena desde la recepción de transacciones (CAP25) hasta la liquidación (CAP29), los subsidios (CAP30) y los indicadores (CAP32), además de varias de gobierno y de datos como auditoría y trazabilidad (CAP06), riesgos y fraude (CAP07) y ciberseguridad (CAP39). Las indirectas son las que mejoran porque reciben datos de la aplicación pero no la usan para ejecutarse, por ejemplo la atención de PQR (CAP23), la contabilidad (CAP33) y la tesorería (CAP34). Las que quedan sin impacto, como la supervisión del servicio de validación (CAP17), la gestión de compras y pagos (CAP36) o la comunicación institucional (CAP44), están cerca del recaudo pero fuera de lo que cubre el software.
 
 **Decisiones.** Una capacidad dice qué sabe hacer el ente, no qué área lo hace; por eso la personalización de tarjetas, aunque la ejecuta Servicio al Cliente, cuenta como parte del recaudo. La planeación de rutas queda con impacto indirecto: el software solo consume su catálogo de rutas para aplicar transbordos y liquidar, no diseña rutas. La operación de validadores y dispositivos es IoT y está fuera del alcance, así que ninguna capacidad la hace directa. El recurso de la plataforma del proveedor se marca como externo para no asumir que el ente la poseerá ni que se reemplazará antes de que venza el contrato.
 
@@ -976,6 +976,30 @@ Además, es el contexto que más conversa con los otros: consulta el tarifario (
 ## 9. Decisiones y supuestos
 ### V10 Trazabilidad vertical
 ![V10 Trazabilidad vertical](vistas/V10_trazabilidad.png)
+
+**Análisis.** La vista muestra tres cadenas completas, de un problema detectado en la entrevista hasta el componente de aplicación que lo resuelve. Se lee de abajo hacia arriba, siempre por realización:
+1. La «Aplicación de recaudo SIT» se compone de contextos (V8).
+2. Cada contexto realiza su servicio de negocio de plataforma (V4).
+3. El servicio realiza capacidades (V2).
+4. Las capacidades realizan un curso de acción.
+5. El curso de acción realiza la meta (V1), en la que influye una evaluación.
+
+Las tres cadenas son:
+- **Cadena 1 · MET01, control de la información.** La dependencia del proveedor (EVA01) motiva la meta. La realiza CA01 con la recepción de transacciones (CAP25) y el control de integridad y duplicados (CAP26). Detrás está el servicio de procesamiento de transacciones (P5) y el contexto BC05, que ejecuta *ProcesarRegistroValidación*.
+- **Cadena 2 · MET02, liquidación y conciliación confiables.** Es la meta que la experta marcó como prioritaria. Las diferencias de conciliación (EVA04) la motivan. CA02 la realiza con CAP28 y CAP29, que salen de los servicios de conciliación (P7) y liquidación (P8). Los contextos BC07 y BC08 se comunican por la API abierta de resultados conciliados (OHS + PL), y P8 le sirve a los operadores.
+- **Cadena 3 · MET04, reducción de pérdidas.** La fuga de subsidios (EVA07) la motiva. CA03 la realiza con la validación de perfiles y elegibilidad (CAP22), el servicio de usuarios y perfiles (P3) y el contexto BC03, que ejecuta *AsignarPerfilTarifario*.
+
+Las cuatro relaciones que pide el enunciado están en la vista: realización (en toda la cadena), influencia (evaluación → meta), servicio (P8 → operadores y el servicio de aplicación → BC08) y asignación (contexto → comando).
+
+**Decisiones.**
+- Las capacidades de V2 no tenían relaciones en el modelo, así que al hacer V10 se completó la trazabilidad de **todo** el modelo, no solo de las tres cadenas dibujadas:
+  - los 10 servicios de plataforma realizan las capacidades que les asigna la tabla de descomposición (§4), 23 relaciones;
+  - las capacidades impactadas realizan los 6 cursos de acción, 18 relaciones;
+  - los cursos de acción realizan las metas, 10 relaciones;
+  - cada contexto realiza su servicio de plataforma, 10 relaciones.
+
+  Así, cualquier contexto de V8 se puede seguir hasta una meta.
+- Los cursos de acción CA01 a CA06 de V2 estaban modelados como *resultado* (Outcome). Se cambiaron a *curso de acción*, que es el tipo que pide V2; no tenían relaciones, así que el cambio no afectó otras vistas.
 
 **Decisiones de diseño:** _…_
 **Supuestos:** _…_
