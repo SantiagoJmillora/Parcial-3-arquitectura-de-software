@@ -95,7 +95,7 @@ Registro de las decisiones tomadas al construir `modelo/recaudo.archimate`. Hay 
 - **ACL o no:** tienen ACL los 8 externos cuyo modelo es ajeno o no controlamos (proveedor, PQR, finanzas, fiduciaria, adquirente, canales, instituciones y operaciones). Planeación y la autoridad de transporte son *conformistas*. Hacienda, operadores, entes de control y la autoridad reciben lo que el software les entrega por la *interfaz de reportes y liquidación* (lenguaje publicado). **V8 debe repetir estos patrones.**
 - **V9 con viewpoint** `application_cooperation`: solo tiene elementos de la capa de aplicación, por eso no hay conflicto.
 - **Liquidación a operadores (P8):** se incluye como servicio de plataforma, pero solo aplica las fórmulas de cada contrato; no las decide (RESC06).
-- **Servicio de consulta (P10):** es servicio de plataforma y no un dominio, porque se alimenta de los demás.
+- **Servicio de consulta (P10):** es un servicio de plataforma propio (tiene usuarios y reglas propias) aunque se alimenta de los demás. En DDD corresponde al dominio genérico DOM10 de V5, que solo lee lo que producen los dominios operacionales.
 
 **Pendientes:** al hacer V5 a V8 y V10, reutilizar estos servicios (para V10, las cadenas meta → capacidad → servicio de negocio → componente pueden salir de estos servicios y de los REQ).
 

@@ -229,7 +229,7 @@ La meta prioritaria expresada por la experta es que el ente gestor pueda demostr
 
 ![V4d Roles, funciones y objetos](vistas/V4d_roles_funciones_objetos.png)
 
-**Decisiones.** Se usó la relación de agregación entre capas porque un servicio de una capa se compone de los de la inferior sin ser su dueño exclusivo. El servicio de consulta, reportes e indicadores (P10) se dejó como un servicio de plataforma y no como un dominio, porque se alimenta de los demás. La liquidación a operadores (P8) sí se incluye, pero solo aplica las fórmulas de cada contrato y no las decide, porque el software no puede modificar unilateralmente las reglas de remuneración (RESC06).
+**Decisiones.** Se usó la relación de agregación entre capas porque un servicio de una capa se compone de los de la inferior sin ser su dueño exclusivo. El servicio de consulta, reportes e indicadores (P10) se dejó como un servicio de plataforma propio, aunque se alimenta de los demás, porque tiene usuarios y reglas propias (permisos de consulta, indicadores y reportes obligatorios). En DDD corresponde al dominio genérico DOM10 (§5): no es la fuente de verdad de ningún dato, solo lee lo que producen los dominios operacionales. La liquidación a operadores (P8) sí se incluye, pero solo aplica las fórmulas de cada contrato y no las decide, porque el software no puede modificar unilateralmente las reglas de remuneración (RESC06).
 
 #### Descomposición del proceso E2E en capas
 
@@ -377,10 +377,6 @@ Quedan las 6 interoperabilidades que pedía el enunciado (servicio al cliente, f
 
 ## 5. Dominios y lenguaje ubicuo
 
-### V5 borrador
-
-## Extracción de dominios
-
 La extracción de dominios se realiza a partir de la estructura organizacional identificada en la entrevista, la cadena de valor y el proceso E2E representados en V3, y los servicios de negocio agrupados por capas y delimitados por alcance en V4.
 
 El objetivo es agrupar las responsabilidades del negocio en dominios coherentes, identificando sus límites a partir de los eventos del proceso y de los cambios de responsabilidad.
@@ -491,17 +487,14 @@ Los siguientes servicios participan en el proceso, pero permanecen fuera del alc
 
 ### 5.6. Resultado de la extracción
 
-La T23 identifica diez dominios candidatos para organizar las responsabilidades del software de recaudo del SIT. La extracción se basa en la estructura organizacional, los eventos del proceso E2E y los puntos de corte entre responsabilidades.
+La extracción identifica diez dominios candidatos para organizar las responsabilidades del software de recaudo del SIT. La extracción se basa en la estructura organizacional, los eventos del proceso E2E y los puntos de corte entre responsabilidades.
 
 Los dominios permiten diferenciar la gestión de reglas y medios de pago, el procesamiento de transacciones, la conciliación financiera, la liquidación y la consulta de resultados. También mantienen explícita la separación entre las funciones implementadas por el software y los servicios externos que participan en el proceso.
-
 
 ### V5 Dominios
 ![V5 Dominios](vistas/V5_dominios.png)
 
-
-
-## Clasificación de dominios
+### 5.7. Clasificación de dominios
 
 | Dominio | Clasificación | Argumento |
 | ------- | ------------- | --------- |
@@ -516,22 +509,19 @@ Los dominios permiten diferenciar la gestión de reglas y medios de pago, el pro
 | Ajustes y devoluciones | De soporte | **¿Qué diferencia al negocio?** Permite corregir errores de cobro y tramitar devoluciones con sus respectivas aprobaciones y evidencias. Es importante para la confianza del usuario, pero apoya los procesos principales de recaudo y conciliación. **¿Se puede comprar?** Sí, existen herramientas de gestión de solicitudes y flujos de aprobación que pueden adaptarse a las políticas y los controles del SIT. |
 | Consulta, reportes e indicadores | Genérico | **¿Qué diferencia al negocio?** La consulta de información y la generación de reportes no son capacidades exclusivas del SIT; su valor reside en los datos y los indicadores específicos que necesita la organización. **¿Se puede comprar?** Sí, existen herramientas de inteligencia de negocios, generación de informes y visualización que pueden configurarse con los datos, las métricas y los permisos del sistema. |
 
-### Criterio aplicado
+#### Criterio aplicado
 
 Un dominio es central cuando contiene reglas o capacidades que diferencian la forma en que opera el SIT; es de soporte cuando habilita o facilita el negocio sin constituir su principal diferenciador; y es genérico cuando ofrece capacidades comunes disponibles como productos o servicios existentes.
 
-### V7 Lenguaje ubicuo
-![V7 Lenguaje ubicuo](vistas/V7_lenguaje_ubicuo.png)
+### 5.8. Glosario de lenguaje ubicuo
 
-# Glosario de lenguaje ubicuo
+#### Objetivo
 
-## 1. Objetivo
-
-Establecer un lenguaje común entre el equipo de arquitectura, Recaudo y Tarifas y las demás áreas involucradas en el SIT. El glosario define los términos utilizados en el proceso de recaudo y en los dominios identificados en la T23, evitando que una misma palabra se interprete de manera diferente según el contexto.
+Establecer un lenguaje común entre el equipo de arquitectura, Recaudo y Tarifas y las demás áreas involucradas en el SIT. El glosario define los términos utilizados en el proceso de recaudo y en los dominios identificados en §5.4, evitando que una misma palabra se interprete de manera diferente según el contexto.
 
 Cuando un término tiene más de un significado, se identifica explícitamente el contexto al que pertenece cada definición.
 
-## 2. Glosario de términos
+#### Glosario de términos
 
 | Término | Definición | Dominio | Ejemplo |
 |---|---|---|---|
@@ -573,7 +563,7 @@ Cuando un término tiene más de un significado, se identifica explícitamente e
 | Contrato de servicio | Definición explícita de lo que un servicio recibe, devuelve, los errores que comunica y sus requisitos no funcionales. | Transversal a los servicios | El contrato de recepción de transacciones define el formato de entrada y la respuesta ante registros inválidos. |
 | Capa anticorrupción (ACL) | Mecanismo de integración que transforma o adapta los conceptos de un sistema externo para preservar el lenguaje y las reglas del dominio interno. | Integración con sistemas externos | Una ACL traduce el formato de transacciones del proveedor al modelo utilizado por el procesamiento del SIT. |
 
-## 3. Resolución explícita de términos ambiguos
+#### Resolución explícita de términos ambiguos
 
 Los términos siguientes requieren especial cuidado al hablar, documentar requisitos o definir contratos de servicios.
 
@@ -587,9 +577,12 @@ Los términos siguientes requieren especial cuidado al hablar, documentar requis
 | Operador | Empresa operadora del transporte frente al proveedor operador del recaudo. | Especificar «operador de transporte» u «operador de recaudo». |
 | Transacción | Registro de validación recibido del proveedor frente a operación financiera de pago. | Especificar «transacción de validación» o «transacción financiera» y no asumir que ambas se producen o aprueban simultáneamente. |
 
-## 4. Regla general de uso del lenguaje ubicuo
+#### Regla general de uso del lenguaje ubicuo
 
-En los requisitos, contratos de servicios, eventos, comandos y documentación de los dominios se deben utilizar los términos definidos en este glosario. Cuando un término tenga más de un significado, se debe indicar el contexto o emplear la expresión específica establecida en la sección 3. Las áreas de negocio y el equipo de arquitectura deben mantener estas definiciones consistentes en los modelos, las interfaces y las conversaciones del proyecto.
+En los requisitos, contratos de servicios, eventos, comandos y documentación de los dominios se deben utilizar los términos definidos en este glosario. Cuando un término tenga más de un significado, se debe indicar el contexto o emplear la expresión específica establecida en la resolución de términos ambiguos. Las áreas de negocio y el equipo de arquitectura deben mantener estas definiciones consistentes en los modelos, las interfaces y las conversaciones del proyecto.
+
+### V7 Lenguaje ubicuo
+![V7 Lenguaje ubicuo](vistas/V7_lenguaje_ubicuo.png)
 
 ## 6. Agregados, comandos y eventos
 ### V6 Agregados, comandos y eventos
@@ -598,7 +591,7 @@ _Un diagrama por dominio._
 #### V6a _Dominio…_
 ![V6a](vistas/V6a_agregados_dominio.png)
 
-## 6.1. Criterios de diseño
+### 6.1. Criterios de diseño
 
 El diseño táctico utiliza agregados para agrupar los objetos que deben mantener sus reglas de negocio de forma consistente. Cada agregado tiene una raíz que controla las modificaciones de su estado y protege sus invariantes.
 
@@ -611,9 +604,9 @@ El diseño táctico utiliza agregados para agrupar los objetos que deben mantene
 
 Cada tabla presenta un agregado representativo por dominio. Los sistemas externos, como los validadores, las redes financieras y la fiduciaria, se tratan como fuentes o consumidores de información, no como agregados internos del SIT.
 
-## 6.2. DOM01 — Gestión tarifaria
+### 6.2. DOM01 — Gestión tarifaria
 
-**Clasificación T24:** Central.
+**Clasificación (§5.7):** Central.
 
 Este dominio concentra las reglas tarifarias que diferencian la operación del SIT. El agregado `ConfiguraciónTarifaria` controla las versiones de las reglas y sus periodos de vigencia. Las tarifas aplicadas a un viaje se calculan en el dominio de Procesamiento de transacciones; no se confunden con los valores configurados aquí.
 
@@ -623,9 +616,9 @@ Este dominio concentra las reglas tarifarias que diferencian la operación del S
 
 **Alcance:** el agregado controla la configuración y publicación de las reglas tarifarias. No calcula por sí mismo el cobro de cada viaje ni realiza la liquidación a los operadores.
 
-## 6.3. DOM02 — Gestión de medios de pago
+### 6.3. DOM02 — Gestión de medios de pago
 
-**Clasificación T24:** Central.
+**Clasificación (§5.7):** Central.
 
 Este dominio administra el ciclo de vida de la tarjeta VAMOS y su saldo. La tarjeta es la raíz del agregado porque controla su estado y las operaciones que afectan directamente su saldo.
 
@@ -635,9 +628,9 @@ Este dominio administra el ciclo de vida de la tarjeta VAMOS y su saldo. La tarj
 
 **Alcance:** el agregado administra el estado y saldo de una tarjeta. La recepción de eventos del validador y el procesamiento de los viajes corresponden al dominio de Procesamiento de transacciones.
 
-## 6.4. DOM03 — Gestión de usuarios y perfiles
+### 6.4. DOM03 — Gestión de usuarios y perfiles
 
-**Clasificación T24:** Central.
+**Clasificación (§5.7):** Central.
 
 Este dominio diferencia a la persona que utiliza el sistema, al titular de una tarjeta y al perfil que determina condiciones tarifarias. El agregado `AsignaciónPerfilTarifario` controla la asignación de un perfil a un titular; los datos personales y las evidencias de elegibilidad se mantienen dentro de los límites autorizados del dominio.
 
@@ -647,9 +640,9 @@ Este dominio diferencia a la persona que utiliza el sistema, al titular de una t
 
 **Alcance:** el agregado controla la asignación del perfil tarifario. La certificación oficial de la condición de cada persona pertenece a una entidad externa; el SIT registra y utiliza el resultado recibido. Los perfiles de acceso al sistema son distintos de los perfiles tarifarios.
 
-## 6.5. DOM04 — Gestión de listas de control
+### 6.5. DOM04 — Gestión de listas de control
 
-**Clasificación T24:** De soporte.
+**Clasificación (§5.7):** De soporte.
 
 Este dominio gestiona las decisiones de inclusión y exclusión de tarjetas en listas de control. La raíz representa la entrada de control de una tarjeta, mientras que las listas y sus versiones determinan cómo se distribuyen las decisiones hacia los componentes que las consumen.
 
@@ -659,9 +652,9 @@ Este dominio gestiona las decisiones de inclusión y exclusión de tarjetas en l
 
 **Alcance:** el agregado conserva las decisiones de control y su publicación lógica. La operación de validadores y lectores queda fuera del alcance interno; estos consumen las listas a través de las interfaces correspondientes.
 
-## 6.6. DOM05 — Procesamiento de transacciones
+### 6.6. DOM05 — Procesamiento de transacciones
 
-**Clasificación T24:** Central.
+**Clasificación (§5.7):** Central.
 
 Este dominio recibe registros de validación y los transforma en transacciones procesadas, aplicando reglas tarifarias, perfiles y transbordos. La raíz `TransacciónDeViaje` mantiene el ciclo de procesamiento de un registro sin confundirlo con una transacción financiera de una red bancaria.
 
@@ -671,9 +664,9 @@ Este dominio recibe registros de validación y los transforma en transacciones p
 
 **Alcance:** el agregado procesa cada registro y conserva su resultado. La reconstrucción de un viaje completo, con varias validaciones y transbordos, debe coordinar los registros relacionados; no se asume que cada validación sea por sí sola un viaje completo. La entrada original proviene de proveedores externos.
 
-## 6.7. DOM06 — Cobro con tarjeta bancaria
+### 6.7. DOM06 — Cobro con tarjeta bancaria
 
-**Clasificación T24:** De soporte.
+**Clasificación (§5.7):** De soporte.
 
 Este dominio administra el cobro bancario diferido y el seguimiento de respuestas, rechazos y contracargos. Se diferencia de la tarjeta VAMOS: aquí la operación financiera depende de una red o entidad financiera externa.
 
@@ -683,9 +676,9 @@ Este dominio administra el cobro bancario diferido y el seguimiento de respuesta
 
 **Alcance:** el agregado registra la solicitud y la respuesta del cobro. La autorización, el movimiento de fondos y la decisión final de la red financiera son responsabilidad del proveedor externo. Los contracargos pueden requerir un proceso adicional de gestión y resolución.
 
-## 6.8. DOM07 — Consolidación y conciliación
+### 6.8. DOM07 — Consolidación y conciliación
 
-**Clasificación T24:** Central.
+**Clasificación (§5.7):** Central.
 
 Este dominio agrupa importes y contrasta los registros del recaudo con las ventas, recargas y consignaciones reportadas por las fuentes involucradas. La raíz `ProcesoConciliación` controla una ejecución concreta y sus resultados, evitando mezclar diferentes periodos o fuentes.
 
@@ -695,9 +688,9 @@ Este dominio agrupa importes y contrasta los registros del recaudo con las venta
 
 **Alcance:** el agregado controla una ejecución de conciliación y su resultado. La consolidación previa de los registros puede alimentar el proceso; la liquidación utiliza los resultados validados como insumo, pero mantiene su propio agregado.
 
-## 6.9. DOM08 — Liquidación a operadores
+### 6.9. DOM08 — Liquidación a operadores
 
-**Clasificación T24:** Central.
+**Clasificación (§5.7):** Central.
 
 Este dominio determina los importes que corresponden a los operadores a partir de una base de liquidación y un esquema de remuneración. El agregado `LiquidaciónOperador` mantiene el cálculo y su estado de aprobación; la transferencia de fondos es una operación externa.
 
@@ -707,9 +700,9 @@ Este dominio determina los importes que corresponden a los operadores a partir d
 
 **Alcance:** el agregado calcula y controla el estado de la liquidación de cada operador. La aprobación habilita la instrucción de pago, pero la ejecución de la transferencia y su confirmación corresponden a la fiduciaria o al sistema financiero externo.
 
-## 6.10. DOM09 — Ajustes y devoluciones
+### 6.10. DOM09 — Ajustes y devoluciones
 
-**Clasificación T24:** De soporte.
+**Clasificación (§5.7):** De soporte.
 
 Este dominio gestiona solicitudes de corrección o devolución relacionadas con operaciones del recaudo. El agregado `SolicitudAjuste` controla el ciclo de vida de cada solicitud y mantiene trazabilidad de la decisión tomada.
 
@@ -719,9 +712,9 @@ Este dominio gestiona solicitudes de corrección o devolución relacionadas con 
 
 **Alcance:** el agregado registra, evalúa y resuelve la solicitud. La ejecución contable o financiera de una devolución debe integrarse con los dominios o sistemas responsables, sin asumir que la aprobación equivale a un reembolso ya pagado.
 
-## 6.11. DOM10 — Consulta, reportes e indicadores
+### 6.11. DOM10 — Consulta, reportes e indicadores
 
-**Clasificación T24:** Genérico.
+**Clasificación (§5.7):** Genérico.
 
 Este dominio expone información de consulta y resultados agregados para los usuarios autorizados. Dado que su función principal es presentar información y no ser la fuente maestra de las transacciones, utiliza un modelo de consulta separado de los agregados operacionales.
 
@@ -731,7 +724,7 @@ Este dominio expone información de consulta y resultados agregados para los usu
 
 **Alcance:** el agregado controla la solicitud y la generación del resultado. Los reportes e indicadores consumen datos de los dominios operacionales; no modifican directamente las tarjetas, las transacciones, las conciliaciones ni las liquidaciones.
 
-## 6.12. Límites de consistencia e interacción entre dominios
+### 6.12. Límites de consistencia e interacción entre dominios
 
 Los agregados definidos mantienen la consistencia de sus propias reglas y no deben modificarse directamente desde otro dominio. La comunicación entre dominios se realiza mediante comandos, contratos de servicio y eventos de negocio, según corresponda.
 
@@ -746,15 +739,11 @@ Los agregados definidos mantienen la consistencia de sus propias reglas y no deb
 | Ajustes y devoluciones → Dominios involucrados                  | Decisión de ajuste o devolución y referencia de la operación.        | Ajustes resuelve solicitudes; el dominio responsable registra la modificación operativa o financiera correspondiente. |
 | Dominios operacionales → Consulta, reportes e indicadores       | Datos y eventos necesarios para consultas y métricas.                | Los dominios operacionales conservan la fuente de verdad; Consulta presenta información autorizada.                   |
 
-
-
 ## 7. Mapa de contextos e interoperabilidad
 ### V8 Mapa de contextos
 ![V8 Mapa de contextos](vistas/V8_mapa_contextos.png)
 
-# 7. Mapa de contextos (DDD)
-
-## 7.1. Bounded contexts identificados
+### 7.1. Bounded contexts identificados
 
 | Código | Bounded context | Responsabilidad |
 | ------ | --------------- | --------------- |
@@ -769,7 +758,7 @@ Los agregados definidos mantienen la consistencia de sus propias reglas y no deb
 | BC09 | Ajustes y devoluciones | Registrar y tramitar solicitudes de ajuste, devolución, reverso o traslado de saldo. |
 | BC10 | Consulta, reportes e indicadores | Consultar historiales, generar indicadores, detectar anomalías y producir reportes. |
 
-## 7.2. Relaciones entre bounded contexts internos
+### 7.2. Relaciones entre bounded contexts internos
 
 | Contexto A | Contexto B | Patrón | Justificación |
 | ---------- | ---------- | ------ | ------------- |
@@ -795,7 +784,7 @@ Los agregados definidos mantienen la consistencia de sus propias reglas y no deb
 | BC10 Consulta, reportes e indicadores | BC08 Liquidación a operadores | C/S + PL | Los informes de liquidación y subsidios consumen los resultados de cálculo y aprobación. |
 | BC10 Consulta, reportes e indicadores | BC09 Ajustes y devoluciones | C/S + PL | Los reportes consumen los estados y resultados de las solicitudes, sin modificarlas directamente. |
 
-## 7.3. Relaciones con sistemas externos
+### 7.3. Relaciones con sistemas externos
 
 La dirección de la información se interpreta desde el software del SIT. La ACL adapta los formatos y conceptos externos al modelo interno y, cuando corresponde, transforma las respuestas del SIT al formato esperado por el sistema externo.
 
@@ -816,7 +805,7 @@ La dirección de la información se interpreta desde el software del SIT. La ACL
 | BC03, BC07, BC08 y BC10 | Entes de control y autoridades de reporte | C/S + PL + ACL | Salen reportes obligatorios y la información regulatoria aplicable. La ACL permite construir los formatos requeridos sin exponer directamente los modelos internos. |
 | BC01, BC03 y BC10 | Comunicaciones | C/S + PL + ACL | Salen avisos de vencimiento de perfil, deuda y cambios tarifarios. El SIT entrega mensajes normalizados y Comunicaciones se encarga de su distribución. |
 
-## 7.4. Patrones y decisiones transversales
+### 7.4. Patrones y decisiones transversales
 
 | Contexto A | Contexto B | Patrón | Justificación |
 | ---------- | ---------- | ------ | ------------- |
@@ -826,7 +815,7 @@ La dirección de la información se interpreta desde el software del SIT. La ACL
 | BC01–BC10 | Ningún contexto interno en particular | Sin núcleo compartido | Los contextos tienen reglas y responsabilidades distintas. Se prefiere intercambiar contratos y objetos de valor definidos por contexto, en lugar de compartir un modelo interno que aumente el acoplamiento. |
 | Contextos internos del SIT | Sistemas externos con contratos estables pero modelos incompatibles | Conformista o ACL, según el caso | Se adopta el contrato externo cuando sea necesario y compatible. Si sus conceptos o formatos contaminan el modelo interno, se utiliza una ACL para traducirlos. |
 
-## 7.5. Criterios de diseño
+### 7.5. Criterios de diseño
 
 1. Cada bounded context conserva sus reglas y datos de negocio.
 2. Las relaciones entre contextos se realizan mediante contratos documentados y no mediante modificaciones directas de sus agregados.
