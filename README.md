@@ -501,9 +501,24 @@ Los dominios permiten diferenciar la gestión de reglas y medios de pago, el pro
 
 
 
+## Clasificación de dominios
+
 | Dominio | Clasificación | Argumento |
-|---|---|---|
-| | | |
+| ------- | ------------- | --------- |
+| Gestión tarifaria | Central | **¿Qué diferencia al negocio?** Define las tarifas, los transbordos y las condiciones económicas particulares del SIT, que determinan cuánto paga cada usuario y cómo se integra el servicio. **¿Se puede comprar?** Existen herramientas de gestión tarifaria, pero no se pueden adquirir listas las reglas específicas del SIT: deben configurarse según sus políticas, modos de transporte y actos administrativos. |
+| Gestión de medios de pago | Central | **¿Qué diferencia al negocio?** Gestiona las tarjetas, las recargas y los saldos dentro del modelo de recaudo del SIT, integrando sus medios de pago con las reglas tarifarias. **¿Se puede comprar?** Existen plataformas de medios de pago, pero deben adaptarse a las tarjetas VAMOS, sus reglas de saldo y las integraciones del sistema. |
+| Gestión de usuarios y perfiles | Central | **¿Qué diferencia al negocio?** Administra las condiciones de acceso a tarifas especiales para estudiantes, adultos mayores y personas con discapacidad, de acuerdo con los requisitos y vigencias establecidos. **¿Se puede comprar?** Se pueden adquirir herramientas de gestión de usuarios, pero las condiciones de elegibilidad, certificación y aplicación de los beneficios deben configurarse para el SIT. |
+| Gestión de listas de control | De soporte | **¿Qué diferencia al negocio?** Permite controlar el uso de tarjetas mediante decisiones de bloqueo y desbloqueo, pero no constituye por sí sola la principal fuente de diferenciación del SIT. **¿Se puede comprar?** Sí, existen mecanismos y herramientas para gestionar listas de control y distribuirlas; deben adaptarse a las interfaces del proveedor y a las necesidades operativas del sistema. |
+| Procesamiento de transacciones | Central | **¿Qué diferencia al negocio?** Convierte las validaciones recibidas en viajes procesados, aplicando las reglas tarifarias y resolviendo situaciones como transacciones duplicadas, tardías o incompletas. La precisión de este proceso afecta el recaudo y los cálculos posteriores. **¿Se puede comprar?** Existen plataformas de procesamiento, pero deben adaptarse a las reglas de integración, los medios de pago y las condiciones operativas del SIT. |
+| Cobro con tarjeta bancaria | De soporte | **¿Qué diferencia al negocio?** Permite aceptar pagos bancarios y gestionar rechazos, cartera y contracargos, ampliando las opciones de pago para los usuarios. La autorización y el procesamiento bancario no son capacidades exclusivas del SIT. **¿Se puede comprar?** Sí, se pueden contratar pasarelas, adquirentes y servicios de pago; es necesario integrarlos con las validaciones y la conciliación del recaudo. |
+| Consolidación y conciliación | Central | **¿Qué diferencia al negocio?** Permite comprobar que el recaudo registrado coincida con las ventas, recargas y consignaciones, identificar diferencias y demostrar de dónde proviene cada valor. La transparencia financiera es una de las metas principales del proyecto. **¿Se puede comprar?** Existen herramientas de conciliación, pero las reglas de agrupación, las fuentes de información y los controles deben adaptarse al modelo financiero del SIT. |
+| Liquidación a operadores | Central | **¿Qué diferencia al negocio?** Determina cuánto corresponde a cada operador según sus condiciones contractuales y calcula los subsidios correspondientes. Las reglas de remuneración y la distribución de recursos son particulares de los contratos y del sistema. **¿Se puede comprar?** Se pueden adquirir herramientas de cálculo y liquidación, pero las fórmulas contractuales, los parámetros y la trazabilidad deben configurarse para el SIT. |
+| Ajustes y devoluciones | De soporte | **¿Qué diferencia al negocio?** Permite corregir errores de cobro y tramitar devoluciones con sus respectivas aprobaciones y evidencias. Es importante para la confianza del usuario, pero apoya los procesos principales de recaudo y conciliación. **¿Se puede comprar?** Sí, existen herramientas de gestión de solicitudes y flujos de aprobación que pueden adaptarse a las políticas y los controles del SIT. |
+| Consulta, reportes e indicadores | Genérico | **¿Qué diferencia al negocio?** La consulta de información y la generación de reportes no son capacidades exclusivas del SIT; su valor reside en los datos y los indicadores específicos que necesita la organización. **¿Se puede comprar?** Sí, existen herramientas de inteligencia de negocios, generación de informes y visualización que pueden configurarse con los datos, las métricas y los permisos del sistema. |
+
+### Criterio aplicado
+
+Un dominio es central cuando contiene reglas o capacidades que diferencian la forma en que opera el SIT; es de soporte cuando habilita o facilita el negocio sin constituir su principal diferenciador; y es genérico cuando ofrece capacidades comunes disponibles como productos o servicios existentes.
 
 ### V7 Lenguaje ubicuo
 ![V7 Lenguaje ubicuo](vistas/V7_lenguaje_ubicuo.png)
