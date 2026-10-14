@@ -46,7 +46,7 @@
 | T13 | [x] Santiago Jaramillo 📝 | Boceto del **mapa de capacidades COMPLETO** de la organización de transporte (estratégicas, misionales y de apoyo, como en la diapositiva 35 de 7_SOA), no solo recaudo | T09 | Boceto (papel o Excalidraw) | Hay ≥ 3 niveles de agrupación y están marcadas las capacidades impactadas | 1,5 |
 | T14 | [x] Vergara 🧩 | **V2 Mapa de capacidades** en Archi: capacidades, recursos y cursos de acción, con las **impactadas resaltadas** y una leyenda | T13, T12 | `vistas/V2_mapa_capacidades.png` | Mapa completo y relaciones a V1 (las metas se realizan con cursos de acción y capacidades) | 2 |
 | T15 | [x] Vergara 🧩 | **V3 Cadena de valor y proceso E2E**: flujo de valor de la organización → etapa donde opera el recaudo → proceso E2E de recaudo con eventos y actores de negocio | T13, T14 | `vistas/V3_cadena_valor_e2e.png` | Queda claro **dónde** se ubica la aplicación | 1,5 |
-| T16 | [~] Velez 📝 | README §1 (Contexto y entrevista), §2 (Motivación) y §3 (Capacidades y E2E): imagen y **análisis y argumentación** de cada vista | T10, T12, T14, T15 | README.md | Cada vista tiene al menos 1 párrafo de análisis y uno de decisiones. Hecho: §1, §2 (V1) y §3 (V2). Falta: análisis y decisiones de V3 | 2 |
+| T16 | [x] Velez, Santiago Jaramillo 📝 | README §1 (Contexto y entrevista), §2 (Motivación) y §3 (Capacidades y E2E): imagen y **análisis y argumentación** de cada vista | T10, T12, T14, T15 | README.md | Cada vista tiene al menos 1 párrafo de análisis y uno de decisiones. Hecho: §1, §2 (V1) y §3 (V2 y V3) | 2 |
 
 ## Día 3 (lun 12): Fase 2, descomposición de servicios, contract-first y anticorrupción
 

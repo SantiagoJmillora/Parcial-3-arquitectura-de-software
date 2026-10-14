@@ -58,9 +58,9 @@ Registro de las decisiones tomadas al construir `modelo/recaudo.archimate`. Hay 
 - Las restricciones de proyecto (presupuesto, contratación, plazos, capacidad del equipo) influyen sobre la meta o el resultado de transición (MET06 y RES09), no sobre la aplicación, porque el software no las «cumple».
 - Validación en Archi: el viewpoint *Motivation* rechazaba el componente de aplicación, así que la vista quedó con viewpoint **None**.
 
-## 4. Pendientes para las siguientes vistas
-- **V2:** reutilizar MET01–MET07 y relacionarlas con capacidades y cursos de acción (T14).
-- **V10:** escoger al menos 2 cadenas meta → capacidad → servicio → componente. Candidatas: MET02 (liquidación y conciliación confiables) y MET04 (reducción de pérdidas).
+## 4. Pendientes para las siguientes vistas (resueltos)
+- **V2:** las metas MET01–MET07 se relacionan con capacidades a través de los cursos de acción (resuelto en T34; ver §11).
+- **V10:** se hicieron 3 cadenas: MET01, MET02 y MET04 (ver §11).
 
 ## 5. V4, V4b, V4c, V4d y V9 (T20, T21 y T22)
 
@@ -135,7 +135,7 @@ Registro de las decisiones tomadas al construir `modelo/recaudo.archimate`. Hay 
 
 ## 8. V6a a V6j Agregados, comandos y eventos (T29)
 
-**Contenido nuevo:** 105 elementos de aplicación (10 raíces `AG-DOMxx`, 2 entidades, 53 objetos de valor, 20 comandos `CMD-DOMxx` y 20 eventos `EVT-DOMxx`) y 130 relaciones. Una vista por dominio; V6a reutiliza la vista vacía original y las otras nueve se crearon a continuación.
+**Contenido nuevo:** 107 elementos de aplicación (10 raíces `AG-DOMxx`, 2 entidades, 53 objetos de valor, 21 comandos `CMD-DOMxx` y 21 eventos `EVT-DOMxx`; DOM02 tiene tres comandos: emitir, recargar y bloquear) y 133 relaciones. Una vista por dominio; V6a reutiliza la vista vacía original y las otras nueve se crearon a continuación.
 
 | Relación | Desde | Hacia | Para qué |
 |---|---|---|---|
@@ -160,7 +160,7 @@ Registro de las decisiones tomadas al construir `modelo/recaudo.archimate`. Hay 
 |---|---|---|---|
 | Composición | Aplicación de recaudo SIT | Componente de contexto | La aplicación se compone de los 10 bounded contexts (se usa en V10) |
 | Realización | Componente de contexto | Servicio de aplicación | Lo que el contexto ofrece a otros |
-| Servicio | Servicio de aplicación | Componente que lo consume | Las 21 relaciones de README §7.2; el nombre es el patrón (C/S + PL u OHS + PL) |
+| Servicio | Servicio de aplicación | Componente que lo consume | Las 21 relaciones de README §7.2; el nombre es el patrón. Todas las salidas de los servicios de BC01, BC02 y BC07 se llaman «OHS + PL», porque el servicio abierto es una propiedad del proveedor y no de cada consumidor; las demás, «C/S + PL» |
 | Composición | Contexto BC01, BC02 o BC07 | Interfaz «API pública … (OHS)» | El servicio abierto de §7.4 |
 | Flujo | Componente de contexto | Componente de contexto | Eventos de las políticas de V6; el nombre es «evento: …» |
 
@@ -173,7 +173,7 @@ Registro de las decisiones tomadas al construir `modelo/recaudo.archimate`. Hay 
 
 **Contexto:** procesamiento de transacciones (BC05). Justificación y mapeo de secciones en README §8.
 
-**Contenido nuevo:** 6 restricciones `RN-BC05-01`–`06` (reglas de negocio de la entrevista) y 27 relaciones: realización de BC05 hacia REQ01 y hacia cada restricción, y **asignación de cada contexto (V8) a sus dos comandos (V6)**, 20 en total.
+**Contenido nuevo:** 7 restricciones `RN-BC05-01`–`07` (reglas de negocio de la entrevista) y 29 relaciones: realización de BC05 hacia REQ01 y hacia cada restricción, y **asignación de cada contexto (V8) a sus comandos (V6)**, 21 en total.
 
 **Decisiones:**
 - Las 11 secciones del canvas son *Group* visuales numerados. Dentro van elementos ya existentes (V1, V3, V5, V6, V7, V8, V9) y notas solo para modelo de negocio, evolución, roles, supuestos, métricas del límite y preguntas abiertas.
@@ -197,3 +197,48 @@ Registro de las decisiones tomadas al construir `modelo/recaudo.archimate`. Hay 
 **Vista:** tres cadenas (MET01 por BC05, MET02 por BC07 y BC08, MET04 por BC03) en franjas por capa: motivación, estrategia, negocio y aplicación. Las franjas son *Group* visuales. Viewpoint None.
 
 **Resaltado de impacto en V2 (rúbrica):** las capacidades con impacto directo llevan borde rojo `#C00000` de grosor 3 y las de impacto indirecto borde naranja `#ED7D31` de grosor 2 (con `deriveElementLineColor = false` para que Archi no derive el borde del relleno). Las que no tienen impacto conservan su borde. El relleno sigue siendo por categoría. Leyenda al pie de la vista.
+
+## 12. Revisión de calidad del modelo (T35)
+
+**Resultado:** 597 elementos y 840 relaciones; 23 vistas (conteo actualizado después de la revisión externa, §13).
+
+| Revisión | Resultado |
+|---|---|
+| Relaciones permitidas por ArchiMate (tabla de relaciones de Archi 5.10) | 0 inválidas |
+| Elementos sin ninguna relación | 0 (había 51) |
+| Elementos que no aparecen en ninguna vista | 0 |
+| Elementos anidados en una vista sin relación con su contenedor | 0 |
+| Relaciones repetidas (mismo tipo, origen y destino) | 0 |
+| Vistas vacías | 0 |
+| PNG de `/vistas` idénticos a la vista renderizada desde el modelo | 23 de 23 |
+
+**Relaciones agregadas para quitar los 51 huérfanos (73, ninguna se dibuja, así que las vistas no cambian):**
+- Servicios fuera de alcance de capa 2 (SN-X1 a X6): el proceso E2E los agrega, y realizan su capacidad (X1 → CAP17, X2 → CAP14 y CAP15, X3 → CAP13, X4 → CAP23, X5 → CAP33, X6 → CAP22).
+- Servicios excluidos de capa 4 (SN-X7 a X14): cuelgan, por agregación, del servicio de quien los ejecuta (X7–X9 del proveedor, X10 de Operaciones, X11 de Cobro diferido, X12 de Esquema de remuneración, X13 de Perfiles tarifarios, X14 de Ciclo de vida de la tarjeta).
+- Capacidades que no tenían relación: realizan el curso de acción que les corresponde (CAP02, 03, 04, 05, 06, 09, 11, 12, 18, 31, 38, 39, 41, 42).
+- Recursos R01 a R05: asignados a las capacidades que habilitan.
+- Capacidades de apoyo fuera del alcance (CAP01, 16, 35, 36, 43, 44): asociación con el actor «Ente gestor del SIT».
+- V3: el equipo de Recaudo y Tarifas (BA03) se asigna a BP00, BP04–BP07; Finanzas (BA04) a BP08; redes de pago (BA02) y las instituciones (BA07) se asocian a BP01 y BP00; VS00 se compone de VS01–VS08.
+
+**Advertencias aceptadas (no son errores):**
+- *IdentificadorTarjeta* y *PeriodoVigencia* aparecen tres veces como objetos de datos: es intencional, cada contexto tiene su propio modelo (V6, sin núcleo compartido). Archi las puede mostrar como «posibles duplicados».
+- Hay elementos de capas distintas con el mismo nombre (p. ej. el dominio «Liquidación a operadores» como *Grouping* y el servicio de negocio del mismo nombre). Es intencional: son el mismo concepto visto desde capas distintas.
+- Los elementos de V2 y V3 (CAPxx, Rxx, CAxx, VSxx, BPxx, BExx, BAxx) llevan el código en el nombre, en contra de la convención §1. Se mantienen porque el README los cita por código en muchas secciones.
+
+## 13. Correcciones por la revisión externa del proyecto
+
+Un revisor independiente comparó el proyecto con la rúbrica. Estas son las correcciones que tocaron el modelo (las de texto están en el README):
+
+| Hallazgo | Corrección en el modelo |
+|---|---|
+| V3 no reflejaba la corrección de la experta al proceso E2E (pregunta 2.9) | BP03 pasa a «Verificar tarifa esperada, perfil y transbordos» (la tarifa la aplica el validador). Se agregan BP11 (adquirir y recargar VAMOS), BP12 (cobro diferido de la tarjeta bancaria), BP13 (consignación de los canales a la fiducia, externo) y BP14 (bloqueos, devoluciones y reclamos), y un *Group* visual «Carril de excepciones» con BP06 y BP14. Los procesos que soporta la aplicación llevan borde azul grueso y una relación de servicio desde «Aplicación de recaudo SIT» (13 relaciones, no dibujadas); leyenda al pie |
+| «Viaje» se usaba como sinónimo de una validación, en contra del glosario | La raíz de DOM05 pasa a `TransacciónDeValidación` y su evento a `TransacciónDeValidaciónProcesada` (V6e, V8, V11). BE08 pasa a «Validación registrada en el acceso (externo)» |
+| «Perfil de titular» no seguía la regla «perfil tarifario / perfil de acceso» | El objeto de negocio pasa a «Perfil tarifario del titular» (V4d, V5, V6c, V7) |
+| DOM02 no tenía la emisión de la tarjeta ni la regla del viaje de emergencia | Comando `EmitirTarjeta` → `TarjetaEmitida` (lo dispara el asesor de Servicio al Cliente) e invariante 4 de `TarjetaVAMOS`: el saldo calculado nunca es menor que menos una tarifa |
+| El patrón OHS se aplicaba por consumidor | Todas las salidas de los servicios OHS de BC01, BC02 y BC07 se llaman «OHS + PL» (V8) |
+| La regla de no validar dos veces en el mismo punto en 10 minutos no estaba en el diseño | Restricción `RN-BC05-07` en V11 |
+| CAP24 (ajustes y devoluciones) estaba como impacto indirecto aunque P9 y DOM09 la ejecutan | Pasa a impacto directo: 21 directas, 16 indirectas y 7 sin impacto (V2) |
+
+**Cómo se aplicaron:** V6, V8, V11 y V10 se regeneraron en cadena desde la copia del modelo previa a V6, con los mismos generadores y los cambios de arriba. Al final, el modelo sigue con 0 relaciones inválidas, 0 huérfanos y 0 elementos fuera de vistas, y los 23 PNG coinciden con lo que renderiza el modelo.
+
+**No se cambió (decisión del equipo):** la clasificación de seis dominios centrales se mantiene; en el README §5 (V5) se agregó el criterio explícito y el orden de prioridad (DOM05, luego DOM07 y DOM08). Los actores fusionados de V3 («Operadores de flota y operador del metro» y «Fiduciaria») no recuperan el código BA05/BA06 en el nombre para no reintroducir códigos en V4d y V7.
