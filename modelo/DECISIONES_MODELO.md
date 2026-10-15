@@ -200,7 +200,7 @@ Registro de las decisiones tomadas al construir `modelo/recaudo.archimate`. Hay 
 
 ## 12. Revisión de calidad del modelo (T35)
 
-**Resultado:** 597 elementos y 840 relaciones; 23 vistas (conteo actualizado después de la revisión externa, §13).
+**Resultado:** 597 elementos y 840 relaciones; 23 vistas (conteo después de la revisión externa, §13; el conteo final está en §14).
 
 | Revisión | Resultado |
 |---|---|
@@ -210,7 +210,7 @@ Registro de las decisiones tomadas al construir `modelo/recaudo.archimate`. Hay 
 | Elementos anidados en una vista sin relación con su contenedor | 0 |
 | Relaciones repetidas (mismo tipo, origen y destino) | 0 |
 | Vistas vacías | 0 |
-| PNG de `/vistas` idénticos a la vista renderizada desde el modelo | 23 de 23 |
+| PNG de `/vistas` idénticos a la vista renderizada desde el modelo | 23 de 23 (V1, V3, V4, V4b, V4c, V4d y V9 llevan encima una franja de título agregada después de exportar; debajo de ella la imagen es idéntica al render) |
 
 **Relaciones agregadas para quitar los 51 huérfanos (73, ninguna se dibuja, así que las vistas no cambian):**
 - Servicios fuera de alcance de capa 2 (SN-X1 a X6): el proceso E2E los agrega, y realizan su capacidad (X1 → CAP17, X2 → CAP14 y CAP15, X3 → CAP13, X4 → CAP23, X5 → CAP33, X6 → CAP22).
@@ -242,3 +242,22 @@ Un revisor independiente comparó el proyecto con la rúbrica. Estas son las cor
 **Cómo se aplicaron:** V6, V8, V11 y V10 se regeneraron en cadena desde la copia del modelo previa a V6, con los mismos generadores y los cambios de arriba. Al final, el modelo sigue con 0 relaciones inválidas, 0 huérfanos y 0 elementos fuera de vistas, y los 23 PNG coinciden con lo que renderiza el modelo.
 
 **No se cambió (decisión del equipo):** la clasificación de seis dominios centrales se mantiene; en el README §5 (V5) se agregó el criterio explícito y el orden de prioridad (DOM05, luego DOM07 y DOM08). Los actores fusionados de V3 («Operadores de flota y operador del metro» y «Fiduciaria») no recuperan el código BA05/BA06 en el nombre para no reintroducir códigos en V4d y V7.
+
+## 14. Cierre de la revisión final
+
+Una última revisión contra el enunciado encontró cuatro puntos del modelo. Se corrigieron con un script sobre el XML (`lxml`, sin cambiar el formato de Archi) y se verificaron renderizando todas las vistas con Archi 5.10 por línea de comandos.
+
+| Hallazgo | Corrección |
+|---|---|
+| Las 8 ACL solo tenían flujos: no se podían seguir hasta una meta ni una capacidad | 8 servicios de aplicación de traducción (`ACL-Ex-S`). Por cada ACL hay 4 relaciones nuevas: «Aplicación de recaudo SIT» la compone, la ACL realiza su servicio, el servicio sirve al contexto de V8 que consume los datos y realiza el servicio de plataforma de V4 que apoya (32 en total) |
+| V9 no tenía servicios de aplicación | Cada servicio de traducción va anidado en su ACL (la caja crece 20 px y conserva su centro, así que los flujos no se mueven). La leyenda lo explica |
+| No había relación entre los procesos de V3 y la descomposición de V4 | 15 realizaciones proceso → servicio de plataforma (BP00 → P1 y P3; BP01–BP03 → P5; BP04–BP06 → P7; BP07–BP08 → P8; BP10 → P10; BP11 → P2; BP12 → P6; BP14 → P9 y P4). La capa 1 sigue siendo un servicio de negocio porque ArchiMate no permite que un proceso agregue servicios |
+| En V1 se cortaban nombres largos | Las cajas de V1 pasan de 60 a 82 px de alto y cada franja baja 22 px más que la anterior. Los puntos de quiebre son relativos a los extremos, así que no cambian |
+
+**V10:** la cadena 3 muestra la «ACL · Instituciones certificadoras» y su «Traducción de certificaciones» con sus cuatro relaciones; la nota de lectura lo explica.
+
+**Resultado final:** 605 elementos, 887 relaciones y 23 vistas. 0 relaciones inválidas, 0 elementos sin relaciones, 0 elementos fuera de las vistas y 0 relaciones repetidas. Los 19 componentes propios llegan a una capacidad y a una meta; los 14 externos no se trazan porque están fuera del alcance. 315 relaciones no se dibujan (avisos *Unused Relation* de Archi).
+
+**Imágenes:** se reexportaron V1, V9 y V10. En V1 y V9 se conservó la franja de título que se agregó a las imágenes en la revisión de legibilidad. Las 23 PNG coinciden con el render del modelo (sin contar esa franja).
+
+**Archivo de respaldo:** se eliminó `modelo/recaudo.pre-legibilidad-2026-10-15.archimate`, que era una copia idéntica del modelo. El repositorio conserva un solo `.archimate`; las versiones anteriores están en el historial de git.

@@ -1,6 +1,6 @@
 # BACKLOG: Parcial 3, recaudo del sistema integrado de transporte
 
-> **Turno de modelo (archivo .archimate):** Santiago Jaramillo (cierre de la revisión final)  ← escribe tu nombre aquí antes de abrir Archi y vuelve a dejarlo en _libre_ al terminar (ver [CLAUDE.md §7](CLAUDE.md#7-cómo-trabajamos-sin-responsables-fijos)).
+> **Turno de modelo (archivo .archimate):** _libre_  ← escribe tu nombre aquí antes de abrir Archi y vuelve a dejarlo en _libre_ al terminar (ver [CLAUDE.md §7](CLAUDE.md#7-cómo-trabajamos-sin-responsables-fijos)).
 
 ## Cómo usar este backlog
 - Las tareas están **en orden**. Toma la **primera tarea libre** (`[ ]`) cuyas dependencias estén en `[x]`.
@@ -111,7 +111,7 @@
 | 6 | Mapa de contextos | 10 % | Patrones correctos y **consistentes con la ACL** | [x] |
 | 7 | Canvas en ArchiMate | 10 % | Canvas completo en una página, bien resuelto en la herramienta y coherente con el modelo | [x] |
 | 8 | Calidad del modelo | 5 % | Cuatro capas, relaciones horizontales y verticales correctas, trazabilidad de meta a componente | [x] |
-| 9 | Documento en GitHub | 5 % | Índice navegable; cada vista con análisis y argumentación | [ ] |
+| 9 | Documento en GitHub | 5 % | Índice navegable; cada vista con análisis y argumentación | [x] |
 | 10 | Equipo y sustentación | 10 % | Cualquiera explica cualquier sección; commits repartidos | [ ] |
 
 ---
