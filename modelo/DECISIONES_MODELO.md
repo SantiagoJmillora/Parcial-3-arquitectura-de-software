@@ -12,7 +12,7 @@ Registro de las decisiones tomadas al construir `modelo/recaudo.archimate`. Hay 
 | Carpetas | Cada elemento en la carpeta de su capa (Motivation, Strategy, Business, Application). Todas las relaciones en *Relations* | Es la estructura por defecto de Archi |
 | Viewpoint de las vistas | **None** cuando la vista mezcla capas (V1 incluye un componente de aplicación). Solo se usa un viewpoint restringido si la vista es de una sola capa | Con un viewpoint restringido Archi marca como inválidos los elementos de otras capas |
 | Franjas y agrupaciones visuales | Se usan **grupos visuales** de Archi (*Group*, no el elemento *Grouping*) para las franjas de una vista | El grupo visual no agrega elementos ni relaciones al modelo |
-| Colores | Los de ArchiMate por defecto | CLAUDE.md §6 |
+| Colores | ArchiMate por defecto como base; las excepciones por vista se documentan en las secciones siguientes y en CLAUDE.md | Mantiene una base común sin borrar las codificaciones semánticas específicas |
 
 ## 2. Elementos compartidos entre vistas
 
@@ -99,7 +99,7 @@ Registro de las decisiones tomadas al construir `modelo/recaudo.archimate`. Hay 
 
 **Pendientes:** al hacer V5 a V8 y V10, reutilizar estos servicios (para V10, las cadenas meta → capacidad → servicio de negocio → componente pueden salir de estos servicios y de los REQ).
 
-**Colores de V4, V4b, V4c, V4d y V9:** siguen la paleta de la presentación de TOGAF (`10_Arquitectura_Empresarial_TOGAF`) y no la de Archi por defecto. Negocio `#FEFF99` (amarillo), aplicación `#F0FFFF` (celeste muy claro), estrategia `#FBE0A7`, motivación `#ADB0FF` y tecnología `#CDFFCC`. Se guardan como color de relleno de cada objeto en la vista. En gris (`#D9D9D9`) van los servicios y los externos que quedan fuera del alcance. V1 y V2 conservan sus colores, y V2 usa colores propios por categoría (estratégica, misional y de apoyo). Esto se aparta de lo que dice CLAUDE.md §6 ("los de ArchiMate por defecto"), así que el equipo debe decidir si todas las vistas usan esta paleta.
+**Colores de V4, V4b, V4c, V4d y V9:** siguen la paleta de la presentación de TOGAF (`10_Arquitectura_Empresarial_TOGAF`) y no la de Archi por defecto. Negocio `#FEFF99` (amarillo), aplicación `#F0FFFF` (celeste muy claro), estrategia `#FBE0A7`, motivación `#ADB0FF` y tecnología `#CDFFCC`. Se guardan como color de relleno de cada objeto en la vista. En gris (`#D9D9D9`) van los servicios y los externos que quedan fuera del alcance. V1 y V2 conservan sus colores, y V2 usa colores propios por categoría (estratégica, misional y de apoyo). Esta es una excepción intencional a la paleta ArchiMate por defecto, limitada a estas vistas. V2, V5, V6, V7 y V8 conservan sus codificaciones específicas, descritas en esta guía y en CLAUDE.md.
 
 ## 6. V5 Dominios (T25)
 
@@ -112,7 +112,7 @@ Registro de las decisiones tomadas al construir `modelo/recaudo.archimate`. Hay 
 
 **Decisiones:**
 - Los dominios son el elemento *Grouping* (el enunciado pide «agrupación» en V5). Las franjas de la vista (centrales, de soporte, genérico) son *Group* visuales, como pide la convención de este archivo.
-- El color de cada dominio sale de su clasificación (central rojo, de soporte azul, genérico gris), no de su capa. Los objetos de negocio usan el amarillo de la paleta de TOGAF.
+- El color de cada dominio sale de su clasificación, no de su capa: central salmón `#F8CBAD`, de soporte azul `#BDD7EE` y genérico gris `#D9D9D9`. V8 reutiliza exactamente esta codificación. Los objetos de negocio de V5 usan amarillo `#FEFF99`.
 - La «Base de liquidación» se muestra en DOM08 (Liquidación a operadores), como en el README §5.4, aunque en V4 vive en el servicio de consolidación.
 - V6 puede reutilizar estos objetos de negocio como raíces de agregado (objetos de datos que los realicen).
 

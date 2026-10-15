@@ -69,7 +69,7 @@
 | T26 | [x] David Pabon 📝 | **Glosario de lenguaje ubicuo**: término, definición, dominio y ejemplo. Resolver los términos ambiguos de [CLAUDE.md §5](CLAUDE.md#5-términos-ambiguos-que-hay-que-resolver-en-el-lenguaje-ubicuo) y dejar explícito **cuando un término cambia de significado entre contextos** | T23 | README §5 | ≥ 25 términos y ≥ 3 términos con doble significado | 2 |
 | T27 | [x] Santiago Jaramillo 🧩 | **V7 Lenguaje ubicuo**: representation y significado asociados a los objetos de negocio | T26 | `vistas/V7_lenguaje_ubicuo.png` | Los términos de V7 son los mismos que se usan en las demás vistas | 1 |
 | T28 | [x] David Pabon 📝 | **DDD táctico** por dominio: entidades vs objetos de valor; agregados con **raíz, límites e invariantes**; **comandos → eventos**. Argumentar el alcance de cada entidad y cada agregado | T24, T26 | README §6 (una tabla por dominio) | Cada agregado tiene ≥ 2 invariantes y su lista de comandos y eventos | 3 |
-| T29 | [x] Santiago Jaramillo 🧩 | **V6a…V6n Agregados, comandos y eventos**: **un diagrama por dominio** (objeto de negocio y de datos, proceso de aplicación = comando, evento de aplicación o de negocio) | T28 | `vistas/V6x_agregados_<dominio>.png` | Hay una vista por dominio | 3 |
+| T29 | [x] Santiago Jaramillo 🧩 | **V6a…V6j Agregados, comandos y eventos**: **un diagrama por dominio** (objeto de negocio y de datos, proceso de aplicación = comando, evento de aplicación o de negocio) | T28 | `vistas/V6x_agregados_<dominio>.png` | Hay una vista por dominio | 3 |
 | T30 | [x] David Pabon 📝 | **Mapa de contextos**: listar los bounded contexts y el **patrón de relación** entre cada par y con los externos (C/S, conformista, núcleo compartido, OHS, PL, ACL), con justificación | T24, T19 | README §7 | Es coherente con la ACL de la Fase 2 (T19 y T22) | 1,5 |
 | T31 | [x] Santiago Jaramillo 🧩 | **V8 Mapa de contextos** (componentes, interfaces, servicios de aplicación, flujos y relaciones de servicio), con los patrones etiquetados | T30 | `vistas/V8_mapa_contextos.png` | Cada relación tiene su patrón visible | 1,5 |
 
@@ -80,37 +80,37 @@
 | T32 | [x] Santiago Jaramillo 📝 | **Investigar** cómo representar el Bounded Context Canvas (ddd-crew) en Archi (agrupaciones como celdas, notas, elementos de motivación o aplicación) y **justificar** la elección | — | README §8 (justificación) | Hay una decisión de modelado escrita | 1 |
 | T33 | [x] Santiago Jaramillo 🧩 | **V11 Bounded Context Canvas** del contexto **central**, en una sola página: propósito, clasificación estratégica, rol del dominio, lenguaje ubicuo, comunicación entrante y saliente, decisiones de negocio y supuestos | T32, T28, T30 | `vistas/V11_bounded_context_canvas.png` | Cabe en una página y es coherente con V5, V6, V7 y V8 | 2,5 |
 | T34 | [x] Santiago Jaramillo 🧩 | **V10 Trazabilidad vertical**: meta (V1) → capacidad (V2) → servicio de negocio (V4) → servicio o componente de aplicación (V8), con realización, influencia, servicio y asignación | T31 | `vistas/V10_trazabilidad.png` | Al menos 2 cadenas completas se pueden seguir de punta a punta | 1,5 |
-| T35 | [~] Santiago Jaramillo 🧩 | **Revisión de calidad del modelo**: notación correcta, relaciones válidas (Archi valida), sin elementos huérfanos y nombres según el glosario | T33, T34 | Modelo final | Pasa *Validate Model* en Archi sin errores | 1 |
-| T36 | [ ] 📝 | Exportar **todas** las vistas en PNG a `/vistas` y verificar que se vean en el README | T35 | `/vistas/*.png` | Las 11 vistas o más se ven en GitHub | 0,5 |
-| T37 | [ ] 📝 | README §6, §7 y §8 con el análisis de cada vista, y **§9 Decisiones y supuestos** | T29, T31, T33 | README.md | Ninguna vista queda sin análisis | 2 |
-| T38 | [X] 📝 | **Índice navegable** con enlaces internos a cada fase y cada vista (probarlos en GitHub) | T37 | README.md | Todos los enlaces funcionan | 0,5 |
-| T39 | [ ] 📝 | **Tabla de aportes**: qué construyó cada integrante, verificable con `git shortlog -sn` | T37 | README.md | Coincide con el historial | 0,5 |
-| T40 | [ ] 📝 | **Revisión cruzada contra la rúbrica** (checklist de abajo): cada integrante revisa una sección que **no** hizo | T38 | Issues o notas corregidas | Todo el checklist en [x] | 1 c/u |
+| T35 | [x] Santiago Jaramillo 🧩 | **Revisión de calidad del modelo**: notación correcta, relaciones válidas (Archi valida), sin elementos huérfanos y nombres según el glosario | T33, T34 | Modelo final | Pasa *Validate Model* en Archi sin errores | 1 |
+| T36 | [x] 📝 | Exportar **todas** las vistas en PNG a `/vistas` y verificar que se vean en el README | T35 | `/vistas/*.png` | Las 11 vistas o más se ven en GitHub | 0,5 |
+| T37 | [x] 📝 | README §6, §7 y §8 con el análisis de cada vista, y **§9 Decisiones y supuestos** | T29, T31, T33 | README.md | Ninguna vista queda sin análisis | 2 |
+| T38 | [x] 📝 | **Índice navegable** con enlaces internos a cada fase y cada vista (probarlos en GitHub) | T37 | README.md | Todos los enlaces funcionan | 0,5 |
+| T39 | [x] 📝 | **Tabla de aportes**: qué construyó cada integrante, verificable con `git shortlog -sn` | T37 | README.md | Coincide con el historial | 0,5 |
+| T40 | [~] Revisión independiente 📝 | **Revisión cruzada contra la rúbrica** (checklist de abajo): cada integrante revisa una sección que **no** hizo | T38 | README §10 | La revisión está documentada; quedan pendientes criterios de calidad y sustentación antes de poner todo el checklist en [x] | 1 c/u |
 | T41 | [ ] | **Ensayo de sustentación por sorteo**: 30 min, sorteando las secciones, y repaso del banco de preguntas | T40 | — | Cada integrante explicó al menos 2 secciones que no hizo | 1,5 c/u |
 
 ---
 
 ## Checklist final de entregables (enunciado §4)
-- [ ] README.md con cada vista exportada como imagen, seguida de su análisis y su argumentación
-- [ ] Índice al inicio del README con enlaces internos a cada fase y cada vista
+- [x] README.md con cada vista exportada como imagen, seguida de su análisis y su argumentación
+- [x] Índice al inicio del README con enlaces internos a cada fase y cada vista
 - [x] Modelo fuente `.archimate` en `/modelo`
-- [ ] Imágenes de las vistas en `/vistas`
+- [x] Imágenes de las vistas en `/vistas`
 - [x] `/entrevista` con guion, instrucción de rol, conversación exportada y análisis de hallazgos
-- [ ] Tabla de aportes verificable en los commits
-- [ ] Vistas V1 a V11 completas (V6, una por dominio)
-- [ ] Commits repartidos entre los 4 integrantes
+- [x] Tabla de aportes verificable en los commits
+- [x] Vistas V1 a V11 completas (V6, una por dominio)
+- [x] Commits repartidos entre los 4 integrantes
 
 ## Checklist contra la rúbrica
 | # | Criterio | Peso | Para estar en «Sobresaliente» hace falta… | OK |
 |---|---|---|---|---|
-| 1 | Entrevista al experto | 10 % | Guion completo por temas **con bloque de interoperabilidad**, y hallazgos analizados, contrastados y **trazados al diseño** | [ ] |
-| 2 | Motivación, capacidades y E2E | 10 % | Mapa de capacidades **completo** (no solo recaudo); motivación y E2E coherentes con la app | [ ] |
-| 3 | Servicios y anticorrupción | 15 % | **≥ 4 capas**, cada inclusión y exclusión justificada, servicios externos completos | [ ] |
-| 4 | Dominios y lenguaje ubicuo | 10 % | Dominios clasificados con argumentos y glosario preciso **usado en todas las vistas** | [ ] |
-| 5 | Agregados, comandos y eventos | 15 % | Raíz, límites e invariantes claros; comandos y eventos consistentes por dominio | [ ] |
-| 6 | Mapa de contextos | 10 % | Patrones correctos y **consistentes con la ACL** | [ ] |
-| 7 | Canvas en ArchiMate | 10 % | Canvas completo en una página, bien resuelto en la herramienta y coherente con el modelo | [ ] |
-| 8 | Calidad del modelo | 5 % | Cuatro capas, relaciones horizontales y verticales correctas, trazabilidad de meta a componente | [ ] |
+| 1 | Entrevista al experto | 10 % | Guion completo por temas **con bloque de interoperabilidad**, y hallazgos analizados, contrastados y **trazados al diseño** | [x] |
+| 2 | Motivación, capacidades y E2E | 10 % | Mapa de capacidades **completo** (no solo recaudo); motivación y E2E coherentes con la app | [x] |
+| 3 | Servicios y anticorrupción | 15 % | **≥ 4 capas**, cada inclusión y exclusión justificada, servicios externos completos | [x] |
+| 4 | Dominios y lenguaje ubicuo | 10 % | Dominios clasificados con argumentos y glosario preciso **usado en todas las vistas** | [x] |
+| 5 | Agregados, comandos y eventos | 15 % | Raíz, límites e invariantes claros; comandos y eventos consistentes por dominio | [x] |
+| 6 | Mapa de contextos | 10 % | Patrones correctos y **consistentes con la ACL** | [x] |
+| 7 | Canvas en ArchiMate | 10 % | Canvas completo en una página, bien resuelto en la herramienta y coherente con el modelo | [x] |
+| 8 | Calidad del modelo | 5 % | Cuatro capas, relaciones horizontales y verticales correctas, trazabilidad de meta a componente | [x] |
 | 9 | Documento en GitHub | 5 % | Índice navegable; cada vista con análisis y argumentación | [ ] |
 | 10 | Equipo y sustentación | 10 % | Cualquiera explica cualquier sección; commits repartidos | [ ] |
 

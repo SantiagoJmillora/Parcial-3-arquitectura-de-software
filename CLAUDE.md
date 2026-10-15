@@ -115,7 +115,7 @@ Estos términos pueden tener más de un significado según el contexto. El glosa
 - **Herramienta:** [Archi](https://www.archimatetool.com/), gratuita. Todos deben usar la misma versión.
 - **Nombres de vistas en Archi:** `V1 Motivación`, `V2 Mapa de capacidades`, …, `V11 Bounded Context Canvas`. Para V6, una por dominio: `V6a …`, `V6b …`.
 - **Imágenes:** `vistas/V1_motivacion.png`, `vistas/V6a_agregados_<dominio>.png`, etc. Se exportan desde Archi en PNG (escala 100–200 %).
-- **Colores:** los de ArchiMate por defecto (estrategia en marrón claro, negocio en amarillo, aplicación en azul, motivación en morado). Las capacidades **impactadas** se resaltan con un color o un borde, y la leyenda va en la vista.
+- **Colores:** se conserva la paleta ArchiMate por defecto como base. Las excepciones intencionales están documentadas en `modelo/DECISIONES_MODELO.md`: V1 usa la paleta de motivación; V2 distingue categorías de capacidades y su impacto con rellenos y bordes; V4, V4b, V4c, V4d y V9 usan la paleta TOGAF; V5 y V8 usan una paleta común por clasificación del dominio (central salmón `#F8CBAD`, soporte azul `#BDD7EE`, genérico gris `#D9D9D9`); V6 y V7 tienen códigos cromáticos propios explicados en sus decisiones. Cada vista debe conservar su leyenda cuando el color codifique significado.
 - **Mismo nombre en todas partes:** el término que se fije en el glosario es el que se usa en todas las vistas y en el README (la rúbrica lo evalúa).
 
 ## 7. Cómo trabajamos (sin responsables fijos)

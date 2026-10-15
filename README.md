@@ -19,7 +19,8 @@
 7. [Mapa de contextos e interoperabilidad](#7-mapa-de-contextos-e-interoperabilidad) · [V8](#v8-mapa-de-contextos) · [V9](#v9-interoperabilidad-y-anticorrupción)
 8. [Bounded Context Canvas](#8-bounded-context-canvas) · [V11](#v11-bounded-context-canvas)
 9. [Trazabilidad, decisiones y supuestos](#9-trazabilidad-decisiones-y-supuestos) · [V10](#v10-trazabilidad-vertical)
-10. [Tabla de aportes](#10-tabla-de-aportes)
+10. [Revisión de la rúbrica](#10-revisión-de-la-rúbrica)
+11. [Tabla de aportes](#11-tabla-de-aportes)
 
 ---
 
@@ -507,7 +508,7 @@ Los dominios permiten diferenciar la gestión de reglas y medios de pago, el pro
 ### V5 Dominios
 ![V5 Dominios](vistas/V5_dominios.png)
 
-**Análisis.** La vista muestra los 10 dominios de §5.4 como *agrupaciones*, en tres franjas según su clasificación (§5.7): seis centrales (rojo), tres de soporte (azul) y uno genérico (gris). Dentro de cada dominio están sus objetos de negocio principales, los mismos de V4d, para que se vea qué información es dueño de manejar cada uno. Cada dominio se apoya en un servicio de plataforma de V4 (DOM01 con P1, DOM02 con P2, etc.); esa relación está en el modelo y es la que usa V10 para la trazabilidad.
+**Análisis.** La vista muestra los 10 dominios de §5.4 como *agrupaciones*, en tres franjas según su clasificación (§5.7): seis centrales (salmón, `#F8CBAD`), tres de soporte (azul, `#BDD7EE`) y uno genérico (gris, `#D9D9D9`). Dentro de cada dominio están sus objetos de negocio principales, los mismos de V4d, para que se vea qué información es dueño de manejar cada uno. Cada dominio se apoya en un servicio de plataforma de V4 (DOM01 con P1, DOM02 con P2, etc.); esa relación está en el modelo y es la que usa V10 para la trazabilidad.
 
 **Decisiones.** Que haya seis dominios centrales es deliberado. El recaudo de este SIT se diferencia en tres frentes que no se pueden comprar hechos: las **reglas** (tarifas, transbordos y perfiles: DOM01 y DOM03), el **cálculo de cada viaje** (procesamiento y saldo calculado: DOM02 y DOM05) y la **demostración del dinero** (consolidación, conciliación y liquidación: DOM07 y DOM08), que es la meta prioritaria de la experta. Si hubiera que priorizar dentro de los centrales, el núcleo del núcleo es DOM05 (por eso es el contexto del canvas, §8), seguido de DOM07 y DOM08. Los de soporte (listas, cobro bancario y ajustes) son necesarios pero siguen reglas comunes a cualquier sistema de pagos, y la consulta es genérica porque se puede resolver con una herramienta de inteligencia de negocio.
 
@@ -829,7 +830,7 @@ Los agregados definidos mantienen la consistencia de sus propias reglas y no deb
 ### V8 Mapa de contextos
 ![V8 Mapa de contextos](vistas/V8_mapa_contextos.png)
 
-**Análisis.** La «Aplicación de recaudo SIT» de V1 se compone de 10 componentes de aplicación, uno por bounded context (§7.1). Cada uno tiene el color de la clasificación de su dominio en V5: central, de soporte o genérico. Cada contexto *realiza* los servicios de aplicación que ofrece a los demás, y la relación de *servicio* hacia el contexto que los consume lleva escrito el patrón. Son las mismas 21 relaciones de §7.2:
+**Análisis.** La «Aplicación de recaudo SIT» de V1 se compone de 10 componentes de aplicación, uno por bounded context (§7.1). Cada uno tiene el mismo color de clasificación que su dominio en V5: central salmón (`#F8CBAD`), de soporte azul (`#BDD7EE`) o genérico gris (`#D9D9D9`). Cada contexto *realiza* los servicios de aplicación que ofrece a los demás, y la relación de *servicio* hacia el contexto que los consume lleva escrito el patrón. Son las mismas 21 relaciones de §7.2:
 - **C/S + PL** cuando un contexto le sirve a otro con un contrato publicado.
 - **OHS + PL** para los tres contextos que exponen una API pública estable (§7.4): el tarifario (BC01), la tarjeta y el saldo (BC02) y los resultados conciliados (BC07). Esa API va dentro del contexto como *interfaz de aplicación*.
 
@@ -1020,10 +1021,36 @@ Las cuatro relaciones que pide el enunciado están en la vista: realización (en
   Así, cualquier contexto de V8 se puede seguir hasta una meta.
 - Los cursos de acción CA01 a CA06 de V2 estaban modelados como *resultado* (Outcome). Se cambiaron a *curso de acción*, que es el tipo que pide V2; no tenían relaciones, así que el cambio no afectó otras vistas.
 
-**Decisiones de diseño:** _…_
-**Supuestos:** _…_
+**Decisiones de diseño.** La solución complementa la plataforma vigente del proveedor: recibe transacciones y novedades de validadores, pero no administra los dispositivos ni reemplaza automáticamente al proveedor. Se separan la validación registrada por el equipo, el procesamiento central, la tarifa esperada y el movimiento efectivo del medio de pago; así se representan rechazos, transacciones tardías, cobros bancarios diferidos y diferencias temporales de saldo. Las reglas de tarifa y transbordo se versionan y se consultan por fecha. Los límites de los diez dominios reflejan responsabilidades distintas, y las políticas entre contextos se expresan como eventos o coordinaciones, no como invariantes de un agregado ajeno. Las ocho integraciones que traducen modelos externos usan ACL; Planeación y la autoridad se tratan como conformistas para la información que se adopta, y las salidas comunes a Hacienda, operadores y entidades de control usan una interfaz de reportes con lenguaje publicado. El canvas reutiliza elementos existentes del modelo y reserva notas para conceptos que ArchiMate no representa directamente. Estas decisiones se desarrollan en [DECISIONES_MODELO.md](modelo/DECISIONES_MODELO.md).
 
-## 10. Tabla de aportes
-| Integrante | Aportes (tareas del backlog) | Commits |
-|---|---|---|
-| | | |
+**Supuestos de trabajo y asuntos por confirmar.** El diseño parte de los datos del escenario de entrevista; no son parámetros aprobados por una autoridad ni especificaciones de contratación. Se asume que el proveedor entrega los lotes y contadores de los validadores dentro de un máximo aproximado de 48 horas, y publica tarifas, listas y novedades mediante interfaces acordadas. Se modelan una ventana de transbordo de 90 minutos, hasta dos transbordos, un segundo transbordo con cobro reducido y un cupo mensual aproximado de viajes subsidiados; la autoridad competente debe confirmar las reglas y sus valores. Se asume que Planeación, Operaciones, Finanzas, la fiduciaria, las instituciones certificadoras y el adquirente pueden intercambiar los datos descritos en V9, sujetos a acuerdos, calidad y disponibilidad de sus fuentes. La cobertura de rutas, los identificadores compartidos, las reglas de conciliación, los tiempos de respuesta ante fallas, la retención de datos personales y los requisitos de seguridad deben acordarse con las áreas responsables antes de implementar. Las preguntas de negocio que la entrevista dejó abiertas para BC05 están en el canvas V11.
+
+## 10. Revisión de la rúbrica
+
+Revisión independiente del entregable contra los diez criterios de la rúbrica. “Cumple” significa que encontré evidencia en el repositorio; no sustituye la evaluación del profesor ni una validación ejecutada en Archi. Los puntos parciales se mantienen visibles para no confundir revisión documental con cierre del trabajo del equipo.
+
+| # | Criterio | Estado de la revisión | Evidencia y pendiente |
+|---|---|---|---|
+| 1 | Entrevista al experto | Cumple | Están el rol, el guion con interoperabilidad, la conversación y 24 hallazgos; el análisis registra aceptados, descartados y contrastados y sus impactos en el diseño. |
+| 2 | Motivación, capacidades y E2E | Cumple, con observación de legibilidad | V1–V3 presentan motivación, capacidades organizacionales y proceso E2E conectado con la aplicación. V1 reúne muchos elementos y relaciones; conviene ensayar su lectura al proyectarla. |
+| 3 | Servicios y anticorrupción | Cumple | V4 y sus sub-vistas separan capas, alcance y contratos; las tablas de inclusión/exclusión e interoperabilidad documentan justificaciones, datos y direcciones. V9 representa las ACL y externos. |
+| 4 | Dominios y lenguaje ubicuo | Cumple | V5 clasifica los diez dominios; el glosario supera 25 términos, resuelve ambigüedades y V7 representa significados por contexto. |
+| 5 | Agregados, comandos y eventos | Cumple | README §6 y V6a–V6j muestran raíces, límites, invariantes, comandos y eventos para cada dominio. |
+| 6 | Mapa de contextos | Cumple | README §7 y V8 nombran patrones y los relacionan con las integraciones de V9; las decisiones explican ACL, conformista, OHS y lenguaje publicado. |
+| 7 | Canvas en ArchiMate | Cumple | V11 muestra en una página las secciones del canvas para BC05 y reutiliza elementos del modelo; README §8 justifica la representación. |
+| 8 | Calidad del modelo | Cumple, con avisos para revisar | La revisión previa documentó una ejecución de *Tools → Validate Model* en Archi sobre `modelo/recaudo.archimate`: no reportó errores y mostró 278 avisos; las filas visibles eran relaciones no usadas en una vista (*Unused Relation*). Esta revisión documental no repitió la validación. El historial de decisiones documenta que algunas relaciones se mantienen en el modelo para trazabilidad aunque no se dibujen. |
+| 9 | Documento en GitHub | Cumple en los archivos; falta comprobar la publicación | El índice enlaza las secciones, las 23 imágenes referenciadas existen y cada vista tiene análisis. La estructura y la tabla de aportes quedan documentadas. Falta comprobar los enlaces y las imágenes en la vista publicada de GitHub. |
+| 10 | Equipo y sustentación | Parcial | El historial registra commits de cuatro autores. No encontré evidencia del ensayo por sorteo ni de que cada integrante haya explicado dos secciones que no hizo; comprobarlo corresponde al equipo. |
+
+La revisión independiente del repositorio queda documentada aquí. El criterio 10 sigue parcial hasta que el equipo realice y registre el ensayo por sorteo; además, conviene que el equipo revise los avisos *Unused Relation* y confirme los enlaces desde la vista publicada de GitHub.
+
+## 11. Tabla de aportes
+
+Los nombres y tareas se contrastaron entre los títulos de commit (`git log`) y las asignaciones de [BACKLOG.md](BACKLOG.md). Los autores “Andres” y “DavidVergaraA” del historial se asocian con Velez y Vergara, respectivamente, por los commits que nombran sus entregables asignados. El conteo mostrado es el número de commits por nombre de autor en el historial local consultado; no mide por sí solo el esfuerzo individual.
+
+| Integrante / autor en Git | Aportes verificables en el historial | Commits |
+|---|---|---:|
+| Santiago Jaramillo | T03, T04–T09, T12–T13, T27, T29, T31–T35; modelo base, entrevista, vistas V1, V6–V8, V10–V11 | 23 |
+| David Pabon | T10–T11, T23–T24, T26, T28, T30; análisis de hallazgos, motivación, extracción/clasificación de dominios, glosario, DDD táctico y mapa de contextos. | 19 |
+| Andrés Velez | T16 (parcial), T17–T22 y T25; capas de servicios, inclusión/exclusión, contratos, interoperabilidad y vistas V4/V5/V9. | 10 |
+| David Vergara | T14–T15; mapa de capacidades y cadena de valor/proceso E2E (V2/V3), revisión nomenclatura colores y diseño de todas las vistas y correcciones de calidad. | 4 |
