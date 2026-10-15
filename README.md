@@ -5,7 +5,7 @@
 
 **Integrantes:** Santiago Jaramillo · David Vergara · David Pabon · Andrés Velez
 
-> Plan de trabajo: [BACKLOG.md](BACKLOG.md) · Guía del proyecto: [CLAUDE.md](CLAUDE.md) · Modelo fuente: [modelo/](modelo/)
+> Plan de trabajo: [BACKLOG.md](BACKLOG.md) · Modelo fuente: [modelo/](modelo/)
 
 ---
 

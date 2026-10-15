@@ -1,6 +1,6 @@
 # BACKLOG: Parcial 3, recaudo del sistema integrado de transporte
 
-> **Turno de modelo (archivo .archimate):** _libre_  ← escribe tu nombre aquí antes de abrir Archi y vuelve a dejarlo en _libre_ al terminar (ver [CLAUDE.md §7](CLAUDE.md#7-cómo-trabajamos-sin-responsables-fijos)).
+> **Turno de modelo (archivo .archimate):** _libre_  ← escribe tu nombre aquí antes de abrir Archi y vuelve a dejarlo en _libre_ al terminar.
 
 ## Cómo usar este backlog
 - Las tareas están **en orden**. Toma la **primera tarea libre** (`[ ]`) cuyas dependencias estén en `[x]`.
@@ -66,7 +66,7 @@
 | T23 | [x] David Pabon 📝 | **Extracción de dominios** con los 3 pasos (estructura organizacional → tormenta de eventos del proceso → puntos de corte), partiendo de V3 y V4 | T20 | Borrador README §5 | Cada dominio tiene sus responsabilidades listadas | 1,5 |
 | T24 | [x] David Pabon 📝 | **Clasificar** cada dominio en central, de soporte o genérico, **con argumentos** (¿qué diferencia al negocio?, ¿se puede comprar?) | T23 | README §5 | Hay un argumento por dominio | 1 |
 | T25 | [x] Velez 🧩 | **V5 Dominios** (capa de aplicación): agrupaciones y objetos de negocio, con la clasificación visible | T24 | `vistas/V5_dominios.png` | Coincide con T24 | 1 |
-| T26 | [x] David Pabon 📝 | **Glosario de lenguaje ubicuo**: término, definición, dominio y ejemplo. Resolver los términos ambiguos de [CLAUDE.md §5](CLAUDE.md#5-términos-ambiguos-que-hay-que-resolver-en-el-lenguaje-ubicuo) y dejar explícito **cuando un término cambia de significado entre contextos** | T23 | README §5 | ≥ 25 términos y ≥ 3 términos con doble significado | 2 |
+| T26 | [x] David Pabon 📝 | **Glosario de lenguaje ubicuo**: término, definición, dominio y ejemplo. Resolver los términos ambiguos (viaje, tarifa, saldo, usuario, perfil, operador y transacción) y dejar explícito **cuando un término cambia de significado entre contextos** | T23 | README §5 | ≥ 25 términos y ≥ 3 términos con doble significado | 2 |
 | T27 | [x] Santiago Jaramillo 🧩 | **V7 Lenguaje ubicuo**: representation y significado asociados a los objetos de negocio | T26 | `vistas/V7_lenguaje_ubicuo.png` | Los términos de V7 son los mismos que se usan en las demás vistas | 1 |
 | T28 | [x] David Pabon 📝 | **DDD táctico** por dominio: entidades vs objetos de valor; agregados con **raíz, límites e invariantes**; **comandos → eventos**. Argumentar el alcance de cada entidad y cada agregado | T24, T26 | README §6 (una tabla por dominio) | Cada agregado tiene ≥ 2 invariantes y su lista de comandos y eventos | 3 |
 | T29 | [x] Santiago Jaramillo 🧩 | **V6a…V6j Agregados, comandos y eventos**: **un diagrama por dominio** (objeto de negocio y de datos, proceso de aplicación = comando, evento de aplicación o de negocio) | T28 | `vistas/V6x_agregados_<dominio>.png` | Hay una vista por dominio | 3 |
