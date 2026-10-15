@@ -1,6 +1,6 @@
 # BACKLOG: Parcial 3, recaudo del sistema integrado de transporte
 
-> **Turno de modelo (archivo .archimate):** Santiago Jaramillo (T35)  ← escribe tu nombre aquí antes de abrir Archi y vuelve a dejarlo en _libre_ al terminar (ver [CLAUDE.md §7](CLAUDE.md#7-cómo-trabajamos-sin-responsables-fijos)).
+> **Turno de modelo (archivo .archimate):** Santiago Jaramillo (cierre de la revisión final)  ← escribe tu nombre aquí antes de abrir Archi y vuelve a dejarlo en _libre_ al terminar (ver [CLAUDE.md §7](CLAUDE.md#7-cómo-trabajamos-sin-responsables-fijos)).
 
 ## Cómo usar este backlog
 - Las tareas están **en orden**. Toma la **primera tarea libre** (`[ ]`) cuyas dependencias estén en `[x]`.
@@ -85,7 +85,7 @@
 | T37 | [x] 📝 | README §6, §7 y §8 con el análisis de cada vista, y **§9 Decisiones y supuestos** | T29, T31, T33 | README.md | Ninguna vista queda sin análisis | 2 |
 | T38 | [x] 📝 | **Índice navegable** con enlaces internos a cada fase y cada vista (probarlos en GitHub) | T37 | README.md | Todos los enlaces funcionan | 0,5 |
 | T39 | [x] 📝 | **Tabla de aportes**: qué construyó cada integrante, verificable con `git shortlog -sn` | T37 | README.md | Coincide con el historial | 0,5 |
-| T40 | [~] Revisión independiente 📝 | **Revisión cruzada contra la rúbrica** (checklist de abajo): cada integrante revisa una sección que **no** hizo | T38 | README §10 | La revisión está documentada; quedan pendientes criterios de calidad y sustentación antes de poner todo el checklist en [x] | 1 c/u |
+| T40 | [~] David Vergara 📝 | **Revisión cruzada contra la rúbrica** (checklist de abajo): cada integrante revisa una sección que **no** hizo | T38 | README §10 | La revisión está documentada; quedan pendientes criterios de calidad y sustentación antes de poner todo el checklist en [x] | 1 c/u |
 | T41 | [ ] | **Ensayo de sustentación por sorteo**: 30 min, sorteando las secciones, y repaso del banco de preguntas | T40 | — | Cada integrante explicó al menos 2 secciones que no hizo | 1,5 c/u |
 
 ---

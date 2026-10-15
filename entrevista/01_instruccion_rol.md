@@ -1,12 +1,12 @@
 # Instrucción de rol del experto del negocio
 
 > Tarea T04 del backlog. Este es el texto exacto que se le pega a la IA al iniciar la entrevista.
-> Regla del curso: la IA **aporta conocimiento del negocio**. Se puede proponer y generar el diseño, eso si, siempre con confirmación del equipo de trabajo. Es importante revisar, señalar inconsistencias, explicar conceptos y dar formato.
+> Regla del curso: durante la entrevista la IA **solo aporta conocimiento del negocio**; no se le pide proponer el mapa de capacidades, los dominios, los agregados, el mapa de contextos ni las vistas. Después de la entrevista el equipo sí puede usarla como herramienta de diseño, siempre con su revisión y confirmación.
 
 ## Herramienta y fecha
 - IA usada: Claude (Anthropic), en una sesión aislada que solo recibió esta instrucción como contexto
 - Fecha de la entrevista: 2026-10-10
-- Entrevistadores: _por completar con los nombres del equipo_
+- Entrevistadores: Santiago Jaramillo, David Vergara, David Pabon y Andrés Velez
 
 ## Texto de la instrucción
 ```

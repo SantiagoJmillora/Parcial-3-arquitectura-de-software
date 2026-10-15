@@ -3,7 +3,7 @@
 **Curso:** Arquitectura de Software, UPB · **Profesor:** César López · **Parcial 3**
 **Tema 4:** Recaudo del sistema integrado de transporte de una ciudad mediana (alimentadores, articulados y metro; tarjeta VAMOS y débito/crédito).
 
-**Integrantes:** _Nombre 1 · Nombre 2 · Nombre 3 · Nombre 4_
+**Integrantes:** Santiago Jaramillo · David Vergara · David Pabon · Andrés Velez
 
 > Plan de trabajo: [BACKLOG.md](BACKLOG.md) · Guía del proyecto: [CLAUDE.md](CLAUDE.md) · Modelo fuente: [modelo/](modelo/)
 
@@ -486,6 +486,22 @@ A partir de la estructura organizacional, los eventos del proceso y los puntos d
 | DOM09 | Ajustes y devoluciones           | Gestión de solicitudes.                                              | Gestionar solicitudes de ajuste y devolución, registrar aprobaciones y conservar la trazabilidad de los cambios económicos.           |
 | DOM10 | Consulta, reportes e indicadores | Servicio de consulta.                                                | Permitir consultas autorizadas, generar reportes e indicadores y presentar resultados del recaudo.                                    |
 
+Los objetos de negocio de cada dominio son los mismos en V4d, V5, V6 (cada raíz de agregado realiza uno) y V7:
+
+| Dominio | Objetos de negocio |
+|---|---|
+| DOM01 | Tarifario |
+| DOM02 | Tarjeta VAMOS · Saldo calculado |
+| DOM03 | Titular y autorización de datos · Perfil tarifario del titular |
+| DOM04 | Decisión de lista · Versión de lista |
+| DOM05 | Transacción de validación · Viaje |
+| DOM06 | Cobro diario de tarjeta · Deuda de tarjeta |
+| DOM07 | Consolidado de usos · Consolidado de ventas · Conciliación |
+| DOM08 | Base de liquidación · Esquema de remuneración · Liquidación · Subsidio mensual |
+| DOM09 | Solicitud de ajuste |
+| DOM10 | Solicitud de consulta |
+| Transversal | Perfil de acceso (permisos dentro del software, V7) |
+
 ### 5.5. Relación con la frontera del alcance
 
 Los siguientes servicios participan en el proceso, pero permanecen fuera del alcance de implementación establecido en V4:
@@ -552,7 +568,7 @@ Cuando un término tiene más de un significado, se identifica explícitamente e
 | Pasajero | Persona que realiza un desplazamiento en alguno de los modos de transporte del SIT. | Procesamiento de transacciones | Un pasajero valida su tarjeta al ingresar al metro. |
 | Titular | Persona registrada como titular de un medio de pago personalizado. No necesariamente debe coincidir con quien presenta una consulta o reclamación. | Gestión de usuarios y perfiles | Una tarjeta personalizada está registrada a nombre de una persona. |
 | Cliente | Persona que establece una relación de atención o servicio con la organización. En este proyecto, el término debe precisarse según el proceso, porque puede referirse a un usuario que presenta una PQR y no necesariamente al titular de la tarjeta. | Ajustes y devoluciones | Una persona solicita la revisión de un cobro y se registra su caso de atención. |
-| Perfil | **Contexto 1 — Perfil tarifario:** condición que determina si una persona puede acceder a un beneficio tarifario. **Contexto 2 — Perfil de usuario del sistema:** conjunto de permisos que determina qué información o funciones puede consultar una persona dentro del software. No son equivalentes. | Gestión de usuarios y perfiles / Transversal (seguridad) | Un estudiante tiene un perfil tarifario especial; un analista tiene permisos para consultar liquidaciones. |
+| Perfil | **Contexto 1 — Perfil tarifario:** condición que determina si una persona puede acceder a un beneficio tarifario. **Contexto 2 — Perfil de acceso:** conjunto de permisos que determina qué información o funciones puede consultar una persona dentro del software. No son equivalentes. | Gestión de usuarios y perfiles / Transversal (seguridad) | Un estudiante tiene un perfil tarifario especial; un analista tiene permisos para consultar liquidaciones. |
 | Operador | **Contexto 1 — Operador de transporte:** empresa que presta el servicio de transporte y cuya remuneración se calcula según su contrato. **Contexto 2 — Proveedor de recaudo** (también llamado «operador de recaudo»): proveedor responsable de los dispositivos y servicios de recaudo contratados. En el diseño se usa siempre «proveedor de recaudo». | Liquidación a operadores / Externo (proveedor de recaudo, vía ACL) | El operador de transporte recibe una liquidación; el proveedor de recaudo entrega las transacciones registradas por los validadores. |
 | Transacción | **Contexto 1 — Transacción de validación:** registro generado por un validador que contiene información del intento o uso del medio de pago. **Contexto 2 — Transacción financiera:** operación de pago o movimiento procesado por una red financiera. Una validación no equivale necesariamente a una transacción financiera aprobada. | Procesamiento de transacciones / Cobro con tarjeta bancaria | El proveedor envía un registro de validación y posteriormente la red financiera informa el resultado del cobro. |
 | Tarjeta VAMOS | Medio de pago propio del escenario del SIT, disponible en modalidad personalizada o al portador, utilizado para acceder al servicio y gestionar saldo prepago. | Gestión de medios de pago | Un usuario recarga su tarjeta VAMOS antes de viajar. |
