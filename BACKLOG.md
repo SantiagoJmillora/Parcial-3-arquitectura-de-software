@@ -83,7 +83,7 @@
 | T35 | [~] Santiago Jaramillo 🧩 | **Revisión de calidad del modelo**: notación correcta, relaciones válidas (Archi valida), sin elementos huérfanos y nombres según el glosario | T33, T34 | Modelo final | Pasa *Validate Model* en Archi sin errores | 1 |
 | T36 | [ ] 📝 | Exportar **todas** las vistas en PNG a `/vistas` y verificar que se vean en el README | T35 | `/vistas/*.png` | Las 11 vistas o más se ven en GitHub | 0,5 |
 | T37 | [ ] 📝 | README §6, §7 y §8 con el análisis de cada vista, y **§9 Decisiones y supuestos** | T29, T31, T33 | README.md | Ninguna vista queda sin análisis | 2 |
-| T38 | [ ] 📝 | **Índice navegable** con enlaces internos a cada fase y cada vista (probarlos en GitHub) | T37 | README.md | Todos los enlaces funcionan | 0,5 |
+| T38 | [X] 📝 | **Índice navegable** con enlaces internos a cada fase y cada vista (probarlos en GitHub) | T37 | README.md | Todos los enlaces funcionan | 0,5 |
 | T39 | [ ] 📝 | **Tabla de aportes**: qué construyó cada integrante, verificable con `git shortlog -sn` | T37 | README.md | Coincide con el historial | 0,5 |
 | T40 | [ ] 📝 | **Revisión cruzada contra la rúbrica** (checklist de abajo): cada integrante revisa una sección que **no** hizo | T38 | Issues o notas corregidas | Todo el checklist en [x] | 1 c/u |
 | T41 | [ ] | **Ensayo de sustentación por sorteo**: 30 min, sorteando las secciones, y repaso del banco de preguntas | T40 | — | Cada integrante explicó al menos 2 secciones que no hizo | 1,5 c/u |
